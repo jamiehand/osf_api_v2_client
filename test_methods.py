@@ -40,11 +40,15 @@ class TestSessionLocalhost(unittest.TestCase):
             domain="http://localhost:8000/", api_prefix="v2/"
         )
 
+    # GETTING URL
+
     def test_url_auth(self):
         assert_equal(self.session_with_auth.url, "http://localhost:8000/v2/")
 
     def test_url_not_auth(self):
         assert_equal(self.session_with_no_auth.url, "http://localhost:8000/v2/")
+
+    # GETTING ROOT
 
     def test_get_root_auth(self):
         root = self.session_with_auth.get_root()
@@ -83,7 +87,14 @@ class TestSessionLocalhost(unittest.TestCase):
         private_node = self.session_with_no_auth.get_node(self.PRIVATE_NODE_ID)
         assert_equal(private_node.status_code, 403)
 
+    # ******************************************** REQUIRES AUTH ***********************************************
+    #  The following tests won't work without authentication, and safe authentication is currently not possible
+    #  with the API. -- for now I am using basic_auth, but this should change after some OAuth/token things
+    #  happen.
+    # **********************************************************************************************************
+
     # CREATING NODES
+    # TODO add checks into tests to make sure the title, public, etc. are correct?
 
     def test_create_public_node_auth(self):
         # TODO figure out how to do this.
@@ -113,6 +124,7 @@ class TestSessionLocalhost(unittest.TestCase):
 
     # EDITING NODES
 
+    # TODO finished?
     # TODO change this to modify the public node created by test_create_public_node
     def test_edit_public_node_auth_contrib(self):
         edited_public_node = self.session_with_auth.edit_node(
@@ -126,6 +138,7 @@ class TestSessionLocalhost(unittest.TestCase):
         assert_equal(edited_public_node.json()[u'data'][u'description'], "Jamie's new description")
         assert_equal(edited_public_node.json()[u'data'][u'description'], "")
 
+    # TODO finished?
     def test_edit_public_node_auth_non_contrib(self):
         edited_public_node = self.session_with_different_auth.edit_node(
             self.PUBLIC_NODE_ID,
@@ -139,6 +152,7 @@ class TestSessionLocalhost(unittest.TestCase):
         assert_equal(public_node.json()[u'data'][u'description'], "User's new description")
         assert_equal(public_node.json()[u'data'][u'description'], "")
 
+    # TODO finished?
     def test_edit_public_node_not_auth(self):
         edited_public_node = self.session_with_no_auth.edit_node(
             self.PUBLIC_NODE_ID,
@@ -153,20 +167,32 @@ class TestSessionLocalhost(unittest.TestCase):
         edited_public_node = self.session_with_no_auth.edit_node(self.PUBLIC_NODE_ID)
         assert_equal(edited_public_node.status_code, 200)
 
+    # TODO finish
     def test_edit_private_node_auth_contributor(self):
         # The node with PRIVATE_NODE_ID is one created by USER, so it should be visible to USER.
         private_node = self.session_with_auth.edit_node(self.PRIVATE_NODE_ID)
         assert_equal(private_node.status_code, 200)
 
+    # TODO finish
     def test_edit_private_node_auth_non_contributor(self):
         # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
         private_node = self.session_with_different_auth.edit_node(self.PRIVATE_NODE_ID)
         assert_equal(private_node.status_code, 403)
 
+    # TODO finish
     def test_edit_private_node_not_auth(self):
         # Unauthenticated user should not be able to view any private node.
         private_node = self.session_with_no_auth.edit_node(self.PRIVATE_NODE_ID)
         assert_equal(private_node.status_code, 403)
+
+    # DELETING NODES
+    # TODO write tests on deleting nodes (private, public; auth, diff_auth, not_auth
+    # TODO check if Reina fixed problem of deleted nodes being returned, ability to delete nodes multiple times, etc.
+
+    # Starter, from code used in initial testing in methods.py:
+    # response = localhost_session.delete_node('x7s9m')
+    # print(response.status_code)
+
 
 # class TestSessionStaging2(unittest.TestCase):
 #     # STAGING2 TESTS - TODO do we need these? I'll write most of my tests for localhost for now.

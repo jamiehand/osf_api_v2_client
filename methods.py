@@ -30,7 +30,7 @@ class Session(object):
         """
         :return: a list of nodes
         """
-        node_list = requests.get('{}nodes/'.format(self.url, auth=self.auth))
+        node_list = requests.get('{}nodes/'.format(self.url), auth=self.auth)
         return node_list
 
     def get_node(self, node_id):
@@ -80,76 +80,6 @@ class Session(object):
         """
         # params = {'node_id': node_id}
         # print('{}nodes/{}/'.format(self.url, node_id))
-        response = requests.delete('{}nodes/{}/'.format(self.url, node_id, auth=self.auth))
+        response = requests.delete('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
         return response
 
-
-
-def main():
-    print("\n \n ---------------------------------- STAGING2 ---------------------------------- \n \n")
-
-    staging2_session = Session(user='user', pw='pass')
-    print("staging2_session.url: {}".format(staging2_session.url))
-    staging2_node = staging2_session.get_node('bxsu6')
-    print(staging2_node.status_code)
-    print("staging2_node.json():")
-    pp.pprint(staging2_node.json())
-
-    print("\n \n ---------------------------------- LOCALHOST:8000/v2/ ---------------------------------- \n \n")
-    localhost_session = Session(domain="http://localhost:8000/", api_prefix="v2/",
-                                user='user', pw='pass')
-    print("localhost_session.url: {}".format(localhost_session.url))
-
-    print("\n \n ---------------------------------- GET_ROOT() ---------------------------------- \n \n")
-    root = localhost_session.get_root()
-    pp.pprint(root.json())
-
-    print("\n \n ------------------------------- GET_NODE(<public node id>) ------------------------------- \n \n")
-    public_node = localhost_session.get_node('mrdnb')
-    print("public_node.json(): ")
-    pp.pprint(public_node.json())
-
-    print("\n \n ------------------------------- GET_NODE(<private node id>) ------------------------------- \n \n")
-    private_node = localhost_session.get_node('z9npx')
-    print("private_node.json(): ")
-    pp.pprint(private_node.json())
-
-    print("\n \n ---------------------------------- CREATE_NODE(<private>) ---------------------------------- \n \n")
-    created_private_node = localhost_session.create_node("Jamie's private node created with python")
-    print("created_private_node.json(): ")
-    pp.pprint(created_private_node.json())
-
-    # print("\n \n ---------------------------------- CREATE_NODE(<public>) ---------------------------------- \n \n")
-    # TODO how to create public node??
-    # created_public_node = localhost_session.create_node("Creating public node with python 1", category="", public="true")
-    # print("created_public_node.json(): ")
-    # pp.pprint(created_public_node.json())
-
-    print("\n \n ---------------------------------- EDIT_NODE(<private>) ---------------------------------- \n \n")
-
-    print("\n \n ---------------------------------- EDIT_NODE(<public>) ---------------------------------- \n \n")
-
-    print("\n \n ---------------------------------- DELETE_NODE(<private>) ---------------------------------- \n \n")
-
-    print("\n \n ---------------------------------- DELETE_NODE(<public>) ---------------------------------- \n \n")
-
-    # response4 = localhost_session.delete_node('x7s9m')
-    # pp.pprint(private_node.content)
-    # print(response4.status_code)
-
-    # basic_auth = ('user', 'pass')
-    # node_id = 'z9npx'
-    # url = "http://localhost:8000/v2/nodes/{}/"
-    #
-    # res = requests.get(url.format(node_id), json={'node_id': node_id}, auth=basic_auth)
-    # data = res.json()
-    # pprint.pprint(data)
-
-    # TODO get delete to work. It's giving a 204 response but not actually deleting the node. :(
-    # see here: https://github.com/kennethreitz/requests/issues/1704
-
-    # res = requests.delete(url.format(node_id), auth=basic_auth)
-    # print("res.status_code: {}".format(res.status_code))
-
-if __name__ == '__main__':
-    main()
