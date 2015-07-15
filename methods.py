@@ -1,6 +1,8 @@
 import requests
 import pprint
 
+from requests.compat import urlparse, urlencode
+
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
@@ -8,23 +10,142 @@ from requests.auth import HTTPBasicAuth
 
 pp = pprint.PrettyPrinter()
 
-class Session(object):
-    def __init__(self, domain='https://staging2.osf.io/', api_prefix='api/v2/', user='', pw=''):
-        self.domain = domain  # TODO use 'or' for giving optional parameter?
-        self.api_prefix = api_prefix
-        self.url = '{}{}'.format(self.domain, self.api_prefix)
-        # self.auth = HTTPBasicAuth(user, pw) TODO is this line not better than the line below?
-        if user == '':  # TODO also include "or (pw == '')" ?
-            self.auth = None  # TODO check if setting this to None is a valid fix. It seems to work! But I'm not
-                              # sure what's going on behind the scenes.
-        else:
-            self.auth = (user, pw)
+class Iterator(object):
+    def __init__(self, num_requested, url, cls, session, params=None, headers=None):
+        # If self.num_requested is None, all of the objects will be iterated over. TODO or -1? (gh3 seems to use -1)
+        self.num_requested = num_requested
+        #: Number of items left in the iterator
+        self.count = num_requested
+        # TODO need this? : URL the class used to make its first GET
+        self.url = url
+        #: Last URL that was requested
+        self.last_url = None
+        # TODO need this?
+        self._api = self.url
+        #: Class for constructing an item to return
+        self.cls = cls
+        #: Parameters of the query string
+        self.params = params or {}
+        # TODO need this? What does it do?
+        self._remove_none(self.params)
+        #: Headers generated for the GET request
+        self.headers = headers or {}
+        #: The last response seen
+        self.last_response = None
+        #: The last status code received
+        self.last_status = 0
 
-    def get_root(self):
+        self.path = urlparse(self.url).path
+
+    def _repr(self):
+        return '<Iterator [{}, {}]>'.format(self.count, self.path)
+
+    # def __iter__(self):
+    #     self.last_url, params = self.url, self.params
+    #     headers = self.headers
+    #
+    #     if 0 < self.count <= 100 and self.count != -1:
+    #         params['per_page'] = self.count
+    #
+    #     if 'per_page' not in params and self.count == -1:
+    #         params['per_page'] = 100
+    #
+    #     cls = self.cls
+    #     # if issubclass(self.cls, models.GitHubCore):
+    #     #     cls = functools.partial(self.cls, session=self)
+    #
+    #     while (self.count == -1 or self.count > 0) and self.last_url:
+    #         response = self._get(self.last_url, params=params, headers=headers)
+    #         self.last_response = response
+    #         self.last_status = response.status_code
+    #         if params:
+    #             params = None  # rel_next already has the params TODO what is rel_next? the next page?
+    #
+    #         json = self._get_json(response)
+    #
+    #         if json is None:
+    #             break
+    #
+    #         # languages returns a single dict. We want the items.
+    #         if isinstance(json, dict):
+    #             if issubclass(self.cls, models.GitHubObject):
+    #                 raise exceptions.UnprocessableResponseBody(
+    #                     "GitHub's API returned a body that could not be"
+    #                     " handled", json
+    #                 )
+    #             if json.get('ETag'):
+    #                 del json['ETag']
+    #             if json.get('Last-Modified'):
+    #                 del json['Last-Modified']
+    #             json = json.items()
+    #
+    #         for i in json:
+    #             yield cls(i)
+    #             self.count -= 1 if self.count > 0 else 0
+    #             if self.count == 0:
+    #                 break
+    #
+    #         rel_next = response.links.get('next', {})
+    #         self.last_url = rel_next.get('url', '')
+
+    def next(self):
+        if True:
+            pass
+        else:
+            raise StopIteration()
+
+# TODO should I make this class inside Session, or pass Session's url to the class when I instantiate a User object?
+class User(object):
+    """
+    Represents an OSF user. This does not need to be the authenticated user for the Session; as long as the user_id
+    is valid in the Session, a User object will be returned.
+    There can be as many User objects as desired in a Session.
+    """
+    def __init__(self, user_id, url, auth=None):
+        """
+        :param user_id: 5-character user_id; must be a valid user_id in the current Session
+        :param url: url of the Session in which this User object is being instantiated
+        :param auth: optional authentication; same as auth of the current Session
+        """
+        # TODO should I assume that the user_id will be valid OR should I try/except to account for an invalid user_id
+        # being passed in?
+        self.response = requests.get('{}users/{}/'.format(url, user_id), auth=auth)
+        self.data = self.response.json()[u'data']
+        self.fullname = self.data[u'fullname']
+        self.given_name = self.data[u'given_name']
+        self.middle_name = self.data[u'middle_name']
+        self.family_name = self.data[u'family_name']
+        self.suffix = self.data[u'suffix']
+        self.gravatar_url = self.data[u'gravatar_url']
+        self.iter_emp_institutions = Iterator( num_requested=5)
+
+
+class Session(object):
+    def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):
+        self.url = url
+        self.auth = auth  # TODO is it okay to have auth be None?
+
+    # TODO is this helpful? It is in the GitHub class of github3.py
+    def me(self):
+        """
+        Retrieves info for the authenticated user in this Session object.
+        :return: The representation of the authenticated user.
+        """
+        authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated user?
+        return requests.get('{}users/{}/'.format(self.url, authenticated_user_id))
+
+    def root(self):
         """
         :return: the api root as designated by self.url
         """
         return requests.get(self.url)
+
+    def user(self, user_id):
+        """
+        :param user_id: 5-character user id
+        :return: the user identified by user_id
+        """
+        return User(user_id, self.url, auth=self.auth)
 
     def get_node_list(self):
         """
