@@ -37,8 +37,32 @@ class Iterator(object):
 
         self.path = urlparse(self.url).path
 
+        #: JSON data on the page that was requested
+        self.data = requests.get(self.url).json()[u'data']
+        #: Navigation links on the page that was requested
+        self.links = requests.get(self.url).json()[u'links']
+        #: Number of the item on the page, for counting when to go onto the next page
+        self.item_number = 0  # or 1 ?
+
     def _repr(self):
         return '<Iterator [{}, {}]>'.format(self.count, self.path)
+
+    def next(self):  # Python 3: def __next__(self)
+        if self.links[u'next'] == 'null':  # or None ?  # if this is the last page
+            if self.data[self.item_number] == self.data[-1]:  # if this is the last item in the page's data
+                raise StopIteration()
+            else:
+                self.item_number += 1  # increment to go to the next item in the page's data
+        else:  # if this is not the last page go to the next page
+            if self.data[self.item_number] == self.data[-1]:  # if this is the last item in the page's data
+                next_url = self.links[u'next']  # go to the next page
+                # TODO how to pass in the next page needed?
+            else:  # this is not the last item in the page's data
+                self.item_number += 1  # go to the next item in the page's data
+
+    def __iter__(self):
+        # reset values; e.g. self.cache_index = 0
+        return self
 
     # def __iter__(self):
     #     self.last_url, params = self.url, self.params
@@ -88,11 +112,6 @@ class Iterator(object):
     #         rel_next = response.links.get('next', {})
     #         self.last_url = rel_next.get('url', '')
 
-    def next(self):
-        if True:
-            pass
-        else:
-            raise StopIteration()
 
 # TODO should I make this class inside Session, or pass Session's url to the class when I instantiate a User object?
 class User(object):
