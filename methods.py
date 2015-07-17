@@ -10,24 +10,31 @@ from requests.auth import HTTPBasicAuth
 
 pp = pprint.PrettyPrinter()
 
+def smart_print(string):
+    try:
+        print(string)
+    except UnicodeEncodeError:
+        print(string.encode('utf-8'))
+
 class Iterator(object):
     def __init__(self, num_requested, url, cls, session, params=None, headers=None):
+        # TODO allow num_requested of -1 to iterate over all of the items
         # If self.num_requested is None, all of the objects will be iterated over. TODO or -1? (gh3 seems to use -1)
         self.num_requested = num_requested
         #: Number of items left in the iterator
         self.count = num_requested
-        # TODO need this? : URL the class used to make its first GET
+        #: Current URL
         self.url = url
         #: Last URL that was requested
-        self.last_url = None
+        self.last_url = url
         # TODO need this?
         self._api = self.url
         #: Class for constructing an item to return
         self.cls = cls
         #: Parameters of the query string
         self.params = params or {}
-        # TODO need this? What does it do?
-        self._remove_none(self.params)
+        # # TODO need this? What does it do?
+        # self._remove_none(self.params)
         #: Headers generated for the GET request
         self.headers = headers or {}
         #: The last response seen
@@ -41,28 +48,89 @@ class Iterator(object):
         self.data = requests.get(self.url).json()[u'data']
         #: Navigation links on the page that was requested
         self.links = requests.get(self.url).json()[u'links']
+        #: Number of items per page
+        self.per_page = int(self.links[u'meta'][u'per_page'])
+        #: Total items listed so far
+        self.total_item_count = -1  # or 1 ?
         #: Number of the item on the page, for counting when to go onto the next page
-        self.item_number = 0  # or 1 ?
+        self.current_page_item_count = self.total_item_count % self.per_page
+
+    # TODO better way to do this? Will this be fixed/not need to be updated once I write a general thing that parses
+    # json and makes it more easily accessible?
+    def update(self):
+        self.data = requests.get(self.url).json()[u'data']  # TODO only needs to be done after page change
+        #: Navigation links on the page that was requested
+        self.links = requests.get(self.url).json()[u'links']  # TODO only needs to be done after page change
+        #: Total items listed so far
+        # self.total_item_count = 0  # or 1 ?  # TODO this is currently being updated within methods; change to be done here?
+        # #: Number of items per page
+        self.per_page = int(self.links[u'meta'][u'per_page'])  # TODO only needs to be done after page change
+        #: Number of the item on the page, for counting when to go onto the next page
+        self.current_page_item_count = self.total_item_count % self.per_page  # TODO needs to be done for every item?
 
     def _repr(self):
         return '<Iterator [{}, {}]>'.format(self.count, self.path)
 
+    # TODO maybe use generator/yield statements to return these things more efficiently
     def next(self):  # Python 3: def __next__(self)
-        if self.links[u'next'] == 'null':  # or None ?  # if this is the last page
-            if self.data[self.item_number] == self.data[-1]:  # if this is the last item in the page's data
-                raise StopIteration()
-            else:
-                self.item_number += 1  # increment to go to the next item in the page's data
-        else:  # if this is not the last page go to the next page
-            if self.data[self.item_number] == self.data[-1]:  # if this is the last item in the page's data
-                next_url = self.links[u'next']  # go to the next page
-                # TODO how to pass in the next page needed?
-            else:  # this is not the last item in the page's data
-                self.item_number += 1  # go to the next item in the page's data
+        # True when a 'next' link contains no value, i.e. there is no next page
+        if self.url == None:
+            raise StopIteration
+
+        # Update the request data every time a new url is requested
+        if self.last_url != self.url:
+            self.update()
+            self.last_url = self.url
+
+        # Increment the item counts (total and per page)
+        self.total_item_count += 1
+        self.current_page_item_count = self.total_item_count % self.per_page
+
+        # Only go up to the number requested
+        if self.total_item_count >= self.num_requested:
+            raise StopIteration()
+
+        # If this is the last item in the page's data, return 'self' with the url of the next page
+        if self.data[self.current_page_item_count] == self.data[-1]:
+            self.url = self.links[u'next']  # go to the next page
+            return self
+        # Otherwise, return 'self' with the same url
+        else:
+            return self
 
     def __iter__(self):
-        # reset values; e.g. self.cache_index = 0
+        # reset values; e.g. self.cache_index = 0  # TODO more here?
         return self
+
+for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
+    print node.url
+    smart_print("{}. {}: {}".format(node.total_item_count + 1,
+                              node.data[node.current_page_item_count][u'provider'],
+                              node.data[node.current_page_item_count][u'name'].encode('utf-8')
+                             ))
+
+# for node in Iterator(3, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
+#     print("{}. {}: {}: {}".format(node.total_item_count,
+#                               node.data[node.current_page_item_count][u'provider'],
+#                               node.data[node.current_page_item_count][u'name'],
+#                               node.data[node.current_page_item_count][u'links'][u'self']
+#                              ))
+#
+# n = requests.get("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive")
+# data = n.json()[u'data']
+# print("{}: {}: {}".format(data[0][u'provider'],
+#                           data[0][u'name'],
+#                           data[0][u'links'][u'self']
+#                          ))
+# print("{}: {}: {}".format(data[1][u'provider'],
+#                           data[1][u'name'],
+#                           data[1][u'links'][u'self']
+#                          ))
+#
+# # TODO get "num_requested" working
+# for node in Iterator(50, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 0, 0):
+# #     print(node.data[node.total_item_count])
+#     print(node)
 
     # def __iter__(self):
     #     self.last_url, params = self.url, self.params
