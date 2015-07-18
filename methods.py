@@ -10,11 +10,37 @@ from requests.auth import HTTPBasicAuth
 
 pp = pprint.PrettyPrinter()
 
+# TODO remove this? Figure out a way to access json attributes through python
+class DotDict(dict):
+    def __getattr__(self, name):
+        return self[name]
+
 def smart_print(string):
     try:
         print(string)
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
+
+# TODO could add "data" automatically if it doesn't say "links" (because "data" is the most common info to want)
+def to_json_request(easy_request):
+    # NOTE: This works with a requests.Response object, from the requests library  # TODO change this?
+    """
+    Make it easy to access json data.
+    :param easy_request: string of the form node.data.title
+    :return: string of the form node.json()[u'data'][u'title']
+    """
+    # Split wherever there is a '.'
+    string_list = easy_request.split('.')
+    # First string stays the same, and gets ".json()" after it
+    first = "{}.json()".format(string_list[0])
+    # Other strings go from, e.g., ".data" to "[u'data']"
+    new_string_list = ["[u'{}']".format(string) for string in string_list[1:]]
+    json_string = first
+    for string in new_string_list:
+        json_string = json_string + string
+    return json_string
+
+print(to_json_request("node.data.title"))
 
 class Iterator(object):
     def __init__(self, num_requested, url, cls, session, params=None, headers=None):
@@ -102,12 +128,13 @@ class Iterator(object):
         # reset values; e.g. self.cache_index = 0  # TODO more here?
         return self
 
-for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
-    print node.url
-    smart_print("{}. {}: {}".format(node.total_item_count + 1,
-                              node.data[node.current_page_item_count][u'provider'],
-                              node.data[node.current_page_item_count][u'name'].encode('utf-8')
-                             ))
+# for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
+#     print node.url
+#     print("{}. {}: {}".format(node.total_item_count + 1,
+#                               node.data[node.current_page_item_count][u'provider'],
+#                               node.data[node.current_page_item_count][u'name'].encode('utf-8')
+#                               ))
+
 
 # for node in Iterator(3, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
 #     print("{}. {}: {}: {}".format(node.total_item_count,
@@ -182,12 +209,13 @@ for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?pat
 
 
 # TODO should I make this class inside Session, or pass Session's url to the class when I instantiate a User object?
-class User(object):
+class User(DotDict):
     """
     Represents an OSF user. This does not need to be the authenticated user for the Session; as long as the user_id
     is valid in the Session, a User object will be returned.
     There can be as many User objects as desired in a Session.
     """
+    # TODO have init for superclass? or REMOVE DOTDICT INHERITANCE
     def __init__(self, user_id, url, auth=None):
         """
         :param user_id: 5-character user_id; must be a valid user_id in the current Session
@@ -200,12 +228,11 @@ class User(object):
         self.data = self.response.json()[u'data']
         self.fullname = self.data[u'fullname']
         self.given_name = self.data[u'given_name']
-        self.middle_name = self.data[u'middle_name']
+        # self.middle_name = self.data[u'middle_name']
         self.family_name = self.data[u'family_name']
         self.suffix = self.data[u'suffix']
         self.gravatar_url = self.data[u'gravatar_url']
-        self.iter_emp_institutions = Iterator( num_requested=5)
-
+        # self.iter_emp_institutions = Iterator( num_requested=5)
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):

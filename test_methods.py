@@ -21,6 +21,9 @@ class TestUser(unittest.TestCase):
     def setUp(self):
         self.user = User(USER_ID, URL, auth=None)  # TODO should I test this with different auths?
 
+    def test_something(self):
+        print(self.user.data.middle_name)
+
     # ATTRIBUTES
 
     # TODO more tests here
