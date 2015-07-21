@@ -10,42 +10,64 @@ from requests.auth import HTTPBasicAuth
 
 pp = pprint.PrettyPrinter()
 
-# TODO remove this? Figure out a way to access json attributes through python
-class DotDict(dict):
-    def __getattr__(self, name):
-        return self[name]
-
 def smart_print(string):
     try:
         print(string)
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
 
-# TODO could add "data" automatically if it doesn't say "links" (because "data" is the most common info to want)
-def to_json_request(easy_request):
-    # NOTE: This works with a requests.Response object, from the requests library  # TODO change this?
-    """
-    Make it easy to access json data.
-    :param easy_request: string of the form node.data.title
-    :return: string of the form node.json()[u'data'][u'title']
-    """
-    # Split wherever there is a '.'
-    string_list = easy_request.split('.')
-    # First string stays the same, and gets ".json()" after it
-    first = "{}.json()".format(string_list[0])
-    # Other strings go from, e.g., ".data" to "[u'data']"
-    new_string_list = ["[u'{}']".format(string) for string in string_list[1:]]
-    json_string = first
-    for string in new_string_list:
-        json_string = json_string + string
-    return json_string
+# TODO could add "data" automatically if it doesn't say "links" (because
+# "data" is the most common info to want)
+# Instead of translating request into json request format, DotDictify transforms response itself.
+# TODO seems like it would be more efficient to just translate the request as opposed to transforming the
+# response ... unless we can transform the responses on a when-needed basis...?
 
-print(to_json_request("node.data.title"))
+# DocDictify class is modified from here:
+# http://stackoverflow.com/questions/3031219/python-recursively-access-dict-via-attributes-as-well-as-index-access
+class DotDictify(dict):
+    marker = object()  # a new object  # TODO what does this do...?
+
+    def __init__(self, data=None):
+        if data is None:
+            pass
+        elif isinstance(data, dict):
+            for key in data:
+                self.__setitem__(key, data[key])  # <==> self[key]=data[key]
+                # x.__setitem__(i, y) <==> x[i]=y
+        else:
+            raise TypeError('expected dict')
+
+    def __setitem__(self, key, value):
+        if isinstance(value, dict) and not isinstance(value, DotDictify):  # TODO when would value have type DotDictify?
+            value = DotDictify(value)
+        elif isinstance(value, list):
+            new_value = []
+            if len(value) > 0:  # TODO or simply if value ?
+                if isinstance(value[0], dict):  # TODO can I assume that they will all be dicts if the first is?
+                    for i in range(len(value)):  # DotDictify the items in the list
+                        new_value.append(DotDictify(value[i]))
+                    value = new_value
+        super(DotDictify, self).__setitem__(key, value)  # calling dict's setitem
+
+    def __getitem__(self, key):
+        found = self.get(key, DotDictify.marker)
+        # def get(self, k, d=None):
+        #     D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
+        if found is DotDictify.marker:  # TODO what does marker do here?
+            found = DotDictify()
+            super(DotDictify, self).__setitem__(key, found)  # TODO why set item here?
+        return found
+
+    __setattr__ = __setitem__
+    __getattr__ = __getitem__
+
+
 
 class Iterator(object):
     def __init__(self, num_requested, url, cls, session, params=None, headers=None):
         # TODO allow num_requested of -1 to iterate over all of the items
-        # If self.num_requested is None, all of the objects will be iterated over. TODO or -1? (gh3 seems to use -1)
+        # If self.num_requested is None, all of the objects will be iterated
+        # over. TODO or -1? (gh3 seems to use -1)
         self.num_requested = num_requested
         #: Number of items left in the iterator
         self.count = num_requested
@@ -209,13 +231,12 @@ class Iterator(object):
 
 
 # TODO should I make this class inside Session, or pass Session's url to the class when I instantiate a User object?
-class User(DotDict):
+class User(object):
     """
     Represents an OSF user. This does not need to be the authenticated user for the Session; as long as the user_id
     is valid in the Session, a User object will be returned.
     There can be as many User objects as desired in a Session.
     """
-    # TODO have init for superclass? or REMOVE DOTDICT INHERITANCE
     def __init__(self, user_id, url, auth=None):
         """
         :param user_id: 5-character user_id; must be a valid user_id in the current Session
@@ -225,14 +246,18 @@ class User(DotDict):
         # TODO should I assume that the user_id will be valid OR should I try/except to account for an invalid user_id
         # being passed in?
         self.response = requests.get('{}users/{}/'.format(url, user_id), auth=auth)
-        self.data = self.response.json()[u'data']
-        self.fullname = self.data[u'fullname']
-        self.given_name = self.data[u'given_name']
+        self.data = DotDictify(self.response.json()[u'data'])
+        # self.fullname = self.data[u'fullname']
+        # self.given_name = self.data[u'given_name']
         # self.middle_name = self.data[u'middle_name']
-        self.family_name = self.data[u'family_name']
-        self.suffix = self.data[u'suffix']
-        self.gravatar_url = self.data[u'gravatar_url']
+        # self.family_name = self.data[u'family_name']
+        # self.suffix = self.data[u'suffix']
+        # self.gravatar_url = self.data[u'gravatar_url']
         # self.iter_emp_institutions = Iterator( num_requested=5)
+
+    # TODO see if I can get this to work
+    # def __getattr__(self, item):
+    #     return self.data.item
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):

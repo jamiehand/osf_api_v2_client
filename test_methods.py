@@ -22,7 +22,9 @@ class TestUser(unittest.TestCase):
         self.user = User(USER_ID, URL, auth=None)  # TODO should I test this with different auths?
 
     def test_something(self):
-        print(self.user.data.middle_name)
+        print("middle_name: {}".format(self.user.data.middle_name))
+        print("gravatar_url: {}".format(self.user.data.gravatar_url))
+        pp.pprint(self.user.data)
 
     # ATTRIBUTES
 
@@ -45,22 +47,22 @@ class TestUser(unittest.TestCase):
         """
         Ensure that the names return strings
         """
-        fullname = self.user.fullname
+        fullname = self.user.data.fullname
         assert_true(isinstance(fullname, basestring))
-        given_name = self.user.given_name
+        given_name = self.user.data.given_name
         assert_true(isinstance(given_name, basestring))
-        middle_name = self.user.middle_name
+        middle_name = self.user.data.middle_name
         assert_true(isinstance(middle_name, basestring))
-        family_name = self.user.family_name
+        family_name = self.user.data.family_name
         assert_true(isinstance(family_name, basestring))
-        suffix = self.user.suffix
+        suffix = self.user.data.suffix
         assert_true(isinstance(suffix, basestring))
 
     def test_gravatar_url(self):
         """
         Ensures user.gravatar_url returns a valid url
         """
-        url = self.user.gravatar_url
+        url = self.user.data.gravatar_url
         res = requests.get(url)
         assert_equal(res.status_code, 200)
 
