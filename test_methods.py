@@ -1,5 +1,8 @@
 # TODO should I have this?: # -*- coding: utf-8 -*-
 
+# TODO import API_PREFIX? (also, import domain?)
+# TODO change auth to work with OAuth/tokens instead of basic auth?
+
 import unittest  # TODO tests were failing without this. Why is it gray as if it's not being used?
 # import mock
 import pprint, requests
@@ -20,11 +23,6 @@ pp = pprint.PrettyPrinter(indent=4)
 class TestUser(unittest.TestCase):
     def setUp(self):
         self.user = User(USER_ID, URL, auth=None)  # TODO should I test this with different auths?
-
-    def test_something(self):
-        print("middle_name: {}".format(self.user.data.middle_name))
-        print("gravatar_url: {}".format(self.user.data.gravatar_url))
-        pp.pprint(self.user.data)
 
     # ATTRIBUTES
 
@@ -47,24 +45,39 @@ class TestUser(unittest.TestCase):
         """
         Ensure that the names return strings
         """
-        fullname = self.user.data.fullname
+        fullname = self.user.fullname
         assert_true(isinstance(fullname, basestring))
-        given_name = self.user.data.given_name
+        given_name = self.user.given_name
         assert_true(isinstance(given_name, basestring))
-        middle_name = self.user.data.middle_name
+        middle_name = self.user.middle_name
         assert_true(isinstance(middle_name, basestring))
-        family_name = self.user.data.family_name
+        family_name = self.user.family_name
         assert_true(isinstance(family_name, basestring))
-        suffix = self.user.data.suffix
+        suffix = self.user.suffix
         assert_true(isinstance(suffix, basestring))
 
     def test_gravatar_url(self):
         """
         Ensures user.gravatar_url returns a valid url
         """
-        url = self.user.data.gravatar_url
+        url = self.user.gravatar_url
         res = requests.get(url)
         assert_equal(res.status_code, 200)
+
+    # TODO finish this test
+    def test_employment_institutions(self):
+        """
+        Ensures user.employment_institutions returns a list
+        """
+        emp_list = self.user.employment_institutions
+        print(emp_list)
+        # assert_true(isinstance(emp_list, dict))
+        print(type(emp_list))
+        if emp_list:  # if emp_list is not empty
+            # assert_true(isinstance(emp_list[0], dict))
+            print(type(emp_list[0]))
+            pass
+
 
 class TestSession(unittest.TestCase):
     # NOTE: These tests are written to be relative to the localhost:8000 api server,

@@ -3,9 +3,6 @@ import pprint
 
 from requests.compat import urlparse, urlencode
 
-# TODO import API_PREFIX? (also, import domain?)
-# TODO change auth to work with OAuth/tokens instead of basic auth?
-
 from requests.auth import HTTPBasicAuth
 
 pp = pprint.PrettyPrinter()
@@ -42,7 +39,7 @@ class DotDictify(dict):
             value = DotDictify(value)
         elif isinstance(value, list):
             new_value = []
-            if len(value) > 0:  # TODO or simply if value ?
+            if value:  # if value list is not empty
                 if isinstance(value[0], dict):  # TODO can I assume that they will all be dicts if the first is?
                     for i in range(len(value)):  # DotDictify the items in the list
                         new_value.append(DotDictify(value[i]))
@@ -230,8 +227,7 @@ class Iterator(object):
     #         self.last_url = rel_next.get('url', '')
 
 
-# TODO should I make this class inside Session, or pass Session's url to the class when I instantiate a User object?
-class User(object):
+class User(DotDictify):
     """
     Represents an OSF user. This does not need to be the authenticated user for the Session; as long as the user_id
     is valid in the Session, a User object will be returned.
@@ -246,18 +242,8 @@ class User(object):
         # TODO should I assume that the user_id will be valid OR should I try/except to account for an invalid user_id
         # being passed in?
         self.response = requests.get('{}users/{}/'.format(url, user_id), auth=auth)
-        self.data = DotDictify(self.response.json()[u'data'])
-        # self.fullname = self.data[u'fullname']
-        # self.given_name = self.data[u'given_name']
-        # self.middle_name = self.data[u'middle_name']
-        # self.family_name = self.data[u'family_name']
-        # self.suffix = self.data[u'suffix']
-        # self.gravatar_url = self.data[u'gravatar_url']
-        # self.iter_emp_institutions = Iterator( num_requested=5)
-
-    # TODO see if I can get this to work
-    # def __getattr__(self, item):
-    #     return self.data.item
+        self.data = self.response.json()[u'data']
+        super(User, self).__init__(self.data)
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):
