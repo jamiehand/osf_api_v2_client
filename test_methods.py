@@ -13,14 +13,15 @@ from local import (
     AUTH2,              # authentication details for USER2
     USER_ID,            # id of a user (doesn't have to be id of USER or USER2)
     PUBLIC_NODE_ID,     # id of a public node
-    PRIVATE_NODE_ID,    # id of a private node that is visible to USER but *not* to USER2
+    PRIVATE_NODE_ID     # id of a private node that is visible to USER but *not* to USER2
 )
 
-from methods import Session, User #  , Node
+from methods import Session, DotDictify, User, Node
 
 pp = pprint.PrettyPrinter(indent=4)
 
 class TestUser(unittest.TestCase):
+    # TODO once new API format is done (Dawn's PR), modify these tests to work and add more to complete testing
     def setUp(self):
         self.user = User(USER_ID, URL, auth=None)  # TODO should I test this with different auths?
 
@@ -64,19 +65,39 @@ class TestUser(unittest.TestCase):
         res = requests.get(url)
         assert_equal(res.status_code, 200)
 
-    # TODO finish this test
     def test_employment_institutions(self):
         """
-        Ensures user.employment_institutions returns a list
+        Ensures user.employment_institutions returns a list of DotDictify objects,
+        and that getting information from the objects works.
         """
-        emp_list = self.user.employment_institutions
-        print(emp_list)
-        # assert_true(isinstance(emp_list, dict))
-        print(type(emp_list))
-        if emp_list:  # if emp_list is not empty
-            # assert_true(isinstance(emp_list[0], dict))
-            print(type(emp_list[0]))
-            pass
+        employment_list = self.user.employment_institutions
+        assert_true(isinstance(employment_list, list))
+        if employment_list:  # if employment_list is not empty
+            assert_true(isinstance(employment_list[0], DotDictify))
+            start_year = employment_list[0].startYear
+            assert_true(isinstance(start_year, basestring))
+            ongoing = employment_list[0].ongoing
+            assert_true(isinstance(ongoing, bool))
+
+    def test_educational_institutions(self):
+        """
+        Ensures user.educational_institutions returns a list of DotDictify objects,
+        and that getting information from the objects works.
+        """
+        educational_list = self.user.educational_institutions
+        assert_true(isinstance(educational_list, list))
+        if educational_list:  # if educational_list is not empty
+            assert_true(isinstance(educational_list[0], DotDictify))
+            start_year = educational_list[0].startYear
+            assert_true(isinstance(start_year, basestring))
+            ongoing = educational_list[0].ongoing
+            assert_true(isinstance(ongoing, bool))
+
+
+class TestNode(unittest.TestCase):
+    # TODO these tests
+    def setUp(self):
+        pass
 
 
 class TestSession(unittest.TestCase):

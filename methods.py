@@ -22,6 +22,13 @@ def smart_print(string):
 # DocDictify class is modified from here:
 # http://stackoverflow.com/questions/3031219/python-recursively-access-dict-via-attributes-as-well-as-index-access
 class DotDictify(dict):
+    """
+    Given a dictionary, DotDictify makes the dictionary's data accessible as data attributes.
+    e.g. given json dictionary json_dict, DotDictify enables access like so: json_dict.data[0].name
+    instead of requiring this syntax: json_dict[u'data'][0][u'name']
+    As seen in the above example, DotDictify recurses through dictionaries of dictionaries and lists of
+    dictionaries, to make those dictionaries into DotDictify objects as well.
+    """
     marker = object()  # a new object  # TODO what does this do...?
 
     def __init__(self, data=None):
@@ -119,7 +126,7 @@ class Iterator(object):
     # TODO maybe use generator/yield statements to return these things more efficiently
     def next(self):  # Python 3: def __next__(self)
         # True when a 'next' link contains no value, i.e. there is no next page
-        if self.url == None:
+        if self.url is None:
             raise StopIteration
 
         # Update the request data every time a new url is requested
@@ -173,7 +180,6 @@ class Iterator(object):
 #                           data[1][u'links'][u'self']
 #                          ))
 #
-# # TODO get "num_requested" working
 # for node in Iterator(50, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 0, 0):
 # #     print(node.data[node.total_item_count])
 #     print(node)
@@ -234,16 +240,35 @@ class User(DotDictify):
     There can be as many User objects as desired in a Session.
     """
     def __init__(self, user_id, url, auth=None):
+        # TODO what should happen if someone requests a nonexistent user? should I assume that the user_id will
+        # be valid OR should I try/except to account for an invalid user_id being passed in?
         """
         :param user_id: 5-character user_id; must be a valid user_id in the current Session
         :param url: url of the Session in which this User object is being instantiated
         :param auth: optional authentication; same as auth of the current Session
         """
-        # TODO should I assume that the user_id will be valid OR should I try/except to account for an invalid user_id
-        # being passed in?
         self.response = requests.get('{}users/{}/'.format(url, user_id), auth=auth)
         self.data = self.response.json()[u'data']
-        super(User, self).__init__(self.data)
+        super(User, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
+
+
+class Node(DotDictify):
+    """
+    Represents an OSF node.
+    There can be as many Node objects as desired in a Session.
+    """
+    def __init__(self, node_id, url, auth=None):
+        # TODO what should happen if someone requests a node that is not visible to them? or a nonexistent node?
+        """
+        :param node_id: 5-character node_id; must be a valid node_id in the current Session
+        :param url: url of the Session in which this Node object is being instantiated
+        :param auth: optional authentication; same as auth of the current Session
+        """
+        self.response = requests.get('{}nodes/{}/'.format(url, node_id), auth=auth)
+        self.data = self.response.json()[u'data']
+        super(Node, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
+
+# TODO create classes for any/all of folders, files, contributors, node pointers, registrations, (children) ?
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):
