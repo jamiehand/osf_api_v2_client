@@ -13,12 +13,9 @@ def smart_print(string):
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
 
-# TODO could add "data" automatically if it doesn't say "links" (because
-# "data" is the most common info to want)
 # Instead of translating request into json request format, DotDictify transforms response itself.
 # TODO seems like it would be more efficient to just translate the request as opposed to transforming the
 # response ... unless we can transform the responses on a when-needed basis...?
-
 # DocDictify class is modified from here:
 # http://stackoverflow.com/questions/3031219/python-recursively-access-dict-via-attributes-as-well-as-index-access
 class DotDictify(dict):
@@ -66,94 +63,6 @@ class DotDictify(dict):
     __getattr__ = __getitem__
 
 
-
-class Iterator(object):
-    def __init__(self, num_requested, url, cls, session, params=None, headers=None):
-        # TODO allow num_requested of -1 to iterate over all of the items
-        # If self.num_requested is None, all of the objects will be iterated
-        # over. TODO or -1? (gh3 seems to use -1)
-        self.num_requested = num_requested
-        #: Number of items left in the iterator
-        self.count = num_requested
-        #: Current URL
-        self.url = url
-        #: Last URL that was requested
-        self.last_url = url
-        # TODO need this?
-        self._api = self.url
-        #: Class for constructing an item to return
-        self.cls = cls
-        #: Parameters of the query string
-        self.params = params or {}
-        # # TODO need this? What does it do?
-        # self._remove_none(self.params)
-        #: Headers generated for the GET request
-        self.headers = headers or {}
-        #: The last response seen
-        self.last_response = None
-        #: The last status code received
-        self.last_status = 0
-
-        self.path = urlparse(self.url).path
-
-        #: JSON data on the page that was requested
-        self.data = requests.get(self.url).json()[u'data']
-        #: Navigation links on the page that was requested
-        self.links = requests.get(self.url).json()[u'links']
-        #: Number of items per page
-        self.per_page = int(self.links[u'meta'][u'per_page'])
-        #: Total items listed so far
-        self.total_item_count = -1  # or 1 ?
-        #: Number of the item on the page, for counting when to go onto the next page
-        self.current_page_item_count = self.total_item_count % self.per_page
-
-    # TODO better way to do this? Will this be fixed/not need to be updated once I write a general thing that parses
-    # json and makes it more easily accessible?
-    def update(self):
-        self.data = requests.get(self.url).json()[u'data']  # TODO only needs to be done after page change
-        #: Navigation links on the page that was requested
-        self.links = requests.get(self.url).json()[u'links']  # TODO only needs to be done after page change
-        #: Total items listed so far
-        # self.total_item_count = 0  # or 1 ?  # TODO this is currently being updated within methods; change to be done here?
-        # #: Number of items per page
-        self.per_page = int(self.links[u'meta'][u'per_page'])  # TODO only needs to be done after page change
-        #: Number of the item on the page, for counting when to go onto the next page
-        self.current_page_item_count = self.total_item_count % self.per_page  # TODO needs to be done for every item?
-
-    def _repr(self):
-        return '<Iterator [{}, {}]>'.format(self.count, self.path)
-
-    # TODO maybe use generator/yield statements to return these things more efficiently
-    def next(self):  # Python 3: def __next__(self)
-        # True when a 'next' link contains no value, i.e. there is no next page
-        if self.url is None:
-            raise StopIteration
-
-        # Update the request data every time a new url is requested
-        if self.last_url != self.url:
-            self.update()
-            self.last_url = self.url
-
-        # Increment the item counts (total and per page)
-        self.total_item_count += 1
-        self.current_page_item_count = self.total_item_count % self.per_page
-
-        # Only go up to the number requested
-        if self.total_item_count >= self.num_requested:
-            raise StopIteration()
-
-        # If this is the last item in the page's data, return 'self' with the url of the next page
-        if self.data[self.current_page_item_count] == self.data[-1]:
-            self.url = self.links[u'next']  # go to the next page
-            return self
-        # Otherwise, return 'self' with the same url
-        else:
-            return self
-
-    def __iter__(self):
-        # reset values; e.g. self.cache_index = 0  # TODO more here?
-        return self
-
 # for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
 #     print node.url
 #     print("{}. {}: {}".format(node.total_item_count + 1,
@@ -163,11 +72,54 @@ class Iterator(object):
 
 
 # for node in Iterator(3, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
-#     print("{}. {}: {}: {}".format(node.total_item_count,
-#                               node.data[node.current_page_item_count][u'provider'],
-#                               node.data[node.current_page_item_count][u'name'],
-#                               node.data[node.current_page_item_count][u'links'][u'self']
-#                              ))
+#     # print("{}. {}: {}: {}".format(node.total_item_count,
+#     #                           node[u'provider'],
+#     #                           node[u'name'],
+#     #                           node[u'links'][u'self']
+#     #                          ))
+#     print(1)
+
+def generator_function(url, num_requested=-1):
+    """
+    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :param url: the url where the desired items are located
+    :return: a generator of the items desired
+    """
+    #: Number of items left in the generator
+    count_remaining = num_requested
+    #: Next url to get the json response from
+    url = url
+
+    print(url)
+    while url is not None:
+        json_response = requests.get(url).json()
+        print(json_response)
+        for item in json_response[u'data']:
+            if count_remaining > 0 or num_requested == -1:
+                count_remaining -= 1
+                print("count_remaining: {}".format(count_remaining))
+                yield item
+        url = json_response[u'links'][u'next']
+
+# happy_gen = generator_function("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 4)
+# for item in happy_gen:
+#     print item
+
+big_gen = generator_function("https://staging2.osf.io/api/v2/users/se6py/nodes/")
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+print(big_gen.next())
+
 #
 # n = requests.get("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive")
 # data = n.json()[u'data']
@@ -183,54 +135,6 @@ class Iterator(object):
 # for node in Iterator(50, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 0, 0):
 # #     print(node.data[node.total_item_count])
 #     print(node)
-
-    # def __iter__(self):
-    #     self.last_url, params = self.url, self.params
-    #     headers = self.headers
-    #
-    #     if 0 < self.count <= 100 and self.count != -1:
-    #         params['per_page'] = self.count
-    #
-    #     if 'per_page' not in params and self.count == -1:
-    #         params['per_page'] = 100
-    #
-    #     cls = self.cls
-    #     # if issubclass(self.cls, models.GitHubCore):
-    #     #     cls = functools.partial(self.cls, session=self)
-    #
-    #     while (self.count == -1 or self.count > 0) and self.last_url:
-    #         response = self._get(self.last_url, params=params, headers=headers)
-    #         self.last_response = response
-    #         self.last_status = response.status_code
-    #         if params:
-    #             params = None  # rel_next already has the params TODO what is rel_next? the next page?
-    #
-    #         json = self._get_json(response)
-    #
-    #         if json is None:
-    #             break
-    #
-    #         # languages returns a single dict. We want the items.
-    #         if isinstance(json, dict):
-    #             if issubclass(self.cls, models.GitHubObject):
-    #                 raise exceptions.UnprocessableResponseBody(
-    #                     "GitHub's API returned a body that could not be"
-    #                     " handled", json
-    #                 )
-    #             if json.get('ETag'):
-    #                 del json['ETag']
-    #             if json.get('Last-Modified'):
-    #                 del json['Last-Modified']
-    #             json = json.items()
-    #
-    #         for i in json:
-    #             yield cls(i)
-    #             self.count -= 1 if self.count > 0 else 0
-    #             if self.count == 0:
-    #                 break
-    #
-    #         rel_next = response.links.get('next', {})
-    #         self.last_url = rel_next.get('url', '')
 
 
 class User(DotDictify):
