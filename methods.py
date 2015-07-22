@@ -5,8 +5,11 @@ from requests.compat import urlparse, urlencode
 
 from requests.auth import HTTPBasicAuth
 
-pp = pprint.PrettyPrinter()
 
+# TODO create classes for: folders, files, contributors, node pointers, registrations, children, users/node lists, root?
+
+# TODO get rid of pprint, smart_print()
+pp = pprint.PrettyPrinter()
 def smart_print(string):
     try:
         print(string)
@@ -63,22 +66,6 @@ class DotDictify(dict):
     __getattr__ = __getitem__
 
 
-# for node in Iterator(700, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
-#     print node.url
-#     print("{}. {}: {}".format(node.total_item_count + 1,
-#                               node.data[node.current_page_item_count][u'provider'],
-#                               node.data[node.current_page_item_count][u'name'].encode('utf-8')
-#                               ))
-
-
-# for node in Iterator(3, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 5, 5):
-#     # print("{}. {}: {}: {}".format(node.total_item_count,
-#     #                           node[u'provider'],
-#     #                           node[u'name'],
-#     #                           node[u'links'][u'self']
-#     #                          ))
-#     print(1)
-
 def generator_function(url, num_requested=-1):
     """
     :param num_requested: the number of items desired; if -1, all items available will be returned
@@ -90,21 +77,24 @@ def generator_function(url, num_requested=-1):
     #: Next url to get the json response from
     url = url
 
-    print(url)
+    # print(url)
     while url is not None:
         json_response = requests.get(url).json()
-        print(json_response)
         for item in json_response[u'data']:
-            if count_remaining > 0 or num_requested == -1:
+            if num_requested == -1:
+                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+            elif count_remaining > 0:
                 count_remaining -= 1
-                print("count_remaining: {}".format(count_remaining))
-                yield item
+                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
         url = json_response[u'links'][u'next']
 
-# happy_gen = generator_function("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 4)
-# for item in happy_gen:
-#     print item
+# Test returning 4
+happy_gen = generator_function("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 4)
+for item in happy_gen:
+    # obj = DotDictify(item)
+    print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
+# Test returning all available (because when num_requested is not specified, it becomes -1, ie a request to return all)
 big_gen = generator_function("https://staging2.osf.io/api/v2/users/se6py/nodes/")
 print(big_gen.next())
 print(big_gen.next())
@@ -119,23 +109,6 @@ print(big_gen.next())
 print(big_gen.next())
 print(big_gen.next())
 print(big_gen.next())
-
-#
-# n = requests.get("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive")
-# data = n.json()[u'data']
-# print("{}: {}: {}".format(data[0][u'provider'],
-#                           data[0][u'name'],
-#                           data[0][u'links'][u'self']
-#                          ))
-# print("{}: {}: {}".format(data[1][u'provider'],
-#                           data[1][u'name'],
-#                           data[1][u'links'][u'self']
-#                          ))
-#
-# for node in Iterator(50, "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 0, 0):
-# #     print(node.data[node.total_item_count])
-#     print(node)
-
 
 class User(DotDictify):
     """
@@ -171,8 +144,6 @@ class Node(DotDictify):
         self.response = requests.get('{}nodes/{}/'.format(url, node_id), auth=auth)
         self.data = self.response.json()[u'data']
         super(Node, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
-
-# TODO create classes for any/all of folders, files, contributors, node pointers, registrations, (children) ?
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):

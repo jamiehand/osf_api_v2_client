@@ -46,6 +46,7 @@ class TestUser(unittest.TestCase):
         """
         Ensure that the names return strings
         """
+        # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
         fullname = self.user.fullname
         assert_true(isinstance(fullname, basestring))
         given_name = self.user.given_name
