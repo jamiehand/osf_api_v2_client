@@ -1,114 +1,8 @@
 import requests
-import pprint
 
-from requests.compat import urlparse, urlencode
-
-from requests.auth import HTTPBasicAuth
-
+from base.utils import DotDictify, response_generator
 
 # TODO create classes for: folders, files, contributors, node pointers, registrations, children, users/node lists, root?
-
-# TODO get rid of pprint, smart_print()
-pp = pprint.PrettyPrinter()
-def smart_print(string):
-    try:
-        print(string)
-    except UnicodeEncodeError:
-        print(string.encode('utf-8'))
-
-# Instead of translating request into json request format, DotDictify transforms response itself.
-# TODO seems like it would be more efficient to just translate the request as opposed to transforming the
-# response ... unless we can transform the responses on a when-needed basis...?
-# DocDictify class is modified from here:
-# http://stackoverflow.com/questions/3031219/python-recursively-access-dict-via-attributes-as-well-as-index-access
-class DotDictify(dict):
-    """
-    Given a dictionary, DotDictify makes the dictionary's data accessible as data attributes.
-    e.g. given json dictionary json_dict, DotDictify enables access like so: json_dict.data[0].name
-    instead of requiring this syntax: json_dict[u'data'][0][u'name']
-    As seen in the above example, DotDictify recurses through dictionaries of dictionaries and lists of
-    dictionaries, to make those dictionaries into DotDictify objects as well.
-    """
-    marker = object()  # a new object  # TODO what does this do...?
-
-    def __init__(self, data=None):
-        if data is None:
-            pass
-        elif isinstance(data, dict):
-            for key in data:
-                self.__setitem__(key, data[key])  # <==> self[key]=data[key]
-                # x.__setitem__(i, y) <==> x[i]=y
-        else:
-            raise TypeError('expected dict')
-
-    def __setitem__(self, key, value):
-        if isinstance(value, dict) and not isinstance(value, DotDictify):  # TODO when would value have type DotDictify?
-            value = DotDictify(value)
-        elif isinstance(value, list):
-            new_value = []
-            if value:  # if value list is not empty
-                if isinstance(value[0], dict):  # TODO can I assume that they will all be dicts if the first is?
-                    for i in range(len(value)):  # DotDictify the items in the list
-                        new_value.append(DotDictify(value[i]))
-                    value = new_value
-        super(DotDictify, self).__setitem__(key, value)  # calling dict's setitem
-
-    def __getitem__(self, key):
-        found = self.get(key, DotDictify.marker)
-        # def get(self, k, d=None):
-        #     D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
-        if found is DotDictify.marker:  # TODO what does marker do here?
-            found = DotDictify()
-            super(DotDictify, self).__setitem__(key, found)  # TODO why set item here?
-        return found
-
-    __setattr__ = __setitem__
-    __getattr__ = __getitem__
-
-
-def generator_function(url, num_requested=-1):
-    """
-    :param num_requested: the number of items desired; if -1, all items available will be returned
-    :param url: the url where the desired items are located
-    :return: a generator of the items desired
-    """
-    #: Number of items left in the generator
-    count_remaining = num_requested
-    #: Next url to get the json response from
-    url = url
-
-    # print(url)
-    while url is not None:
-        json_response = requests.get(url).json()
-        for item in json_response[u'data']:
-            if num_requested == -1:
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
-            elif count_remaining > 0:
-                count_remaining -= 1
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
-        url = json_response[u'links'][u'next']
-
-# Test returning 4
-happy_gen = generator_function("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 4)
-for item in happy_gen:
-    # obj = DotDictify(item)
-    print("{}: {}: {}".format(item.provider, item.name, item.links.self))
-
-# Test returning all available (because when num_requested is not specified, it becomes -1, ie a request to return all)
-big_gen = generator_function("https://staging2.osf.io/api/v2/users/se6py/nodes/")
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
-print(big_gen.next())
 
 class User(DotDictify):
     """
@@ -206,9 +100,9 @@ class Session(object):
         # TODO how should this functionality work in terms of when a category is passed in or not?
         # TODO figure out how to change the private setting to public and vice versa
         params = {}  # 'node_id': node_id}
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             params[key] = value
-        print params
+        print(params)
         # TODO should this be PATCH or PUT? Should we have two diff. methods? It seems that PATCH
         # is more useful, because it seems pointless to require that the title be changed (which
         # PUT does, if I understand correctly).

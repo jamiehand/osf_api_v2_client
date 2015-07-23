@@ -3,10 +3,12 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
-import unittest  # TODO tests were failing without this. Why is it gray as if it's not being used?
 # import mock
-import pprint, requests
+import pprint
+
+import requests
 from nose.tools import *  # flake8: noqa
+
 from local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH,               # authentication details for USER
@@ -15,8 +17,7 @@ from local import (
     PUBLIC_NODE_ID,     # id of a public node
     PRIVATE_NODE_ID     # id of a private node that is visible to USER but *not* to USER2
 )
-
-from methods import Session, DotDictify, User, Node
+from base.methods import Session, DotDictify, User, Node
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -48,15 +49,15 @@ class TestUser(unittest.TestCase):
         """
         # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
         fullname = self.user.fullname
-        assert_true(isinstance(fullname, basestring))
+        assert_true(isinstance(fullname, str))
         given_name = self.user.given_name
-        assert_true(isinstance(given_name, basestring))
+        assert_true(isinstance(given_name, str))
         middle_name = self.user.middle_name
-        assert_true(isinstance(middle_name, basestring))
+        assert_true(isinstance(middle_name, str))
         family_name = self.user.family_name
-        assert_true(isinstance(family_name, basestring))
+        assert_true(isinstance(family_name, str))
         suffix = self.user.suffix
-        assert_true(isinstance(suffix, basestring))
+        assert_true(isinstance(suffix, str))
 
     def test_gravatar_url(self):
         """
@@ -76,7 +77,7 @@ class TestUser(unittest.TestCase):
         if employment_list:  # if employment_list is not empty
             assert_true(isinstance(employment_list[0], DotDictify))
             start_year = employment_list[0].startYear
-            assert_true(isinstance(start_year, basestring))
+            assert_true(isinstance(start_year, str))
             ongoing = employment_list[0].ongoing
             assert_true(isinstance(ongoing, bool))
 
@@ -90,9 +91,13 @@ class TestUser(unittest.TestCase):
         if educational_list:  # if educational_list is not empty
             assert_true(isinstance(educational_list[0], DotDictify))
             start_year = educational_list[0].startYear
-            assert_true(isinstance(start_year, basestring))
+            assert_true(isinstance(start_year, str))
             ongoing = educational_list[0].ongoing
             assert_true(isinstance(ongoing, bool))
+
+    def test_social_accounts(self):
+        social_dict = self.user.social_accounts
+        assert_true(isinstance(social_dict, DotDictify))
 
 
 class TestNode(unittest.TestCase):
