@@ -1,5 +1,27 @@
 import requests
 
+def response_generator(url, auth=None, num_requested=-1):
+    """
+    :param url: the url where the desired items are located
+    :param auth: authentication to send with the request
+    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :return: a generator of the items desired
+    """
+    #: Number of items left in the generator
+    count_remaining = num_requested
+    #: Next url to get the json response from
+    url = url
+
+    while url is not None:
+        json_response = requests.get(url, auth=auth).json()
+        for item in json_response[u'data']:
+            if num_requested == -1:
+                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+            elif count_remaining > 0:
+                count_remaining -= 1
+                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+        url = json_response[u'links'][u'next']
+
 
 # Instead of translating request into json request format, DotDictify transforms response itself.
 # TODO seems like it would be more efficient to just translate the request as opposed to transforming the
@@ -51,24 +73,3 @@ class DotDictify(dict):
     __setattr__ = __setitem__
     __getattr__ = __getitem__
 
-
-def response_generator(url, num_requested=-1):
-    """
-    :param num_requested: the number of items desired; if -1, all items available will be returned
-    :param url: the url where the desired items are located
-    :return: a generator of the items desired
-    """
-    #: Number of items left in the generator
-    count_remaining = num_requested
-    #: Next url to get the json response from
-    url = url
-
-    while url is not None:
-        json_response = requests.get(url).json()
-        for item in json_response[u'data']:
-            if num_requested == -1:
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
-            elif count_remaining > 0:
-                count_remaining -= 1
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
-        url = json_response[u'links'][u'next']

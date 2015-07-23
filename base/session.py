@@ -1,43 +1,8 @@
 import requests
 
 from base.utils import DotDictify, response_generator
-
-# TODO create classes for: folders, files, contributors, node pointers, registrations, children, users/node lists, root?
-
-class User(DotDictify):
-    """
-    Represents an OSF user. This does not need to be the authenticated user for the Session; as long as the user_id
-    is valid in the Session, a User object will be returned.
-    There can be as many User objects as desired in a Session.
-    """
-    def __init__(self, user_id, url, auth=None):
-        # TODO what should happen if someone requests a nonexistent user? should I assume that the user_id will
-        # be valid OR should I try/except to account for an invalid user_id being passed in?
-        """
-        :param user_id: 5-character user_id; must be a valid user_id in the current Session
-        :param url: url of the Session in which this User object is being instantiated
-        :param auth: optional authentication; same as auth of the current Session
-        """
-        self.response = requests.get('{}users/{}/'.format(url, user_id), auth=auth)
-        self.data = self.response.json()[u'data']
-        super(User, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
-
-
-class Node(DotDictify):
-    """
-    Represents an OSF node.
-    There can be as many Node objects as desired in a Session.
-    """
-    def __init__(self, node_id, url, auth=None):
-        # TODO what should happen if someone requests a node that is not visible to them? or a nonexistent node?
-        """
-        :param node_id: 5-character node_id; must be a valid node_id in the current Session
-        :param url: url of the Session in which this Node object is being instantiated
-        :param auth: optional authentication; same as auth of the current Session
-        """
-        self.response = requests.get('{}nodes/{}/'.format(url, node_id), auth=auth)
-        self.data = self.response.json()[u'data']
-        super(Node, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
+from base.users import User
+from base.nodes import Node
 
 class Session(object):
     def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):
@@ -66,22 +31,31 @@ class Session(object):
         """
         return User(user_id, self.url, auth=self.auth)
 
-    def get_node_list(self):
+    def nodes(self, node_id=None, num_requested=-1):
+        # TODO try/except error of invalid node_id?
+        # TODO what about permissions?
         """
-        :return: a list of nodes
-        """
-        node_list = requests.get('{}nodes/'.format(self.url), auth=self.auth)
-        return node_list
-
-    def get_node(self, node_id):
-        """
+        If node_id is None, return a generator containing nodes
+        If node_id is a valid id, return the node with that id
+        If node_id is not a valid node id, raise exception
         :param node_id: 5-character node id
-        :return: the node identified by node_id
+        :param num_requested: a positive integer or -1; -1 will cause all nodes
+        to be returned; otherwise num_requested number of nodes will be returned
+        :return: the node identified by node_id , or a generator containing nodes
         """
-        node = requests.get('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
-        # TODO is the following better than the above? (the following was Reina's approach, by including the json.)
-        # node = requests.get('{}nodes/{}/'.format(self.url, node_id), json={'node_id': node_id}, auth=self.auth)
-        return node
+        if node_id is None:
+            # get all the nodes
+            node_gen = response_generator('{}nodes/'.format(self.url), auth=self.auth, num_requested=num_requested)
+            return node_gen
+            # node_list = requests.get('{}nodes/'.format(self.url), auth=self.auth)
+        elif isinstance(node_id, str):
+            # get the one node
+            try:
+                node = requests.get('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
+                return node
+            except (invalid node id):
+                # TODO raise exception? specify which exception in docstring if so!
+                pass
 
     def create_node(self, title="", description="", category="", public="True"):
         """
@@ -122,4 +96,3 @@ class Session(object):
         # print('{}nodes/{}/'.format(self.url, node_id))
         response = requests.delete('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
         return response
-

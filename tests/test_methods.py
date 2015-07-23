@@ -17,7 +17,7 @@ from local import (
     PUBLIC_NODE_ID,     # id of a public node
     PRIVATE_NODE_ID     # id of a private node that is visible to USER but *not* to USER2
 )
-from base.methods import Session, DotDictify, User, Node
+# from base.methods import Session, DotDictify, User, Node
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -278,6 +278,6 @@ class TestSession(unittest.TestCase):
     # TODO write tests on deleting nodes (private, public; auth, diff_auth, not_auth
     # TODO check if Reina fixed problem of deleted nodes being returned, ability to delete nodes multiple times, etc.
 
-    # Starter, from code used in initial testing in methods.py:
+    # Starter, from code used in initial testing in nodes.py:
     # response = localhost_session.delete_node('x7s9m')
     # print(response.status_code)
