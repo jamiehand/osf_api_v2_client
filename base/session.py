@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urljoin
 
 from base.utils import DotDictify, response_generator
 from base.users import User
@@ -31,7 +32,7 @@ class Session(object):
         """
         return User(user_id, self.url, auth=self.auth)
 
-    def nodes(self, node_id=None, num_requested=-1):
+    def nodes(self, node_id='', num_requested=-1):
         # TODO try/except error of invalid node_id?
         # TODO what about permissions?
         """
@@ -43,19 +44,39 @@ class Session(object):
         to be returned; otherwise num_requested number of nodes will be returned
         :return: the node identified by node_id , or a generator containing nodes
         """
-        if node_id is None:
+        # if not node_id:  # TODO or, if node_id could be anything but a string: if node_id == ''
             # get all the nodes
-            node_gen = response_generator('{}nodes/'.format(self.url), auth=self.auth, num_requested=num_requested)
-            return node_gen
+
+            # node_gen = response_generator('{}nodes/'.format(self.url), auth=self.auth, num_requested=num_requested)
+            # return node_gen
             # node_list = requests.get('{}nodes/'.format(self.url), auth=self.auth)
-        elif isinstance(node_id, str):
-            # get the one node
-            try:
-                node = requests.get('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
-                return node
-            except (invalid node id):
-                # TODO raise exception? specify which exception in docstring if so!
-                pass
+        # elif isinstance(node_id, str):
+        #     # get the one node
+        #     # try:
+        #     node = requests.get('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
+        #     return node
+        #     # except (invalid node id):
+        #     #     # TODO raise exception? specify which exception in docstring if so!
+        #     #     pass
+        # if not node_id:  # TODO or, if node_id could be anything but a string: if node_id == ''
+        node_id_string = '{}/'.format(node_id).lstrip('/')  # if node_id is empty, remove '/' to
+                                                            # avoid interpretation as absolute path
+        target_url = urljoin('{}nodes/'.format(self.url), node_id_string)
+        print(target_url)
+        response = requests.get(target_url, auth=self.auth)
+        print(response.json())
+        if u'data' in response.json():
+            response_data = response.json()[u'data']
+            if isinstance(response_data, list):  # if data is a list (node list), return iterator of data
+                return response_generator(target_url, auth=self.auth)  # TODO: inefficient? Makes 1st GET request twice
+            elif isinstance(response_data, dict):  # elif data is a dict (single node), return DotDictify of data
+                return DotDictify(response_data)
+            else:
+                raise ValueError("Invalid input for node_id: {}. Please leave node_id blank to get node generator, or "
+                                 "provide a valid id for a node that you are authorized to view.".format(node_id))
+        else:
+            raise ValueError("Invalid input for node_id: {}. Please leave node_id blank to get node generator, or "
+                             "provide a valid id for a node that you are authorized to view.".format(node_id))
 
     def create_node(self, title="", description="", category="", public="True"):
         """
