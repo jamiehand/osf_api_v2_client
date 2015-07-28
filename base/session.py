@@ -32,33 +32,21 @@ class Session(object):
         """
         return User(user_id, self.url, auth=self.auth)
 
+    def get_node_generator(self, num_requested=-1):
+        # TODO consider case when generator is empty?
+        pass
+
     def nodes(self, node_id='', num_requested=-1):
-        # TODO try/except error of invalid node_id?
         # TODO what about permissions?
         """
         If node_id is None, return a generator containing nodes
         If node_id is a valid id, return the node with that id
         If node_id is not a valid node id, raise exception
-        :param node_id: 5-character node id
+        :param node_id: 5-character id for a node that can be viewed by this session's auth
         :param num_requested: a positive integer or -1; -1 will cause all nodes
         to be returned; otherwise num_requested number of nodes will be returned
-        :return: the node identified by node_id , or a generator containing nodes
+        :return: the node identified by node_id, or a generator containing nodes
         """
-        # if not node_id:  # TODO or, if node_id could be anything but a string: if node_id == ''
-            # get all the nodes
-
-            # node_gen = response_generator('{}nodes/'.format(self.url), auth=self.auth, num_requested=num_requested)
-            # return node_gen
-            # node_list = requests.get('{}nodes/'.format(self.url), auth=self.auth)
-        # elif isinstance(node_id, str):
-        #     # get the one node
-        #     # try:
-        #     node = requests.get('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
-        #     return node
-        #     # except (invalid node id):
-        #     #     # TODO raise exception? specify which exception in docstring if so!
-        #     #     pass
-        # if not node_id:  # TODO or, if node_id could be anything but a string: if node_id == ''
         node_id_string = '{}/'.format(node_id).lstrip('/')  # if node_id is empty, remove '/' to
                                                             # avoid interpretation as absolute path
         target_url = urljoin('{}nodes/'.format(self.url), node_id_string)
@@ -68,7 +56,7 @@ class Session(object):
         if u'data' in response.json():
             response_data = response.json()[u'data']
             if isinstance(response_data, list):  # if data is a list (node list), return iterator of data
-                return response_generator(target_url, auth=self.auth)  # TODO: inefficient? Makes 1st GET request twice
+                return response_generator(target_url, auth=self.auth, num_requested=num_requested)
             elif isinstance(response_data, dict):  # elif data is a dict (single node), return DotDictify of data
                 return DotDictify(response_data)
             else:
@@ -113,7 +101,5 @@ class Session(object):
         :param node_id: 5-character node id
         :return: none
         """
-        # params = {'node_id': node_id}
-        # print('{}nodes/{}/'.format(self.url, node_id))
         response = requests.delete('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
         return response
