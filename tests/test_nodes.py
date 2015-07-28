@@ -80,8 +80,8 @@ class TestCreateNodes(unittest.TestCase):
 
     def test_create_public_node_auth(self):
         # TODO figure out how to do this.
-        # TODO capture the node_id, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PUT/POST?)
-        # TODO including tests that check that non-auth'd users *can't* put/post/delete
+        # TODO capture the node_id, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PATCH?)
+        # TODO include tests that check that non-auth'd users *can't* patch/post/delete
         new_public_node = SESSION_AUTH1.create_node(
             "Creating public node with python 1", category="", public="true"
         )
@@ -90,8 +90,8 @@ class TestCreateNodes(unittest.TestCase):
         assert_true(new_public_node.json()[u'data'][u'public'])
 
     def test_create_private_node(self):
-        # TODO capture the node_id for this, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PUT/POST?)
-        # TODO including tests that check that non-auth'd users *can't* put/post/delete/get
+        # TODO capture the node_id for this, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PATCH?)
+        # TODO include tests that check that non-auth'd users *can't* patch/post/delete/get
         new_private_node = SESSION_AUTH1.create_node(
             "Creating private node with python 1", category=""
         )

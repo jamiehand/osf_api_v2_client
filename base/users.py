@@ -1,6 +1,6 @@
 import requests
 
-from base.utils import DotDictify, response_generator
+from base.utils import DotDictify, response_generator, get_response_or_exception
 
 
 class User(DotDictify):
@@ -17,7 +17,7 @@ class User(DotDictify):
         :param root_url: root_url of the Session in which this User object is being instantiated
         :param auth: optional authentication; same as auth of the current Session
         """
-        self.response = requests.get('{}users/{}/'.format(root_url, user_id), auth=auth)
+        self.response = get_response_or_exception('{}users/{}/'.format(root_url, user_id), auth=auth)
         self.data = self.response.json()[u'data']
         super(User, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
 

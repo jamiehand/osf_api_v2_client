@@ -90,9 +90,6 @@ class Session(object):
         for key, value in kwargs.items():
             params[key] = value
         print(params)
-        # TODO should this be PATCH or PUT? Should we have two diff. methods? It seems that PATCH
-        # is more useful, because it seems pointless to require that the title be changed (which
-        # PUT does, if I understand correctly).
         response = requests.patch('{}nodes/{}/'.format(self.root_url, node_id),
                                   json=params,
                                   # TODO should use json=params or data=params ?

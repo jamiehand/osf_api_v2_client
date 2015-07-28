@@ -1,5 +1,12 @@
 import requests
 
+def get_response_or_exception(url, *args, **kwargs):
+    response = requests.get(url, *args, **kwargs)
+    if response.status_code >= 400:
+        raise Exception('{}'.format(response.status_code))
+    else:
+        return response  # TODO return DotDictify object instead?
+
 def response_generator(url, auth=None, num_requested=-1):
     """
     :param url: the url where the desired items are located

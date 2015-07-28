@@ -1,6 +1,6 @@
 import requests
 
-from base.utils import DotDictify, response_generator
+from base.utils import DotDictify, response_generator, get_response_or_exception
 
 
 class Node(DotDictify):
