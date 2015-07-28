@@ -10,11 +10,13 @@ class Session(object):
         self.root_url = root_url
         self.auth = auth  # TODO is it okay to have auth be None?
 
-    def root(self):
+    def get_root(self):
         """
-        :return: a DotDictify object of the api root_url as designated by self.root_url
+        :return: a DotDictify object of the api root as designated by self.root_url
         """
-        return requests.get(self.root_url)
+        response = requests.get(self.root_url)
+        response_json = response.json()
+        return DotDictify(response_json)
 
     # USER ACTIONS
 
@@ -31,18 +33,18 @@ class Session(object):
 
     def get_user(self, user_id):
         """
-        :param user_id: 5-character get_user id
-        :return: the get_user identified by user_id
+        :param user_id: 5-character user id
+        :return: the user identified by user_id
         """
         return User(user_id, self.root_url, auth=self.auth)
 
     # def get_me(self):
     #     # TODO is this helpful? It is in the GitHub class of github3.py
     #     """
-    #     Retrieves info for the authenticated get_user in this Session object.
-    #     :return: The representation of the authenticated get_user.
+    #     Retrieves info for the authenticated user in this Session object.
+    #     :return: The representation of the authenticated user.
     #     """
-    #     authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated get_user?
+    #     authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated user?
     #     return self.get_user(authenticated_user_id)
 
     # NODE ACTIONS

@@ -5,7 +5,7 @@ from base.utils import DotDictify, response_generator
 
 class User(DotDictify):
     """
-    Represents an OSF get_user. This does not need to be the authenticated user for the
+    Represents an OSF user. This does not need to be the authenticated user for the
     Session; as long as the user_id is valid in the Session, a User object will be returned.
     There can be as many User objects as desired in a Session.
     """

@@ -23,9 +23,9 @@ from base.session import Session
 from base.utils import DotDictify
 
 # Sessions with different forms of authentication:
-# A session authenticated by the get_user who created the node with PRIVATE_NODE_ID
+# A session authenticated by the user who created the node with PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
-# A session authenticated by a get_user who does NOT have access to the node with PRIVATE_NODE_ID
+# A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
 SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
@@ -71,7 +71,7 @@ class TestUserAttributes(unittest.TestCase):
         """
         Ensure that the names return strings
         """
-        # TODO could test, e.g. assert_true(self.get_user.fullname == self[u'get_user'][u'fullname'])
+        # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
         fullname = self.user.fullname
         assert_true(isinstance(fullname, str))
         given_name = self.user.given_name
@@ -85,7 +85,7 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_gravatar_url(self):
         """
-        Ensures get_user.gravatar_url returns a valid url
+        Ensures user.gravatar_url returns a valid url
         """
         url = self.user.gravatar_url
         res = requests.get(url)
@@ -93,7 +93,7 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_employment_institutions(self):
         """
-        Ensures get_user.employment_institutions returns a list of DotDictify objects,
+        Ensures user.employment_institutions returns a list of DotDictify objects,
         and that getting information from the objects works.
         """
         employment_list = self.user.employment_institutions
@@ -107,7 +107,7 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_educational_institutions(self):
         """
-        Ensures get_user.educational_institutions returns a list of DotDictify objects,
+        Ensures user.educational_institutions returns a list of DotDictify objects,
         and that getting information from the objects works.
         """
         educational_list = self.user.educational_institutions
