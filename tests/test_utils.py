@@ -2,7 +2,6 @@ import pprint
 
 from base.utils import response_generator, DotDictify
 
-
 # TODO get rid of pprint, smart_print()
 pp = pprint.PrettyPrinter()
 def smart_print(string):
@@ -10,6 +9,8 @@ def smart_print(string):
         print(string)
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
+
+# TODO test that generator responds correctly when num_requested == -1 vs any other number.
 
 # TODO tests here
 

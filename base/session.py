@@ -6,65 +6,67 @@ from base.users import User
 from base.nodes import Node
 
 class Session(object):
-    def __init__(self, url='https://staging2.osf.io/api/v2/', auth=None):
-        self.url = url
+    def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
+        self.root_url = root_url
         self.auth = auth  # TODO is it okay to have auth be None?
-
-    # TODO is this helpful? It is in the GitHub class of github3.py
-    def me(self):
-        """
-        Retrieves info for the authenticated user in this Session object.
-        :return: The representation of the authenticated user.
-        """
-        authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated user?
-        return requests.get('{}users/{}/'.format(self.url, authenticated_user_id))
 
     def root(self):
         """
-        :return: the api root as designated by self.url
+        :return: a DotDictify object of the api root_url as designated by self.root_url
         """
-        return requests.get(self.url)
+        return requests.get(self.root_url)
 
-    def user(self, user_id):
+    # USER ACTIONS
+
+    def get_user_generator(self, num_requested=-1):
         """
-        :param user_id: 5-character user id
-        :return: the user identified by user_id
+        :param num_requested: a positive integer or -1; -1 will cause all users
+        to be returned; otherwise num_requested number of users will be returned
+        :return: a generator containing users
         """
-        return User(user_id, self.url, auth=self.auth)
+        # TODO consider case when generator is empty?
+        target_url = '{}users/'.format(self.root_url)
+        # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
+        return response_generator(target_url, auth=self.auth, num_requested=num_requested)
+
+    def get_user(self, user_id):
+        """
+        :param user_id: 5-character get_user id
+        :return: the get_user identified by user_id
+        """
+        return User(user_id, self.root_url, auth=self.auth)
+
+    # def get_me(self):
+    #     # TODO is this helpful? It is in the GitHub class of github3.py
+    #     """
+    #     Retrieves info for the authenticated get_user in this Session object.
+    #     :return: The representation of the authenticated get_user.
+    #     """
+    #     authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated get_user?
+    #     return self.get_user(authenticated_user_id)
+
+    # NODE ACTIONS
 
     def get_node_generator(self, num_requested=-1):
+        """
+        :param num_requested: a positive integer or -1; -1 will cause all nodes
+        to be returned; otherwise num_requested number of nodes will be returned
+        :return: a generator containing nodes
+        """
         # TODO consider case when generator is empty?
-        pass
+        target_url = '{}nodes/'.format(self.root_url)
+        # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
+        return response_generator(target_url, auth=self.auth, num_requested=num_requested)
 
-    def nodes(self, node_id='', num_requested=-1):
-        # TODO what about permissions?
+    def get_node(self, node_id=''):
         """
         If node_id is None, return a generator containing nodes
         If node_id is a valid id, return the node with that id
         If node_id is not a valid node id, raise exception
         :param node_id: 5-character id for a node that can be viewed by this session's auth
-        :param num_requested: a positive integer or -1; -1 will cause all nodes
-        to be returned; otherwise num_requested number of nodes will be returned
-        :return: the node identified by node_id, or a generator containing nodes
+        :return: the node identified by node_id
         """
-        node_id_string = '{}/'.format(node_id).lstrip('/')  # if node_id is empty, remove '/' to
-                                                            # avoid interpretation as absolute path
-        target_url = urljoin('{}nodes/'.format(self.url), node_id_string)
-        print(target_url)
-        response = requests.get(target_url, auth=self.auth)
-        print(response.json())
-        if u'data' in response.json():
-            response_data = response.json()[u'data']
-            if isinstance(response_data, list):  # if data is a list (node list), return iterator of data
-                return response_generator(target_url, auth=self.auth, num_requested=num_requested)
-            elif isinstance(response_data, dict):  # elif data is a dict (single node), return DotDictify of data
-                return DotDictify(response_data)
-            else:
-                raise ValueError("Invalid input for node_id: {}. Please leave node_id blank to get node generator, or "
-                                 "provide a valid id for a node that you are authorized to view.".format(node_id))
-        else:
-            raise ValueError("Invalid input for node_id: {}. Please leave node_id blank to get node generator, or "
-                             "provide a valid id for a node that you are authorized to view.".format(node_id))
+        return Node(node_id, self.root_url, auth=self.auth)
 
     def create_node(self, title="", description="", category="", public="True"):
         """
@@ -75,7 +77,7 @@ class Session(object):
         :return: created node
         """
         params = {'title': title, 'description': description, 'category': category, 'public': public}
-        node = requests.post('{}nodes/'.format(self.url), json=params, auth=self.auth)
+        node = requests.post('{}nodes/'.format(self.root_url), json=params, auth=self.auth)
         return node
 
     def edit_node(self, node_id, **kwargs):
@@ -89,7 +91,7 @@ class Session(object):
         # TODO should this be PATCH or PUT? Should we have two diff. methods? It seems that PATCH
         # is more useful, because it seems pointless to require that the title be changed (which
         # PUT does, if I understand correctly).
-        response = requests.patch('{}nodes/{}/'.format(self.url, node_id),
+        response = requests.patch('{}nodes/{}/'.format(self.root_url, node_id),
                                   json=params,
                                   # TODO should use json=params or data=params ?
                                   auth=self.auth
@@ -101,5 +103,5 @@ class Session(object):
         :param node_id: 5-character node id
         :return: none
         """
-        response = requests.delete('{}nodes/{}/'.format(self.url, node_id), auth=self.auth)
+        response = requests.delete('{}nodes/{}/'.format(self.root_url, node_id), auth=self.auth)
         return response

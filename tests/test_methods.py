@@ -14,7 +14,8 @@ from local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
-    USER_ID,            # id of a user (doesn't have to be id of USER1 or USER2)
+    USER1_ID,           # id of USER1
+    USER2_ID,           # id of USER2
     PUBLIC_NODE_ID,     # id of a public node
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
@@ -26,118 +27,34 @@ from base.utils import DotDictify
 
 pp = pprint.PrettyPrinter(indent=4)
 
-class TestUser(unittest.TestCase):
-    # TODO once new API format is done (Dawn's PR), modify these tests to work and add more to complete testing
-    def setUp(self):
-        self.user = User(USER_ID, URL, auth=None)  # TODO should I test this with different auths?
-
-    # ATTRIBUTES
-
-    # TODO more tests here
-    def test_user_response(self):
-        """
-        Ensures the user detail endpoint is returned
-        """
-        response = self.user.response
-        assert_equal(response.status_code, 200)
-
-    def test_user_data(self):
-        """
-        Ensures user.data returns a dict
-        """
-        data = self.user.data
-        assert_true(isinstance(data, dict))
-
-    def test_user_names(self):
-        """
-        Ensure that the names return strings
-        """
-        # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
-        fullname = self.user.fullname
-        assert_true(isinstance(fullname, str))
-        given_name = self.user.given_name
-        assert_true(isinstance(given_name, str))
-        middle_name = self.user.middle_name
-        assert_true(isinstance(middle_name, str))
-        family_name = self.user.family_name
-        assert_true(isinstance(family_name, str))
-        suffix = self.user.suffix
-        assert_true(isinstance(suffix, str))
-
-    def test_gravatar_url(self):
-        """
-        Ensures user.gravatar_url returns a valid url
-        """
-        url = self.user.gravatar_url
-        res = requests.get(url)
-        assert_equal(res.status_code, 200)
-
-    def test_employment_institutions(self):
-        """
-        Ensures user.employment_institutions returns a list of DotDictify objects,
-        and that getting information from the objects works.
-        """
-        employment_list = self.user.employment_institutions
-        assert_true(isinstance(employment_list, list))
-        if employment_list:  # if employment_list is not empty
-            assert_true(isinstance(employment_list[0], DotDictify))
-            start_year = employment_list[0].startYear
-            assert_true(isinstance(start_year, str))
-            ongoing = employment_list[0].ongoing
-            assert_true(isinstance(ongoing, bool))
-
-    def test_educational_institutions(self):
-        """
-        Ensures user.educational_institutions returns a list of DotDictify objects,
-        and that getting information from the objects works.
-        """
-        educational_list = self.user.educational_institutions
-        assert_true(isinstance(educational_list, list))
-        if educational_list:  # if educational_list is not empty
-            assert_true(isinstance(educational_list[0], DotDictify))
-            start_year = educational_list[0].startYear
-            assert_true(isinstance(start_year, str))
-            ongoing = educational_list[0].ongoing
-            assert_true(isinstance(ongoing, bool))
-
-    def test_social_accounts(self):
-        social_dict = self.user.social_accounts
-        assert_true(isinstance(social_dict, DotDictify))
-
-
-class TestNode(unittest.TestCase):
-    # TODO these tests
-    def setUp(self):
-        pass
-
 
 class TestSession(unittest.TestCase):
     # NOTE: These tests are written to be relative to the localhost:8000 api server,
     # so the values for users and node_id's will change depending on whose computer runs the test.
     def setUp(self):
         # A session authenticated by the user who created the node with PRIVATE_NODE_ID
-        self.session_auth1 = Session(url=URL, auth=AUTH1)
+        self.session_auth1 = Session(root_url=URL, auth=AUTH1)
         # A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
-        self.session_auth2 = Session(url=URL, auth=AUTH2)
+        self.session_auth2 = Session(root_url=URL, auth=AUTH2)
         # A session that is not authenticated
-        self.session_no_auth = Session(url=URL)
+        self.session_no_auth = Session(root_url=URL)
 
     # GETTING URL
 
     def test_url_auth(self):
-        assert_equal(self.session_auth1.url, "http://localhost:8000/v2/")
+        assert_equal(self.session_auth1.root_url, "http://localhost:8000/v2/")
 
     def test_url_not_auth(self):
-        assert_equal(self.session_no_auth.url, "http://localhost:8000/v2/")
+        assert_equal(self.session_no_auth.root_url, "http://localhost:8000/v2/")
 
     # GETTING ROOT
 
     def test_get_root_auth(self):
-        root = self.session_auth1.root()
+        root = self.session_auth1.root_url()
         assert_equal(root.status_code, 200)
 
     def test_get_root_not_auth(self):
-        root = self.session_no_auth.root()
+        root = self.session_no_auth.root_url()
         assert_equal(root.status_code, 200)
 
     # GETTING USERS
