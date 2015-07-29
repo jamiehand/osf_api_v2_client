@@ -64,12 +64,12 @@ class TestGetNodes(unittest.TestCase):
 
     def test_get_private_node_auth_non_contrib(self):
         # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
-        with assert_raises(ValueError):
+        with assert_raises(Exception):
             SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
 
     def test_get_private_node_not_auth(self):
         # Unauthenticated user should not be able to view any private node.
-        with assert_raises(ValueError):
+        with assert_raises(Exception):
             SESSION_NO_AUTH.get_node(PRIVATE_NODE_ID)
 
 

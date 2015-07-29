@@ -15,7 +15,7 @@ class Node(DotDictify):
         :param auth: optional authentication; same as auth of the current Session
         """
         self.url = '{}nodes/{}/'.format(root_url, node_id)
-        self.response = requests.get(self.url, auth=auth)
+        self.response = get_response_or_exception(self.url, auth=auth)
         if self.response.status_code == 200:
             if u'data' in self.response.json():
                 self.data = self.response.json()[u'data']

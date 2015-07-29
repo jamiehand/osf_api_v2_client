@@ -3,9 +3,12 @@ import requests
 def get_response_or_exception(url, *args, **kwargs):
     response = requests.get(url, *args, **kwargs)
     if response.status_code >= 400:
-        raise Exception('{}'.format(response.status_code))
+        raise Exception('Error in attempt to access {} \n'  # TODO make exception more specific?
+                        'Status code: {} {} \n'
+                        'Content: {}'.format(
+                        response.url, response.status_code, response.reason, response.text))
     else:
-        return response  # TODO return DotDictify object instead?
+        return response  # TODO return DotDictify object instead? -- not now; might stop DotDictifying things later?
 
 def response_generator(url, auth=None, num_requested=-1):
     """
