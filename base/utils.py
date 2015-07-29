@@ -23,7 +23,8 @@ def response_generator(url, auth=None, num_requested=-1):
     url = url
 
     while url is not None:
-        json_response = requests.get(url, auth=auth).json()
+        response = get_response_or_exception(url, auth=auth)
+        json_response = response.json()
         for item in json_response[u'data']:
             if num_requested == -1:
                 yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors

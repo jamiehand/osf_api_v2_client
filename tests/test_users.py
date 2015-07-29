@@ -1,10 +1,11 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
-import pprint
-import unittest
-import types
+import pprint  # TODO remove this
 
+import vcr
+import types
+import unittest
 import requests
 from nose.tools import *  # flake8: noqa
 
@@ -30,9 +31,16 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
+my_vcr = vcr.VCR(
+    serializer='json',
+    cassette_library_dir='fixtures/vcr_cassettes',
+    record_mode='new_episodes',  # TODO or 'once' ?
+)
 
+# @my_vcr.use_cassette()
 class TestGetUsers(unittest.TestCase):
 
+    @my_vcr.use_cassette()
     def test_get_user_generator(self):
         user_generator = SESSION_AUTH1.get_user_generator()
         # TODO what should my assertion(s) here be?
@@ -43,6 +51,7 @@ class TestGetUsers(unittest.TestCase):
         #     pp.pprint(node)
         #     count += 1
 
+    @my_vcr.use_cassette()
     def test_get_authenticated_user(self):
         user1 = SESSION_AUTH1.get_user(USER1_ID)
         assert_true(isinstance(user1, User))
@@ -88,8 +97,8 @@ class TestUserAttributes(unittest.TestCase):
         Ensures user.gravatar_url returns a valid url
         """
         url = self.user.gravatar_url
-        res = requests.get(url)
-        assert_equal(res.status_code, 200)
+        response = requests.get(url)
+        assert_equal(response.status_code, 200)
 
     def test_employment_institutions(self):
         """

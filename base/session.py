@@ -1,7 +1,7 @@
 import requests
 from urllib.parse import urljoin
 
-from base.utils import DotDictify, response_generator
+from base.utils import DotDictify, response_generator, get_response_or_exception
 from base.users import User
 from base.nodes import Node
 
@@ -14,7 +14,7 @@ class Session(object):
         """
         :return: a DotDictify object of the api root as designated by self.root_url
         """
-        response = requests.get(self.root_url)
+        response = get_response_or_exception(self.root_url)
         response_json = response.json()
         return DotDictify(response_json)
 

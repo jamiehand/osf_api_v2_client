@@ -16,15 +16,5 @@ class Node(DotDictify):
         """
         self.url = '{}nodes/{}/'.format(root_url, node_id)
         self.response = get_response_or_exception(self.url, auth=auth)
-        if self.response.status_code == 200:
-            if u'data' in self.response.json():
-                self.data = self.response.json()[u'data']
-                super(Node, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
-            else:
-                raise ValueError("Invalid input for node_id: {}. Please provide a valid id for "
-                                 "a node that you are authorized to view.".format(node_id))
-        else:
-            raise ValueError("Invalid input for node_id: {}. Please provide a valid id for "
-                             "a node that you are authorized to view.".format(node_id))
-
-
+        self.data = self.response.json()[u'data']
+        super(Node, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
