@@ -1,0 +1,19 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/users/cm98x/
+  response:
+    body: {string: Internal Server Error}
+    headers:
+      Connection: [keep-alive]
+      Date: ['Mon, 03 Aug 2015 17:55:44 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+    status: {code: 500, message: Internal Server Error}
+version: 1
