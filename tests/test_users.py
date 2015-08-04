@@ -1,11 +1,11 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
-import pprint  # TODO remove this
-
 import vcr
 import types
+import pprint  # TODO remove this
 import unittest
+import logging  # TODO remove
 import requests
 from nose.tools import *  # flake8: noqa
 
@@ -32,7 +32,6 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 SESSION_NO_AUTH = Session(root_url=URL)
 
 my_vcr = vcr.VCR(
-    serializer='json',
     cassette_library_dir='fixtures/vcr_cassettes',
     record_mode='new_episodes',  # TODO or 'once' ?
 )
@@ -56,10 +55,12 @@ class TestGetUsers(unittest.TestCase):
         user1 = SESSION_AUTH1.get_user(USER1_ID)
         assert_true(isinstance(user1, User))
 
+    @my_vcr.use_cassette()
     def test_get_different_user_from_authenticated_user(self):
         user2 = SESSION_AUTH1.get_user(USER2_ID)
         assert_true(isinstance(user2, User))
 
+    @my_vcr.use_cassette()
     def test_get_user_from_unauthenticated_session(self):
         user1 = SESSION_NO_AUTH.get_user(USER1_ID)
         assert_true(isinstance(user1, User))
@@ -73,7 +74,11 @@ class TestUserAttributes(unittest.TestCase):
     # TODO rename this class when Dawn's PR is merged, if needed.
     # TODO more tests here; modify to match Dawn's PR once merged.
 
+    @my_vcr.use_cassette()
     def setUp(self):
+        logging.basicConfig()
+        vcr_log = logging.getLogger("vcr")
+        vcr_log.setLevel(logging.INFO)
         self.user = SESSION_AUTH1.get_user(USER1_ID)
 
     def test_user_names(self):
@@ -131,3 +136,4 @@ class TestUserAttributes(unittest.TestCase):
     def test_social_accounts(self):
         social_dict = self.user.social_accounts
         assert_true(isinstance(social_dict, DotDictify))
+

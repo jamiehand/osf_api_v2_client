@@ -1,11 +1,11 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
-# import mock
+
+import vcr
+import types
 import pprint
 import unittest
-import types
-
 import requests
 from nose.tools import *  # flake8: noqa
 
@@ -32,17 +32,24 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
+my_vcr = vcr.VCR(
+    cassette_library_dir='fixtures/vcr_cassettes',
+    record_mode='new_episodes',  # TODO or 'once' ?
+)
 
 class TestGetRoot(unittest.TestCase):
     """
         Ensures the root is a DotDictify object with 'meta' as an attribute (because
         the JSON object has a 'meta' dictionary).
     """
+
+    @my_vcr.use_cassette()
     def test_get_root_auth(self):
         root = SESSION_AUTH1.get_root()
         assert_true(isinstance(root, DotDictify))
         assert_true(hasattr(root, 'meta'))
 
+    @my_vcr.use_cassette()
     def test_get_root_not_auth(self):
         root = SESSION_NO_AUTH.get_root()
         assert_true(isinstance(root, DotDictify))

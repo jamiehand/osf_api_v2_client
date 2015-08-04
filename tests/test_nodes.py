@@ -1,6 +1,7 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth
 
+import vcr
 import types
 import unittest
 from nose.tools import *  # flake8: noqa
@@ -29,9 +30,15 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
+my_vcr = vcr.VCR(
+    cassette_library_dir='fixtures/vcr_cassettes',
+    record_mode='new_episodes',  # TODO or 'once' ?
+)
+
 
 class TestGetNodes(unittest.TestCase):
 
+    @my_vcr.use_cassette()
     def test_get_node_generator(self):
         node_generator = SESSION_AUTH1.get_node_generator()
         # TODO what should my assertion(s) here be?
@@ -45,28 +52,34 @@ class TestGetNodes(unittest.TestCase):
     # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
     # returns more nodes when USER1 calls node_generator().
 
+    @my_vcr.use_cassette()
     def test_get_public_node_auth_contrib(self):
         public_node = SESSION_AUTH1.get_node(PUBLIC_NODE_ID)
         assert_true(isinstance(public_node, Node))
 
+    @my_vcr.use_cassette()
     def test_get_public_node_auth_non_contrib(self):
         public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
         assert_true(isinstance(public_node, Node))
 
+    @my_vcr.use_cassette()
     def test_get_public_node_not_auth(self):
         public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
         assert_true(isinstance(public_node, Node))
 
+    @my_vcr.use_cassette()
     def test_get_private_node_auth_contrib(self):
         # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
         private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
         assert_true(isinstance(private_node, Node))
 
+    @my_vcr.use_cassette()
     def test_get_private_node_auth_non_contrib(self):
         # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
-        with assert_raises(Exception):
+        with assert_raises(Exception):  # TODO more specific exception?
             SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
 
+    @my_vcr.use_cassette()
     def test_get_private_node_not_auth(self):
         # Unauthenticated user should not be able to view any private node.
         with assert_raises(Exception):

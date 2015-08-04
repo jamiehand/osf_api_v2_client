@@ -38,15 +38,6 @@ class Session(object):
         """
         return User(user_id, self.root_url, auth=self.auth)
 
-    # def get_me(self):
-    #     # TODO is this helpful? It is in the GitHub class of github3.py
-    #     """
-    #     Retrieves info for the authenticated user in this Session object.
-    #     :return: The representation of the authenticated user.
-    #     """
-    #     authenticated_user_id = 'abcd3'  # TODO how to get the user_id of the authenticated user?
-    #     return self.get_user(authenticated_user_id)
-
     # NODE ACTIONS
 
     def get_node_generator(self, num_requested=-1):
