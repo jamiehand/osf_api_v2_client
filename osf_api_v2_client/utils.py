@@ -1,7 +1,20 @@
+import six
 import requests
 
-def get_response_or_exception(url, *args, **kwargs):
-    response = requests.get(url, *args, **kwargs)
+
+def get_response_or_exception(method, url, *args, **kwargs):
+    method = method.lower()
+    if method == 'get':
+        response = requests.get(url, *args, **kwargs)
+    elif method == 'post':
+        response = requests.post(url, *args, **kwargs)
+    elif method == 'patch':
+        response == requests.patch(url, *args, **kwargs)
+    elif method == 'delete':
+        response == requests.delete(url, **kwargs)
+    else:
+        raise ValueError('Invalid method input: {} \n'
+                         'Please use get, post, patch, or delete.')
     if response.status_code >= 400:
         raise Exception('Error in attempt to access {} \n'  # TODO make exception more specific?
                         'Status code: {} {} \n'
@@ -23,7 +36,7 @@ def response_generator(url, auth=None, num_requested=-1):
     url = url
 
     while url is not None:
-        response = get_response_or_exception(url, auth=auth)
+        response = get_response_or_exception('get', url, auth=auth)
         json_response = response.json()
         for item in json_response[u'data']:
             if num_requested == -1:

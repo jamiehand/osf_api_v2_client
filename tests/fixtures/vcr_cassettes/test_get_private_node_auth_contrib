@@ -1,0 +1,80 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+  response:
+    body: {string: <h1>Server Error (500)</h1>}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [text/html]
+      Date: ['Wed, 05 Aug 2015 19:59:21 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+    status: {code: 500, message: INTERNAL SERVER ERROR}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA51TwWqEMBD9FcmlF7tRYdnFT+i5t1JK1FGHjUlIxsKy9N87iW5xD6VUEEzGmfdm
+        5j1volOkRH0T2IlauDOEk8gFIWng+4uaEJ5C1mhlLlkgj2bIWkUwWH/NjO0gKzm9g9B6dITWcBEH
+        7inLjSngo/XAr0hSFeXxuTjx81qe6mNRV+dDVVVFUUSomDvZDnv8O5nUEGLv4RoIJlG/vediDuDj
+        6SsXGs0lfe9RQzp40GsTI5ELtZSBMXio6mBDf0ArlUP5Wck4WpBpHTJVS8GATnkwlBhB96I2s9Yc
+        bq3hzTQzWZ9YWjvHrDLfx7eFW2gtGoIH7GIntluhEq6HAVlTFXXbNr4X/AEvMSxrEv9YNltgpEmz
+        TX4rWkSJJhtRdyzIZuV7O79DcdNRZm8deMLFM50KY2OVZ+v2SgeIemsN7eL2NbQdfc2LQHOjsf2p
+        o6uLP1XyFhN9AzIrIQN8AwAA
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 20:55:35 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA51TwWqEMBD9FcmlF7tRYdnFT+i5t1JK1FGHjUlIxsKy9N87iW5xD6VUEEzGmfdm
+        5j1volOkRH0T2IlauDOEk8gFIWng+4uaEJ5C1mhlLlkgj2bIWkUwWH/NjO0gKzm9g9B6dITWcBEH
+        7inLjSngo/XAr0hSFeXxuTjx81qe6mNRV+dDVVVFUUSomDvZDnv8O5nUEGLv4RoIJlG/vediDuDj
+        6SsXGs0lfe9RQzp40GsTI5ELtZSBMXio6mBDf0ArlUP5Wck4WpBpHTJVS8GATnkwlBhB96I2s9Yc
+        bq3hzTQzWZ9YWjvHrDLfx7eFW2gtGoIH7GIntluhEq6HAVlTFXXbNr4X/AEvMSxrEv9YNltgpEmz
+        TX4rWkSJJhtRdyzIZuV7O79DcdNRZm8deMLFM50KY2OVZ+v2SgeIemsN7eL2NbQdfc2LQHOjsf2p
+        o6uLP1XyFhN9AzIrIQN8AwAA
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 20:57:20 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

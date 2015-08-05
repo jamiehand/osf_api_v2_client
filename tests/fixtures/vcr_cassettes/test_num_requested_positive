@@ -1,0 +1,260 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA8WYbW+bMBCA/0rlle5LwouBkKK2U1W106Rp6tZok1ZNFQVDrAJm2ImyRfnvO5Om
+        eQPSVYF84cWcffY9x/l8UxR4wkPu/RRlORvTgOTIRRFjUUyCnI4J6qDME0No1K4nXpLF5Oruu+rz
+        MXyggiQP4k9G4GtIYymbeol82xJNiPDmmqaI079SxjIM6JCwgIaUBNCAdcPu6r0uNgeG5ZqWa+iq
+        rus/QcpnqSCpWCgTZCK0+RzgKYf5T1FOxpRTln6SQ/UxdnpoNuugmKZPXH7nJA4fYBpDFsD7Pfp4
+        PUC/OkUzdBgKkXFX07jwIppGuCvXw1XGQ5UyTb58kGY43zDCSUqD84kILftkYb7zdePlJPZEsbxN
+        FYvBvYxqY6ylLCBcK8Yq9HGtXGOpHljoCgeOZp1X8LxMaSLnpmD9M4uYmrB6qAv5oxXpEq4YW4bu
+        6BVs8cDou6btGriCrfRBpv0eUf9JUHCmDqpCbGO7EcRLu9hLy7RBulxxg8Ct/wJeSJcD153TeuCW
+        a/drgU+6STF+JWzLaQu2NT4QbFC8P9jPIVidxHzymli9ECwBbDm2Wfc7475rGBV0vSyLqe8JiMza
+        OA1UlpF0ksQhyyH28C4LQ+qTgPmjBOK7yrOceAEfEiKSWC3uNT6B9dNGfGLVdG24wpq+/XnAbU6+
+        keg2h+1WTTKr1gm2ZUv8wDEtC/f65a5g9AeG6dqwcdsVrjCP7POZVP3mFnhaE9v2xvraoLqpcn9g
+        byA9+EHF8FLBzh1kKzH5OmKCqFka1UJ+6fd+u1cJ7r5llv72dhefygxNx5CkVbCGzCIi2nxCVawh
+        T2iE9Yp57C0DtUG+fgL78wMF93YyP3mWOARfsxm+CrbnC2+D5VLZPrmZCrYULK87Ab47fnd8OIam
+        3kw8lmaF5dvSDIsnucq2kJbq3iNh8+pRMa99mvsxeYjhdKWYV4p5KRt3Ej97vFjpeOY+XhyOP3aa
+        SbuBujQRXNeMJFtlIxhKfmrRI147m/35yBcolcDRW27kcLvLPB8KDru2cNnpSHY5WutwgOhuOs2c
+        vudmgZP33DDwsFxpG9GhVv/r6ENZ6aXsFNKcC+SmoziGVk8+v6kSFJFz56QoQSn4pvyYCJU6KIIt
+        dKWQdr1dF96pS7qcrKsJJrwYuT0b1JP8IYO8D0Hlbjab/QMxpLP8XBQAAA==
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:30:57 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=2&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA91Z61LaQBR+Fbo1/EKSbBJuU9pai9Ze7EVbW7V1IlmS1ZBNky2oDC/TR+mT9Wwi
+        FpEaRnIZHZjAXnLO7vd9yTm7O0KWyU3UOhghP2ADapEAtZDNmO0SK6ADgirIN7kDlbKEa5LRkbAh
+        Yb3qezY0UU76R/zcJ9Deo67o7Zl9USr/kFYuO/UJN2MvIxTSC9Ha0DUN+vaZRXuUWFCDFdVYVYxV
+        3NxV9ZaCW5peVRRlH3p1mceJxyd+aN+0iRz7J2c8gNGPUEAGNKTM2xK2GhirOhqPK8il3mko2kPi
+        9o5gIA6zoHyANju76HslqoYbHM79sCXLITdt6tl4VcwlrLKwV6VMFoVnAoQ2QGAACNiIYBBAGDEU
+        ZY9a7TPe043yBMb2dRAD4po8mumss4kb06fyAMses0goR7Yiz6Gc5HuuR5j8FC8hGlcWYliRsPgm
+        0lsqlYpjV23UMmMXZm8ICOAiJpgXsbNu0+O0S4OuS45cZrNEVm/2LeLZrauZsDszuTyYnXWZHqvm
+        cdciPduhJ6du32P+zyDkvwbDs/MLRcWabtTqjebai/WXnY3NV1uv37x9t/3+w8dPO7ufv+x9/baf
+        KIRUzBegHU1tZKKd5fHIQ24pjDI9hUrrWFrDi1wT1fjn9/SnwLjTbGaiLog2ABY2AK4l/uUYrtIa
+        bYpqm+SmiWKCxLQ4BWm1bGKbyFem8tIcpXDDbYqcauvs+IR0OSSkQ2pxR9JeShjrCiRL8KQoDqG2
+        w2cqxUIjrnKI67IhC1yrGg574hatc+uS5UnsrRT5ah8icHSISrGXq6KwD4Xrxg/RU7GaKWCdU88m
+        3oGe/oEPqXAMP1QCAcYlBfAbpcmXNMxvjOi4apqlJDahdfIIjnlPKcXnYGrdLWFN0kH/6iLvuZXH
+        zx8V967DWj2raHljDS6EqMFFQGPE4OSkqYWGkp4Wlkvx4KV53w0k6n65CZbu8+1FPuvZxKHl2IjC
+        00MwkVc+9xCwSoH0CO703tnbsCO+R7mzzXZ8swv7ykl75/+5oYj8UstmH33eDPMI2HP9LsY0nBZc
+        nSb0KGy33X0rX8Ib8+UFLsw7G7ZJu16Ojiluse/DQUkmA/fgKOaOhmHgWuLAhfjFQQ5n3HRRq2bA
+        uRQJjnw4C0ItVRmPx38BQVpcacsaAAA=
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:30:58 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=3&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA9WY32/aMBDH/xXkNjxB4tgxpdHYJm3dtPdqD2vXKiVO8JbEUexRNsT/vnNSGCBo
+        ECJBeyn1D+7ru8/ZxjdHYaAD5N/NUV7IqQh5gXwUSxknPCzElKMeygM9gU7HIgOL3dh5FkOn0Dx9
+        1L9zDiORSMy8LEhNq/vwMiXlOqisz5ESf8zY0KMUZqYyFJHgIfQQ7LI+Zn1yfet6PiY+9WyM8TeY
+        NZaZ5pleqog0iLlTqfOZLmDVc1TwqVBCZl+MrSGhhKDFoocSkf1UZlzxJHqEhUxkCO079PnmFn3v
+        ld3whYnWufIdR+kgFllM+sYTZUsV2UI6pvHOOD8C1xk4T1jlfjcT4WimI491l0EbbYas4EmgS/+2
+        JZbGg1w4U+JkMuTKKW2VesrZrbhTBxxdI6DQoncQRRw8jV1Ca0F2NuadgybGjdFcC0JbONclT8nT
+        7ErITYt4FqGWh2vBdh+sy4v359ulhF43xrXapWa/QkCYCQmDoBBWhaUt1DWraIz+YejPR55it13y
+        xtWzQi8XcELe9IN8+sHH2iL4WYR6YtGPFiEexvAX+iZcxBO91Wku4aprwpNEPssiCW31HJmv0PoL
+        /U2l2Cn1RvcIxO5Rp1JaNY0GNDYF7tHbM+YaZU3l2j8IbImBMAOCvaCAT9NY4tg9WGJZDW2jqUxU
+        eFrK4NbdOuG+INSFCxCiTuG097zag/DCvSQX9HI58Qy/bsgVbSo/y2DA5VcmoQkI/F962lIi7dc/
+        JfH6HzqdM54+A68xuqXjbaGsxE7H7SsvzION2KEcv/qO3Jq4Y4cSeDwOdj0nvb47vHWJj4e+O9jz
+        nAzyPBHjQMNanFTBnRiCpb3vSq8Zmus+tgF0Q+/kTA3S2SFMlxN3MR3SK6+GKd5XIlhnOs1CW+Y8
+        m6VJJIs00Kovo0iMOSzyVwp1BdswhxiMuVLw+E8Ts6py5JVE8HAzh/YLmDIwLSZCpXfyRCg390GZ
+        sJr5/6UCYcNGTvj1PdpmLlQoDnyrQA1tVWOLRKH08aUui3zaLQoSwdGGYz666pbFu1fs51A+PHLh
+        YJ/U2s/gPjnevldr32waU+XUUgcJ8gcMirW8eMyhUIp8Fy8Wi7+lP3lX4BUAAA==
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:30:59 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=4&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA8WY32+bMBDH/5UKqX0K4B/8KlI07WGdJu0x2sOqqULBUGuAEfaybFX+952hrGln
+        SJoG9oKEOfy9u48P43uw0kQlVnz7YNWN2PCUNVZs5ULkBUsbvmHWwqoTdQ+D7hfWSC4q7KRivYVx
+        rlh5p37VDB5mvNCmVVLqu5eWJVNJp/NgSf5bm5CIkmt4oxQpzzhL9RDCvo08G0crTGIUxl7kIIS+
+        gtVaVIpVqldL6rrg60SBN+6mSh1Rs2pbFploykRJW2QZXzPw8kcJLzk/RZNCcGsmJa/ystD+t09g
+        YrZVDYT/YDVsw3V0n7QnEaEetXa7hVXw6rvUzyUrsjuI416kcH9rffywsr4t2mF44V6pWsauK1WS
+        gwaxdT6kI2TmcOHqm3c6i8vnObyqeLrcqszzr/rkL5+nvmFFotrkvFTo505q7m6IW4mUSbedq5WT
+        rlHQKANh7lGU1m5x/GLQuTxmKTzamRYCYA8OLARyzEIopQY9xhR7UzLVIc5ItJU7O8+2uI8B2hv+
+        X6JkUqJtjDMi7fTOxzRLNhy+nA5cRpE+tzMQxdhHphKlNvJX2IcPdYyGSpSXSc7cra09GSlO+ApM
+        Upx7sc1Bcl/ufCAf91OW3sCn3XPqKh/laTQ3YA0xDiMTV2JjtCIopmFM6cAe3HHtXBnaRcn19SRQ
+        /w1wDrYG1YkQ09ch7s1NiAOAfAAxCt+COCTTI24DnB1xpzoRYvI6xL25AXEUYG+8ioPYf1MVIzQ9
+        4jbA2RF3qhMhxq9D3JubENMQeaNVHMQ0eEMV02DS4063cbUBzo64Uz0f4vcV7HxwJrsk6LPIhVPW
+        mszwWbi3v9izNiAmlPhhZDwIYZuiFaIxgg156C9Ln9yF2/kytBt7QThJHT9lxH/KyRyczcLnQw2I
+        HbXVbYJhvBePFgakmEbGosU2CvRfM0UxIgNFqwCiWxcJH/tn9tA0e+8lAZA6rjkgPokdBw6aLn+b
+        MhlvpDq9OXJJbswnaJBITp44Z8vwqu32jMxfQ7/pRMdhfnpw/grWz+nzQz/qgP96ueu2mBIqKaw4
+        8KFNyJq7Gs56VozRbrf7A0+8sf1aFAAA
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:31:01 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=5&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA8VYW2vbMBT+K5lH8tTYlm9xPMLYoB2FPQyaUVgZQdhyos62hKVm2UL++46cS9PW
+        sbMQO2BCLB2f2/cdXc5Si7DEWvCw1HjO5jQiuRZoU8amCYlyOifalcaxnMGg0bXM9aPLhYRxKkk6
+        kX84gcmYJko0w6l663Q6G5mUSLy2sNQE/asmke07IJqyiMaURDBimcjtm6hvemPkBrYZmJZumuYP
+        kApZJkkmt2YkWUiDJ5hmMAf/c3B9qeVkTgVl2a1S5ls2srXV6kpLaPZLqHlBkngCnsxYBO8P2pfr
+        sfbzqhiGD2ZSchEYhpB4SrOp1VexCJ2JWKfMUC8fVQZGEL+rMrD9URH2MhqNFjJ23N42faOXyctJ
+        gmUR5Ws7WwuYU2NuGRmLiDAKXYVRYVSYLTUGIe+hIbTV1RGgfmU5SQHWWy6e0lpgC+nOvuwlALYQ
+        agTgTS4A4F2EbQBcZvZ8AIdMTBI2Zfojn1YW7SvBEmDtgee7b0rX6SOrbzpj5AWuCc+B0qUpnhLj
+        kRPlxcHSdZtBdj+2NiB9Ya8BLHl2JJZrwRIske8P3i7De1g6fmAOK7Fc6z4EJRp6jRTpLrVgvlUo
+        lb3zQdm10OQGlvk7iXMJ2849lbNP2fUiTHCKJWxm3xjNpM6juLJo3x2vpIQEg6GHrLKChr3YHSM/
+        sAcBsg+QAHOe0LDw1Vi7eYgKlus2QgW1Fx+bxTao8l/+nJNKXhcOPd6wa3+uJUzvPQh+2IhdkhLN
+        rA4KAsiGu86H5a4z0hb4JZbPCbP5ZsG44zgktZh3Kr+7HAlsvzkSVOSqLTZUuXA+WsDSW0uAZ5nL
+        gW35fiObwCa2NkDdmjofeCW79/cM7uAihItWLazHfH05wG1/0AjgtVG3QYV6J85HknuWR3rEwkXl
+        SXBfqgR0Z2ibtl951nMD51DfZf+sN88inXGSLdIkZjkcVkWfxTENCbj4lEKzRv8NDkP4IRECTrZp
+        opwvZqpuft6wEbbs0tIGK56NHYc+NKF2TaqY5kKe3ibqWjfltxMwgU9WPCWjQa/oflXo59B/O9Fx
+        0O/U6s/gXnG6fq9Wv6oW1SaUTOJECzwXWp4kn3DoV2gBMler1T+0zeNfJhUAAA==
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:31:02 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=6&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA8WYX2+bMBDAvwvS+lTAmD8lSNFe1k7dw1ZpkTatmio3mNQqYAt7KVmU774zadMk
+        MzSLAntCmPOdz7/znbmllRJFrOR2aYmKz1lKKyuxZpzPcppWbE6tc0sQ9QCD7jdepU7KpzDEFC3u
+        1EJQGM9YrqVKUui3LaGCKrLWvrQk+62/BiMf+TFIFzxlGaMpjGHkBbbn2SiceHHih0mAHYTQD5Ca
+        8lLRUr1YIkLkbEoU46VbyCdYDsjQWlXgwNKq6JxJ+HStlcbYH8XWanVu5ax8lPq7pHl2B2t64Cm8
+        31ofLyfWz/NmGCY8KCVk4rpSkRkrZ9jWbkmHy8xh3NUv7/U+jDe7cFaydFyrLAjPXnZuvLtvFc2J
+        alzcV/6ilgjmzrFb8pRKt9HVWJLuvi2jBXBuC4G0VucHQPxE5uSKV1++fm/2HSHPSYtZJ9LWKQbA
+        URTHcYQDE2Jk+2jiBYkfJV58AOLa1sCpnTL5yAoy01HWRjtAYS+0zb4Pwb7F8uki4YY/0eqGs1I5
+        QqjOCPhL1EDeDyI8iszc8WiCEZzrxEMHcJ+XqVNIW+j1Cb2+Du5+0A/3XY+H4L1nsS/O9T+A1rK9
+        k+aClnWRZ7wqiJI2zzI2pVBlfhWQ+R1RUQnPJucX+c5rR1Tg+KKXbLDLqB4+LGpzrTmqElzWpID0
+        qgv2h5ftfqu6t88xxEnsBchU69HIRvEEewnkBP8ktR6H/fBucXcI7m2mT5cXni1c68rqiLL7DmAQ
+        NhD3cYAMFQD5ttdU/iBKUNBSAZoK767X0Vbl/Yt+7nT73g0IeLP9pz/ZcFfvTPbPXq/FDDSjcNQJ
+        M0xwG8ztmzqfKqpsqSpKio6c7Y9QLzn71csBqcKe9sET/tS6/r02rjZy/5+o32tWdlJFBkUK5k6e
+        fW8W8D9aOmJxCNht4dPSVZBx3doWzWo6Din2+rluP0fuxsEBub7aPDlcttb9mSt6z/mjw8SivD8E
+        dNtEA/QAm+9Ym5LrJzhsKbnHZGmE+8zSRscHDAaz/cMCA3pJm15Txiqpjm/8vMNX5lQDJsjRimd0
+        fHHWNLE69MMP1/zIhYN+6IW9ob+ETHO8/rfXr4+I7vYprkhuJVEI/Uta3QndPoL2w2q1+gOTQ6UH
+        8xQAAA==
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:31:03 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?page=7&path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA72W3Y6bMBCF38VSc5WAMZAfpKg3u1v1btVEqtRVFVnYEKsGI+yltBHv3jFZNu2W
+        JGiV5NJm7DMz33EyO8SooSh62qGiVJVgvEQRSpVKJWelqDgao4KaLWy69zXNCsm/qpLdqfg547lx
+        mIprCBGGZxvzq+AQlwhpT+U0s6sThzJu6F59h7T4baO9qT8LMZzOFBOJ4Az2CPaCCfYnHl57QRSQ
+        yA8djPE3iIpVbiCLTpkWhRQxNULlbpUzRxU8rzOZqDKjRk9UkoiYQ8b71H9CHVBzzLUWeZpJW0v7
+        BS7mtSmhKztU8kpouO+zzWRO/HCKmmaMpMh/aPtdc5lsoJCtYrB+Qp/u1+j7uN2GA1tjCh25rjY0
+        BQ0ysb3RjtKJI5RrFx9tc5dHWzvKBVvWJgnCUYdn+S+ckktq2j69FetkaCHciri5Yly77V2tsnbP
+        afcqQvF/cdaoGQ93zqooOWV6y7lxaqkHGafnTI9vfLIIgnO2wRexjT4UAZ5pizlhGOLhaxrmbXdu
+        6Jf/pC9vl8fVytG0GvL7sjrE9tjD82ceOWMPjwywh4oNNxNtwMfZKep+eFXqL8XeknYneXHKX5xy
+        COB9WA9b31/0k8WzNcGR50fhkIc/lOxidk2yUOUNoVq1i/N8vHtwCpYMYXoI7eFKwjAg86NovXmE
+        Z1EYDHi0+2yO/qXPr/pWX2q8IdVOcRhZGFZeh5lElNq8f5L4QB767QQS1F6cP0sJ4yTMVO8USfly
+        OmonphNaOZDutKyv7JhmlKESRdMQ5Hm5KWgK06aHm6b5A+KPxVYBCwAA
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 19:31:04 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

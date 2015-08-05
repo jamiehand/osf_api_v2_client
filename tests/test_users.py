@@ -1,6 +1,7 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
+import six
 import vcr
 import types
 import pprint  # TODO remove this

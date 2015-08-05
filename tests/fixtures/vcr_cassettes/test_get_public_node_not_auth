@@ -1,0 +1,106 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/bxsu6/
+  response:
+    body: {string: <h1>Server Error (500)</h1>}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [text/html]
+      Date: ['Wed, 05 Aug 2015 19:59:23 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+    status: {code: 500, message: INTERNAL SERVER ERROR}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/bxsu6/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA61TzU7DMAx+leILQirrHwyRN+DCCQ4IIZS17mqRJVXiAhPi3XHSIYYQByZOSZzv
+        x7GdN+g0a1BvQB0oWL2GaQk5MLFBOd8G9Mchu8aX7CaFcugwtJ5GJme/AFYA+xc5tJpx7fxWMJEk
+        p8fWoyzRpi6r89NyedqUN9WZai5V1SyWy6Ysy0/sxnXU0w/whWpKVdeLs6qewazXIWYftoFxA+r+
+        IYdJkpYdDGiME8GrTG8ynQlUDnd6eySLOoGH9xwM2afE78lg2ng0uyQH5jGooghCJLuuFy70C3KF
+        Hql4rgvr5MFFKliR2AWI4Kg9Wk4ZoelB2ckYCbfOsqfVxM4nl9ZNEVXlh/nty822jizjN+36QO1x
+        J5V0Pa4psNex2/+R+De95DCXCf5QbOnewBsjY/QbaW6K4NqBTCcN2Sv5oWX5lJKkY5u9G9EzzTPT
+        6TCsnPYy2r02AWO/jcF2/iO70P7Td7goNK0MtaDYT0Lj7Rh/XRot8fkASRejB50DAAA=
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 20:55:37 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/bxsu6/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA61TzU7DMAx+leILQirrHwyRN+DCCQ4IIZS17mqRJVXiAhPi3XHSIYYQByZOSZzv
+        x7GdN+g0a1BvQB0oWL2GaQk5MLFBOd8G9Mchu8aX7CaFcugwtJ5GJme/AFYA+xc5tJpx7fxWMJEk
+        p8fWoyzRpi6r89NyedqUN9WZai5V1SyWy6Ysy0/sxnXU0w/whWpKVdeLs6qewazXIWYftoFxA+r+
+        IYdJkpYdDGiME8GrTG8ynQlUDnd6eySLOoGH9xwM2afE78lg2ng0uyQH5jGooghCJLuuFy70C3KF
+        Hql4rgvr5MFFKliR2AWI4Kg9Wk4ZoelB2ckYCbfOsqfVxM4nl9ZNEVXlh/nty822jizjN+36QO1x
+        J5V0Pa4psNex2/+R+De95DCXCf5QbOnewBsjY/QbaW6K4NqBTCcN2Sv5oWX5lJKkY5u9G9EzzTPT
+        6TCsnPYy2r02AWO/jcF2/iO70P7Td7goNK0MtaDYT0Lj7Rh/XRot8fkASRejB50DAAA=
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 20:57:23 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/bxsu6/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA61TzU7DMAx+leILQirrHwyRN+DCCQ4IIZS17mqRJVXiAhPi3XHSIYYQByZOSZzv
+        x7GdN+g0a1BvQB0oWL2GaQk5MLFBOd8G9Mchu8aX7CaFcugwtJ5GJme/AFYA+xc5tJpx7fxWMJEk
+        p8fWoyzRpi6r89NyedqUN9WZai5V1SyWy6Ysy0/sxnXU0w/whWpKVdeLs6qewazXIWYftoFxA+r+
+        IYdJkpYdDGiME8GrTG8ynQlUDnd6eySLOoGH9xwM2afE78lg2ng0uyQH5jGooghCJLuuFy70C3KF
+        Hql4rgvr5MFFKliR2AWI4Kg9Wk4ZoelB2ckYCbfOsqfVxM4nl9ZNEVXlh/nty822jizjN+36QO1x
+        J5V0Pa4psNex2/+R+De95DCXCf5QbOnewBsjY/QbaW6K4NqBTCcN2Sv5oWX5lJKkY5u9G9EzzTPT
+        6TCsnPYy2r02AWO/jcF2/iO70P7Td7goNK0MtaDYT0Lj7Rh/XRot8fkASRejB50DAAA=
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Aug 2015 21:00:02 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

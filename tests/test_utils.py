@@ -1,3 +1,4 @@
+import six
 import vcr
 import types
 import pprint
@@ -41,29 +42,46 @@ def smart_print(string):
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
 
-# TODO test that generator responds correctly when num_requested == -1 vs any other number.
+class TestResponseGenerator(unittest.TestCase):
+    @my_vcr.use_cassette()
+    def test_defaults(self):
+        """
+        num_requested should == -1, meaning all items should be returned
+        """
+        big_gen = response_generator("https://staging2.osf.io/api/v2/users/se6py/nodes/")
+        with assert_raises(StopIteration):
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
+            print(next(big_gen))
 
-# TODO tests here
+    @my_vcr.use_cassette()
+    def test_num_requested_negative1(self):
+        # TODO this
+        """
+        Test that generator responds correctly when num_requested == -1 vs any other number.
+        """
+        pass
 
-# Test returning 4
-happy_gen = response_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive", 4)
-for item in happy_gen:
-    print("{}: {}: {}".format(item.provider, item.name, item.links.self))
+    @my_vcr.use_cassette()
+    def test_num_requested_positive(self):
+        """
+        request 4; 4 items should be returned
+        """
+        happy_gen = response_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
+                                       num_requested=4)
+        for item in happy_gen:
+            print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
-# Test returning all available (because when num_requested is not specified, it becomes -1, ie a request to return all)
-big_gen = response_generator("https://staging2.osf.io/api/v2/users/se6py/nodes/")
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
-print(next(big_gen))
+

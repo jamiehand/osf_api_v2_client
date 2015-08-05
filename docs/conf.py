@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'osf_api_v2_client'
-copyright = u'2015, Jamie Hand'
+copyright = u'2015, Center for Open Science'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -210,7 +210,7 @@ latex_elements = {
 latex_documents = [
     ('index', 'osf_api_v2_client.tex',
      u'osf_api_v2_client Documentation',
-     u'Jamie Hand', 'manual'),
+     u'Center for Open Science', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -241,7 +241,7 @@ latex_documents = [
 man_pages = [
     ('index', 'osf_api_v2_client',
      u'osf_api_v2_client Documentation',
-     [u'Jamie Hand'], 1)
+     [u'Center for Open Science'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -256,7 +256,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'osf_api_v2_client',
      u'osf_api_v2_client Documentation',
-     u'Jamie Hand',
+     u'Center for Open Science',
      'osf_api_v2_client',
      'One line description of project.',
      'Miscellaneous'),

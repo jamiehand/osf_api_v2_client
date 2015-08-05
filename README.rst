@@ -1,6 +1,6 @@
-===============================
+=================
 osf_api_v2_client
-===============================
+=================
 
 .. image:: https://img.shields.io/travis/jamiehand/osf_api_v2_client.svg
         :target: https://travis-ci.org/jamiehand/osf_api_v2_client

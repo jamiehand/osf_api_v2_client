@@ -1,5 +1,5 @@
+import six
 import requests
-from urllib.parse import urljoin
 
 from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
 from osf_api_v2_client.users import User
@@ -14,7 +14,7 @@ class Session(object):
         """
         :return: a DotDictify object of the api root as designated by self.root_url
         """
-        response = get_response_or_exception(self.root_url)
+        response = get_response_or_exception('get', self.root_url)
         response_json = response.json()
         return DotDictify(response_json)
 

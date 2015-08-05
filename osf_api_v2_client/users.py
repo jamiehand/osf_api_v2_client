@@ -1,3 +1,4 @@
+import six
 import requests
 
 from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
@@ -16,7 +17,7 @@ class User(DotDictify):
         :param auth: optional authentication; same as auth of the current Session
         """
         self.url = '{}users/{}/'.format(root_url, user_id)
-        self.response = get_response_or_exception(self.url, auth=auth)
+        self.response = get_response_or_exception('get', self.url, auth=auth)
         self.data = self.response.json()[u'data']
         super(User, self).__init__(self.data)  # makes a DocDictify object out of response.json[u'data']
 

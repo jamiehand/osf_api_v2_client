@@ -8,6 +8,7 @@ test_osf-api-v2-client
 Tests for `osf_api_v2_client` module.
 """
 
+import six
 import unittest
 
 import osf_api_v2_client
