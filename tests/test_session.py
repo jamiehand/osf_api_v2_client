@@ -19,10 +19,10 @@ from local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 
-from base.users import User
-from base.nodes import Node
-from base.session import Session
-from base.utils import DotDictify
+from osf_api_v2_client.users import User
+from osf_api_v2_client.nodes import Node
+from osf_api_v2_client.session import Session
+from osf_api_v2_client.utils import DotDictify
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID

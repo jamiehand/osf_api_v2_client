@@ -6,8 +6,8 @@ import types
 import unittest
 from nose.tools import *  # flake8: noqa
 
-from base.nodes import Node
-from base.session import Session
+from osf_api_v2_client.nodes import Node
+from osf_api_v2_client.session import Session
 
 from local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'

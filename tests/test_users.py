@@ -19,9 +19,9 @@ from local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 
-from base.users import User
-from base.session import Session
-from base.utils import DotDictify
+from osf_api_v2_client.users import User
+from osf_api_v2_client.session import Session
+from osf_api_v2_client.utils import DotDictify
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID
@@ -69,7 +69,7 @@ class TestGetUsers(unittest.TestCase):
 class TestUserAttributes(unittest.TestCase):
     """
     Test accessing user attributes with the DotDictify format,
-    as enabled through the DotDictify class in base/utils.py
+    as enabled through the DotDictify class in osf_api_v2_client/utils.py
     """
     # TODO rename this class when Dawn's PR is merged, if needed.
     # TODO more tests here; modify to match Dawn's PR once merged.

@@ -10,10 +10,10 @@ Tests for `osf_api_v2_client` module.
 
 import unittest
 
-import osf-api-v2-client
+import osf_api_v2_client
 
 
-class TestOsf-api-v2-client(unittest.TestCase):
+class TestOsf_api_v2_client(unittest.TestCase):
 
     def setUp(self):
         pass

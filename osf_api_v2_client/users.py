@@ -1,6 +1,6 @@
 import requests
 
-from base.utils import DotDictify, response_generator, get_response_or_exception
+from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
 
 
 class User(DotDictify):

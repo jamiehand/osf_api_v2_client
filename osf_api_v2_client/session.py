@@ -1,9 +1,9 @@
 import requests
 from urllib.parse import urljoin
 
-from base.utils import DotDictify, response_generator, get_response_or_exception
-from base.users import User
-from base.nodes import Node
+from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
+from osf_api_v2_client.users import User
+from osf_api_v2_client.nodes import Node
 
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
