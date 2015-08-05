@@ -35,7 +35,7 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 osf-api-v2-client tests
+	flake8 osf_api_v2_client tests
 
 test:
 	python setup.py test
@@ -44,15 +44,15 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source osf-api-v2-client setup.py test
+	coverage run --source osf_api_v2_client setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/osf-api-v2-client.rst
+	rm -f docs/osf_api_v2_client.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ osf-api-v2-client
+	sphinx-apidoc -o docs/ osf_api_v2_client
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html

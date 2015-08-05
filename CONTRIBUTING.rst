@@ -36,8 +36,8 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-OSF API v2 Client could always use more documentation, whether
-as part of the official OSF API v2 Client docs, in docstrings,
+osf_api_v2_client could always use more documentation, whether
+as part of the official osf_api_v2_client docs, in docstrings,
 or even on the web in blog posts, articles, and such.
 
 Submit Feedback
@@ -55,17 +55,17 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `osf-api-v2-client` for local development.
+Ready to contribute? Here's how to set up `osf_api_v2_client` for local development.
 
 1. Fork the `osf-api-v2-client` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/osf-api-v2-client.git
+    $ git clone git@github.com:your_name_here/osf-api-v2-client.git osf_api_v2_client
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv osf-api-v2-client
-    $ cd osf-api-v2-client/
+    $ mkvirtualenv osf_api_v2_client
+    $ cd osf_api_v2_client/
     $ python setup.py develop
 
 4. Create a branch for local development::
@@ -76,7 +76,7 @@ Ready to contribute? Here's how to set up `osf-api-v2-client` for local developm
 
 5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
 
-    $ flake8 osf-api-v2-client tests
+    $ flake8 osf_api_v2_client tests
     $ python setup.py test
     $ tox
 
@@ -100,7 +100,7 @@ Before you submit a pull request, check that it meets these guidelines:
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
 3. The pull request should work for Python 2.7, 3.3, and 3.4, and for PyPy. Check
-   https://travis-ci.org/jamiehand/osf-api-v2-client/pull_requests
+   https://travis-ci.org/jamiehand/osf_api_v2_client/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
 Tips
@@ -108,4 +108,4 @@ Tips
 
 To run a subset of tests::
 
-    $ python -m unittest tests.test_osf-api-v2-client
+    $ python -m unittest tests.test_osf_api_v2_client

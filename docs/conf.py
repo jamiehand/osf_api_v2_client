@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'OSF API v2 Client'
+project = u'osf_api_v2_client'
 copyright = u'2015, Jamie Hand'
 
 # The version info for the project you're documenting, acts as replacement
@@ -188,7 +188,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'osf-api-v2-clientdoc'
+htmlhelp_basename = 'osf_api_v2_clientdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------
@@ -209,7 +209,7 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'osf_api_v2_client.tex',
-     u'OSF API v2 Client Documentation',
+     u'osf_api_v2_client Documentation',
      u'Jamie Hand', 'manual'),
 ]
 
@@ -240,7 +240,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'osf_api_v2_client',
-     u'OSF API v2 Client Documentation',
+     u'osf_api_v2_client Documentation',
      [u'Jamie Hand'], 1)
 ]
 
@@ -255,7 +255,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'osf_api_v2_client',
-     u'OSF API v2 Client Documentation',
+     u'osf_api_v2_client Documentation',
      u'Jamie Hand',
      'osf_api_v2_client',
      'One line description of project.',

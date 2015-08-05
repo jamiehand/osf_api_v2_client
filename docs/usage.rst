@@ -2,6 +2,6 @@
 Usage
 ========
 
-To use OSF API v2 Client in a project::
+To use osf_api_v2_client in a project::
 
     import osf_api_v2_client
