@@ -11,7 +11,7 @@ osf_api_v2_client
 
 A client for accessing the OSF v2 API
 
-* Free software: BSD license
+* Free software: Apache license
 * Documentation: https://osf_api_v2_client.readthedocs.org.
 
 Features

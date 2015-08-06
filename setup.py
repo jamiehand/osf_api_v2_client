@@ -29,7 +29,7 @@ setup(
     description="A client for accessing the OSF v2 API",
     long_description=readme + '\n\n' + history,
     author="Jamie Hand",
-    url='https://github.com/jamiehand/osf-api-v2-client',
+    url='https://github.com/jamiehand/osf_api_v2_client',
     packages=[
         'osf_api_v2_client',
     ],
@@ -43,7 +43,7 @@ setup(
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',  # TODO change?
+        'License :: OSI Approved :: Apache License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',

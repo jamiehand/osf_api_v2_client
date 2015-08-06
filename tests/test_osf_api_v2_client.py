@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_osf-api-v2-client
+test_osf_api_v2_client
 ----------------------------------
 
 Tests for `osf_api_v2_client` module.
