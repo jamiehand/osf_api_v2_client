@@ -2,6 +2,11 @@ import six
 import requests
 
 
+# Possible alternative to replace a bunch of if statements:
+# mydict = {
+#     'get':requests.get
+# }
+# mydict[method](url, *args, **kwargs)
 def get_response_or_exception(method, url, *args, **kwargs):
     method = method.lower()
     if method == 'get':
@@ -25,6 +30,7 @@ def get_response_or_exception(method, url, *args, **kwargs):
 
 def response_generator(url, auth=None, num_requested=-1):
     """
+    Deals with pagination.
     :param url: the url where the desired items are located
     :param auth: authentication to send with the request
     :param num_requested: the number of items desired; if -1, all items available will be returned
@@ -33,10 +39,11 @@ def response_generator(url, auth=None, num_requested=-1):
     #: Number of items left in the generator
     count_remaining = num_requested
     #: Next url to get the json response from
-    url = url
+    url = url  # url of first page
 
     while url is not None:
-        response = get_response_or_exception('get', url, auth=auth)
+        # if num_requested == -1 or count_remaining > 0:
+        response = get_response_or_exception('get', url, auth=auth)  # page response
         json_response = response.json()
         for item in json_response[u'data']:
             if num_requested == -1:
@@ -44,6 +51,10 @@ def response_generator(url, auth=None, num_requested=-1):
             elif count_remaining > 0:
                 count_remaining -= 1
                 yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+            elif count_remaining == 0:
+                break
+        if count_remaining == 0:
+            break
         url = json_response[u'links'][u'next']
 
 

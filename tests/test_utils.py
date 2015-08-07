@@ -1,6 +1,7 @@
 import six
 import vcr
 import types
+import timeit
 import pprint
 import unittest
 import requests
@@ -83,5 +84,23 @@ class TestResponseGenerator(unittest.TestCase):
                                        num_requested=4)
         for item in happy_gen:
             print("{}: {}: {}".format(item.provider, item.name, item.links.self))
+
+    def test_time(self):
+        small_gen = response_generator("https://staging2.osf.io/api/v2/users",
+                                       num_requested=4)
+
+        def bar():
+            for item in small_gen:
+                print(item)
+
+        print(timeit.timeit(bar))
+
+        big_gen = response_generator("https://staging2.osf.io/api/v2/users")
+
+        def foo():
+            for item in big_gen:
+                print(item)
+
+        print(timeit.timeit(foo))
 
 

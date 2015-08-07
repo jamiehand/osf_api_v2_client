@@ -2,8 +2,8 @@
 osf_api_v2_client
 =================
 
-.. image:: https://img.shields.io/travis/jamiehand/osf-api-v2-client.svg
-        :target: https://travis-ci.org/jamiehand/osf-api-v2-client
+.. image:: https://img.shields.io/travis/jamiehand/osf_api_v2_client.svg
+        :target: https://travis-ci.org/jamiehand/osf_api_v2_client
 
 .. TODO:: this, once on pypi
 .. .. image:: https://img.shields.io/pypi/v/osf_api_v2_client.svg

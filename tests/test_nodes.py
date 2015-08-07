@@ -38,55 +38,54 @@ my_vcr = vcr.VCR(
 
 
 class TestGetNodes(unittest.TestCase):
-    pass
-    # TODO why am I getting internal server errors?
-    # @my_vcr.use_cassette()
-    # def test_get_node_generator(self):
-    #     node_generator = SESSION_AUTH1.get_node_generator()
-    #     # TODO what should my assertion(s) here be?
-    #     assert_true(isinstance(node_generator, types.GeneratorType))
-    #     # count = 1
-    #     # for node in node_generator:
-    #     #     print("***************************** {} *******************************".format(count))
-    #     #     pp.pprint(node)
-    #     #     count += 1
-    #
-    # # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
-    # # returns more nodes when USER1 calls node_generator().
-    #
-    # @my_vcr.use_cassette()
-    # def test_get_public_node_auth_contrib(self):
-    #     public_node = SESSION_AUTH1.get_node(PUBLIC_NODE_ID)
-    #     assert_true(isinstance(public_node, Node))
-    #
-    # @my_vcr.use_cassette()
-    # def test_get_public_node_auth_non_contrib(self):
-    #     public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
-    #     assert_true(isinstance(public_node, Node))
-    #
-    # @my_vcr.use_cassette()
-    # def test_get_public_node_not_auth(self):
-    #     public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
-    #     assert_true(isinstance(public_node, Node))
 
-    # # TODO is there a way for vcrpy to record the exceptions to replay them? right now these 3 tests fail:
-    # @my_vcr.use_cassette()
-    # def test_get_private_node_auth_contrib(self):
-    #     # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
-    #     private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
-    #     assert_true(isinstance(private_node, Node))
-    #
-    # @my_vcr.use_cassette()
-    # def test_get_private_node_auth_non_contrib(self):
-    #     # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
-    #     with assert_raises(Exception):  # TODO more specific exception?
-    #         SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
-    #
-    # @my_vcr.use_cassette()
-    # def test_get_private_node_not_auth(self):
-    #     # Unauthenticated user should not be able to view any private node.
-    #     with assert_raises(Exception):  # TODO more specific exception?
-    #         SESSION_NO_AUTH.get_node(PRIVATE_NODE_ID)
+    @my_vcr.use_cassette()
+    def test_get_node_generator(self):
+        node_generator = SESSION_AUTH1.get_node_generator()
+        # TODO what should my assertion(s) here be?
+        assert_true(isinstance(node_generator, types.GeneratorType))
+        # count = 1
+        # for node in node_generator:
+        #     print("***************************** {} *******************************".format(count))
+        #     pp.pprint(node)
+        #     count += 1
+
+    # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
+    # returns more nodes when USER1 calls node_generator().
+
+    @my_vcr.use_cassette()
+    def test_get_public_node_auth_contrib(self):
+        public_node = SESSION_AUTH1.get_node(PUBLIC_NODE_ID)
+        assert_true(isinstance(public_node, Node))
+
+    @my_vcr.use_cassette()
+    def test_get_public_node_auth_non_contrib(self):
+        public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
+        assert_true(isinstance(public_node, Node))
+
+    @my_vcr.use_cassette()
+    def test_get_public_node_not_auth(self):
+        public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
+        assert_true(isinstance(public_node, Node))
+
+    # TODO is there a way for vcrpy to record the exceptions to replay them? right now these 3 tests fail:
+    @my_vcr.use_cassette()
+    def test_get_private_node_auth_contrib(self):
+        # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
+        private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
+        assert_true(isinstance(private_node, Node))
+
+    @my_vcr.use_cassette()
+    def test_get_private_node_auth_non_contrib(self):
+        # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
+        with assert_raises(Exception):  # TODO more specific exception?
+            SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
+
+    @my_vcr.use_cassette()
+    def test_get_private_node_not_auth(self):
+        # Unauthenticated user should not be able to view any private node.
+        with assert_raises(Exception):  # TODO more specific exception?
+            SESSION_NO_AUTH.get_node(PRIVATE_NODE_ID)
 
 
 # class TestCreateNodes(unittest.TestCase):
