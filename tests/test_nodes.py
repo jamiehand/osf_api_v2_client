@@ -33,7 +33,7 @@ SESSION_NO_AUTH = Session(root_url=URL)
 
 my_vcr = vcr.VCR(
     cassette_library_dir='fixtures/vcr_cassettes',
-    record_mode='new_episodes',  # TODO or 'once' ?; for rerecoding: 'all'
+    record_mode='new_episodes',  # TODO or 'once' ?; for re-recording: 'all'
 )
 
 
