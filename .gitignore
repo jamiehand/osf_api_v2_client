@@ -87,7 +87,7 @@ website/static/robots.local.txt
 api/static/vendor
 
 # Local settings files
-local.py
+settings/local.py
 
 website/uploads/
 website/mfrcache/

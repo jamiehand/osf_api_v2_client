@@ -4,10 +4,16 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
-  - "pypy"
+
+env:
+  PROJECT_DIR: $PWD
+
 # command to install dependencies
 install:
+  - cd $PROJECT_DIR
+  - cp settings/local-travis.py settings/local.py
   - "pip install ."
   - "pip install -r requirements.txt"
+
 # command to run tests
 script: nosetests

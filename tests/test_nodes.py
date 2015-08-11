@@ -1,7 +1,9 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth
 
-import six
+import types
+import pprint
+
 import vcr
 import types
 import unittest
@@ -9,8 +11,7 @@ from nose.tools import *  # flake8: noqa
 
 from osf_api_v2_client.utils import DotDictify
 from osf_api_v2_client.session import Session
-
-from local import (
+from settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
@@ -20,7 +21,6 @@ from local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 
-import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 # Sessions with different forms of authentication:
@@ -50,14 +50,7 @@ class TestGetNodes(unittest.TestCase):
             node_list.append(node)
         assert_equal(len(node_list), 25)
         print(type(node_list[0]))
-        # assert_true(isinstance(node_list[0], DotDictify))
-        # count = 1
-        # for node in node_generator:
-        #     print("***************************** {} *******************************".format(count))
-        #     pp.pprint(node)
-        #     count += 1
-        node = SESSION_AUTH1.get_node('2bwm8')
-        print(type(node))
+        assert_true(isinstance(node_list[0], DotDictify))
 
     # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
     # returns more nodes when USER1 calls node_generator().
