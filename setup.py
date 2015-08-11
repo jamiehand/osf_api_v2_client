@@ -16,6 +16,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'six',
+    'vcrpy',
     'requests',
     # TODO: put package requirements here
 ]
