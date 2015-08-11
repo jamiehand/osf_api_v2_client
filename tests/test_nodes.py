@@ -7,7 +7,7 @@ import types
 import unittest
 from nose.tools import *  # flake8: noqa
 
-from osf_api_v2_client.nodes import Node
+from osf_api_v2_client.utils import DotDictify
 from osf_api_v2_client.session import Session
 
 from local import (
@@ -44,13 +44,13 @@ class TestGetNodes(unittest.TestCase):
         node_generator = SESSION_AUTH1.get_node_generator(num_requested=25)
         # TODO what should my assertion(s) here be?
         assert_true(isinstance(node_generator, types.GeneratorType))
-        # Create a list with the Nodes in it
+        # Create a list with the nodes in it
         node_list = []
         for node in node_generator:
             node_list.append(node)
         assert_equal(len(node_list), 25)
         print(type(node_list[0]))
-        # assert_true(isinstance(node_list[0], Node))
+        # assert_true(isinstance(node_list[0], DotDictify))
         # count = 1
         # for node in node_generator:
         #     print("***************************** {} *******************************".format(count))
@@ -65,24 +65,24 @@ class TestGetNodes(unittest.TestCase):
     @my_vcr.use_cassette()
     def test_get_public_node_auth_contrib(self):
         public_node = SESSION_AUTH1.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, Node))
+        assert_true(isinstance(public_node, DotDictify))
 
     @my_vcr.use_cassette()
     def test_get_public_node_auth_non_contrib(self):
         public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, Node))
+        assert_true(isinstance(public_node, DotDictify))
 
     @my_vcr.use_cassette()
     def test_get_public_node_not_auth(self):
         public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, Node))
+        assert_true(isinstance(public_node, DotDictify))
 
     # TODO is there a way for vcrpy to record the exceptions to replay them? right now these 3 tests fail:
     @my_vcr.use_cassette()
     def test_get_private_node_auth_contrib(self):
         # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
         private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
-        assert_true(isinstance(private_node, Node))
+        assert_true(isinstance(private_node, DotDictify))
 
     @my_vcr.use_cassette()
     def test_get_private_node_auth_non_contrib(self):
@@ -117,7 +117,7 @@ class TestGetNodes(unittest.TestCase):
 #         new_private_node = SESSION_AUTH1.create_node(
 #             "Creating private node with python 1", category=""
 #         )
-#         assert_true(isinstance(new_private_node, Node))
+#         assert_true(isinstance(new_private_node, DotDictify))
 #
 #     def test_create_node_not_auth(self):
 #         # Shouldn't work, because users must be authenticated in order to create nodes.
@@ -197,6 +197,6 @@ class TestGetNodes(unittest.TestCase):
 #     # TODO write tests on deleting nodes (private, public; auth, diff_auth, not_auth
 #     # TODO check if Reina fixed problem of deleted nodes being returned, ability to delete nodes multiple times, etc.
 #
-#     # Starter, from code used in initial testing in nodes.py:
+#     # Starter, from code used in initial testing:
 #     # response = localhost_session.delete_node('x7s9m')
 #     # print(response.status_code)

@@ -2,8 +2,6 @@ import six
 import requests
 
 from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
-from osf_api_v2_client.users import User
-from osf_api_v2_client.nodes import Node
 
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
@@ -36,7 +34,10 @@ class Session(object):
         :param user_id: 5-character user id
         :return: the user identified by user_id
         """
-        return User(user_id, self.root_url, auth=self.auth)
+        url = '{}users/{}/'.format(self.root_url, user_id)
+        response = get_response_or_exception('get', url, auth=self.auth)
+        data = response.json()[u'data']
+        return DotDictify(data)
 
     # NODE ACTIONS
 
@@ -59,7 +60,10 @@ class Session(object):
         :param node_id: 5-character id for a node that can be viewed by this session's auth
         :return: the node identified by node_id
         """
-        return Node(node_id, self.root_url, auth=self.auth)
+        url = '{}nodes/{}/'.format(self.root_url, node_id)
+        response = get_response_or_exception('get', url, auth=self.auth)
+        data = response.json()[u'data']
+        return DotDictify(data)
 
     def create_node(self, title="", description="", category="", public="True"):
         """

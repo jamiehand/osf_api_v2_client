@@ -17,8 +17,6 @@ from local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 
-from osf_api_v2_client.users import User
-from osf_api_v2_client.nodes import Node
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
 
@@ -43,7 +41,9 @@ def smart_print(string):
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
 
+
 class TestResponseGenerator(unittest.TestCase):
+
     @my_vcr.use_cassette()
     def test_defaults(self):
         """

@@ -20,7 +20,6 @@ from local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 
-from osf_api_v2_client.users import User
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotDictify
 
@@ -36,6 +35,7 @@ my_vcr = vcr.VCR(
     cassette_library_dir='fixtures/vcr_cassettes',
     record_mode='new_episodes',  # TODO or 'once' ?
 )
+
 
 # @my_vcr.use_cassette()
 class TestGetUsers(unittest.TestCase):
@@ -54,17 +54,17 @@ class TestGetUsers(unittest.TestCase):
     @my_vcr.use_cassette()
     def test_get_authenticated_user(self):
         user1 = SESSION_AUTH1.get_user(USER1_ID)
-        assert_true(isinstance(user1, User))
+        assert_true(isinstance(user1, DotDictify))
 
     @my_vcr.use_cassette()
     def test_get_different_user_from_authenticated_user(self):
         user2 = SESSION_AUTH1.get_user(USER2_ID)
-        assert_true(isinstance(user2, User))
+        assert_true(isinstance(user2, DotDictify))
 
     @my_vcr.use_cassette()
     def test_get_user_from_unauthenticated_session(self):
         user1 = SESSION_NO_AUTH.get_user(USER1_ID)
-        assert_true(isinstance(user1, User))
+        assert_true(isinstance(user1, DotDictify))
 
 
 class TestUserAttributes(unittest.TestCase):
@@ -77,9 +77,6 @@ class TestUserAttributes(unittest.TestCase):
 
     @my_vcr.use_cassette()
     def setUp(self):
-        logging.basicConfig()
-        vcr_log = logging.getLogger("vcr")
-        vcr_log.setLevel(logging.INFO)
         self.user = SESSION_AUTH1.get_user(USER1_ID)
 
     def test_user_names(self):

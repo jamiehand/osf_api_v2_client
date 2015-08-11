@@ -9,22 +9,6 @@ interactions:
     method: GET
     uri: https://staging2.osf.io/api/v2/users/se6py/
   response:
-    body: {string: Internal Server Error}
-    headers:
-      Connection: [keep-alive]
-      Date: ['Mon, 03 Aug 2015 17:55:45 GMT']
-      Server: [nginx/1.4.6 (Ubuntu)]
-    status: {code: 500, message: Internal Server Error}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
-    method: GET
-    uri: https://staging2.osf.io/api/v2/users/se6py/
-  response:
     body:
       string: !!binary |
         H4sIAAAAAAAAA81WTW/bMAz9K54OO7XxR74cA8XQdYd2wLAB6WUYhkCWaVubLBmSnDUL8t9HOU7n
@@ -45,7 +29,7 @@ interactions:
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Wed, 05 Aug 2015 20:56:43 GMT']
+      Date: ['Tue, 11 Aug 2015 14:26:33 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
