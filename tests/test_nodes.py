@@ -41,14 +41,23 @@ class TestGetNodes(unittest.TestCase):
 
     @my_vcr.use_cassette()
     def test_get_node_generator(self):
-        node_generator = SESSION_AUTH1.get_node_generator()
+        node_generator = SESSION_AUTH1.get_node_generator(num_requested=25)
         # TODO what should my assertion(s) here be?
         assert_true(isinstance(node_generator, types.GeneratorType))
+        # Create a list with the Nodes in it
+        node_list = []
+        for node in node_generator:
+            node_list.append(node)
+        assert_equal(len(node_list), 25)
+        print(type(node_list[0]))
+        # assert_true(isinstance(node_list[0], Node))
         # count = 1
         # for node in node_generator:
         #     print("***************************** {} *******************************".format(count))
         #     pp.pprint(node)
         #     count += 1
+        node = SESSION_AUTH1.get_node('2bwm8')
+        print(type(node))
 
     # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
     # returns more nodes when USER1 calls node_generator().
