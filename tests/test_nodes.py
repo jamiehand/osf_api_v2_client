@@ -31,8 +31,12 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
+from requests.auth import HTTPBasicAuth
+SESSION_EX1 = Session(root_url=URL, auth=HTTPBasicAuth('user1@example.com', 'password1'))
+SESSION_EX2 = Session(root_url=URL, auth=HTTPBasicAuth('user2@example.com', 'password2'))
+
 my_vcr = vcr.VCR(
-    cassette_library_dir='fixtures/vcr_cassettes',
+    cassette_library_dir='fixtures/vcr_cassettes/test_nodes',
     record_mode='new_episodes',  # TODO or 'once' ?; for re-recording: 'all'
 )
 
@@ -49,7 +53,6 @@ class TestGetNodes(unittest.TestCase):
         for node in node_generator:
             node_list.append(node)
         assert_equal(len(node_list), 25)
-        print(type(node_list[0]))
         assert_true(isinstance(node_list[0], DotDictify))
 
     # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
@@ -93,7 +96,7 @@ class TestGetNodes(unittest.TestCase):
 # class TestCreateNodes(unittest.TestCase):
 #     # TODO add checks into tests to make sure the title, public, etc. are correct?
 #
-#     # def test_create_public_node_auth(self):
+#     # def test_create_public_node_auth(self):  TODO delete
 #     #     # TODO figure out how to do this.
 #     #     # TODO capture the node_id, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PATCH?)
 #     #     # TODO include tests that check that non-auth'd users *can't* patch/post/delete
@@ -193,3 +196,16 @@ class TestGetNodes(unittest.TestCase):
 #     # Starter, from code used in initial testing:
 #     # response = localhost_session.delete_node('x7s9m')
 #     # print(response.status_code)
+
+# class TestExamples(unittest.TestCase):
+#
+#     @my_vcr.use_cassette()
+#     def test_user1(self):
+#         public_node = SESSION_EX1.get_node('bxsu6')
+#         assert_true(isinstance(public_node, DotDictify))
+#
+#     @my_vcr.use_cassette()
+#     def test_user2(self):
+#         public_node = SESSION_EX2.get_node('bxsu6')
+#         assert_true(isinstance(public_node, DotDictify))
+

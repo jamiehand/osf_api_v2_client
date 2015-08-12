@@ -28,7 +28,7 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 SESSION_NO_AUTH = Session(root_url=URL)
 
 my_vcr = vcr.VCR(
-    cassette_library_dir='fixtures/vcr_cassettes',
+    cassette_library_dir='fixtures/vcr_cassettes/test_utils',
     record_mode='new_episodes',  # TODO or 'once' ?
 )
 
