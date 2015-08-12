@@ -1,7 +1,7 @@
 import six
 import requests
 
-from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
+from osf_api_v2_client.utils import DotDictify, dotdictify_generator, get_response_or_exception
 
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
@@ -27,7 +27,7 @@ class Session(object):
         # TODO consider case when generator is empty?
         target_url = '{}users/'.format(self.root_url)
         # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
-        return response_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_user(self, user_id):
         """
@@ -50,7 +50,7 @@ class Session(object):
         # TODO consider case when generator is empty?
         target_url = '{}nodes/'.format(self.root_url)
         # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
-        return response_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_node(self, node_id=''):
         """
@@ -99,3 +99,16 @@ class Session(object):
         """
         response = requests.delete('{}nodes/{}/'.format(self.root_url, node_id), auth=self.auth)
         return response
+
+    # FILE ACTIONS
+
+    def get_file_generator(self, node_id, num_requested=-1):
+        """
+        :param node_id: 5-character node id
+        :param num_requested: a positive integer or -1; -1 will cause all files
+        to be returned; otherwise num_requested number of files will be returned
+        :return: a generator containing files related to node_id
+        """
+        node = self.get_node(node_id=node_id)
+        files_page = get_response_or_exception('get', node.links.files.related, auth=self.auth)
+        return

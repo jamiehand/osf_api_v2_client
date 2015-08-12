@@ -17,7 +17,7 @@ from settings.local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 from osf_api_v2_client.session import Session
-from osf_api_v2_client.utils import DotDictify, response_generator, get_response_or_exception
+from osf_api_v2_client.utils import DotDictify, dotdictify_generator, get_response_or_exception
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID
@@ -41,14 +41,23 @@ def smart_print(string):
         print(string.encode('utf-8'))
 
 
-class TestResponseGenerator(unittest.TestCase):
+class TestFileGenerator(unittest.TestCase):
+
+    @my_vcr.use_cassette()
+    def test_few_files(selfs):
+        pass
+    # TODO this
+
+
+
+class TestDotDictifyGenerator(unittest.TestCase):
 
     @my_vcr.use_cassette()
     def test_defaults(self):
         """
         num_requested should == -1, meaning all items should be returned
         """
-        big_gen = response_generator("https://staging2.osf.io/api/v2/users/se6py/nodes/")
+        big_gen = dotdictify_generator("https://staging2.osf.io/api/v2/users/se6py/nodes/")
         with assert_raises(StopIteration):
             print(next(big_gen))
             print(next(big_gen))
@@ -79,13 +88,13 @@ class TestResponseGenerator(unittest.TestCase):
         """
         request 4; 4 items should be returned
         """
-        happy_gen = response_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
+        happy_gen = dotdictify_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
                                        num_requested=4)
         for item in happy_gen:
             print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
     def test_time(self):
-        small_gen = response_generator("https://staging2.osf.io/api/v2/users",
+        small_gen = dotdictify_generator("https://staging2.osf.io/api/v2/users",
                                        num_requested=4)
 
         def bar():
@@ -94,7 +103,7 @@ class TestResponseGenerator(unittest.TestCase):
 
         print(timeit.timeit(bar))
 
-        big_gen = response_generator("https://staging2.osf.io/api/v2/users")
+        big_gen = dotdictify_generator("https://staging2.osf.io/api/v2/users")
 
         def foo():
             for item in big_gen:

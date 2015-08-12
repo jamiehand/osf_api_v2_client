@@ -28,13 +28,13 @@ def get_response_or_exception(method, url, *args, **kwargs):
     else:
         return response  # TODO return DotDictify object instead? -- not now; might stop DotDictifying things later?
 
-def response_generator(url, auth=None, num_requested=-1):
+
+def file_generator(url, auth=None, num_requested=-1):
     """
-    Deals with pagination.
     :param url: the url where the desired items are located
     :param auth: authentication to send with the request
     :param num_requested: the number of items desired; if -1, all items available will be returned
-    :return: a generator of the items desired
+    :return: a generator of Response objects
     """
     #: Number of items left in the generator
     count_remaining = num_requested
@@ -42,20 +42,54 @@ def response_generator(url, auth=None, num_requested=-1):
     url = url  # url of first page
 
     while url is not None:
-        # if num_requested == -1 or count_remaining > 0:
+        files_page = get_response_or_exception('get', url, auth=auth)
+        files_page_json = files_page.json()
+        for item in files_page_json[u'data']:
+            # If it's a folder, follow it
+            if item[u'item_type'] == "folder":
+                for subitem in file_generator(url, auth=auth, num_requested=count_remaining):
+                    count_remaining -= 1
+                    yield DotDictify(subitem)
+            # If it's a file, yield it
+            elif item[u'item_type'] == "file":
+                if num_requested == -1:
+                    yield DotDictify(item)
+                elif count_remaining > 0:
+                    count_remaining -= 1
+                    yield DotDictify(item)
+                elif count_remaining == 0:
+                    break
+        if count_remaining == 0:
+            break
+        url = files_page_json[u'links'][u'next']
+
+def dotdictify_generator(url, auth=None, num_requested=-1):
+    """
+    Deals with pagination.
+    :param url: the url where the desired items are located
+    :param auth: authentication to send with the request
+    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :return: a generator of DotDictify versions of the items desired
+    """
+    #: Number of items left in the generator
+    count_remaining = num_requested
+    #: Next url to get the json response from
+    url = url  # url of first page
+
+    while url is not None:
         response = get_response_or_exception('get', url, auth=auth)  # page response
-        json_response = response.json()
-        for item in json_response[u'data']:
+        response_json = response.json()
+        for item in response_json[u'data']:
             if num_requested == -1:
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+                yield DotDictify(item)
             elif count_remaining > 0:
                 count_remaining -= 1
-                yield DotDictify(item)  # TODO test whether DotDictify'ing the item here ever causes errors
+                yield DotDictify(item)
             elif count_remaining == 0:
                 break
         if count_remaining == 0:
             break
-        url = json_response[u'links'][u'next']
+        url = response_json[u'links'][u'next']
 
 
 # Instead of translating request into json request format, DotDictify transforms response itself.
