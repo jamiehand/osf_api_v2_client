@@ -1,7 +1,10 @@
 import six
 import requests
 
-from osf_api_v2_client.utils import DotDictify, dotdictify_generator, get_response_or_exception
+from osf_api_v2_client.utils import(DotDictify,
+                                    dotdictify_generator,
+                                    file_generator,
+                                    get_response_or_exception)
 
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
@@ -18,6 +21,13 @@ class Session(object):
 
     # USER ACTIONS
 
+    # TODO maybe: get_generator; get_object -- e.g. if I wanted to get a registration...
+    # but, if you're passing in the URL you maybe might as well be using the API itself
+
+    # TODO: if a parameter gets passed in, I should process it.
+    # TODO: requests -- query parameters = ...
+
+    # TODO: modify DotDictify object, then push it to server to edit it?
     def get_user_generator(self, num_requested=-1):
         """
         :param num_requested: a positive integer or -1; -1 will cause all users
@@ -102,6 +112,7 @@ class Session(object):
 
     # FILE ACTIONS
 
+    # TODO possible to do something like node.get_files_generator() ? ...
     def get_file_generator(self, node_id, num_requested=-1):
         """
         :param node_id: 5-character node id
@@ -109,6 +120,6 @@ class Session(object):
         to be returned; otherwise num_requested number of files will be returned
         :return: a generator containing files related to node_id
         """
-        node = self.get_node(node_id=node_id)
-        files_page = get_response_or_exception('get', node.links.files.related, auth=self.auth)
-        return
+        node = self.get_node(node_id)
+        files_url = node.links.files.related
+        return file_generator(files_url, auth=self.auth)

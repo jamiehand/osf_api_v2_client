@@ -29,17 +29,17 @@ def get_response_or_exception(method, url, *args, **kwargs):
         return response  # TODO return DotDictify object instead? -- not now; might stop DotDictifying things later?
 
 
-def file_generator(url, auth=None, num_requested=-1):
+def file_generator(files_url, auth=None, num_requested=-1):
     """
-    :param url: the url where the desired items are located
+    :param files_url: the url where the desired files are located
     :param auth: authentication to send with the request
     :param num_requested: the number of items desired; if -1, all items available will be returned
-    :return: a generator of Response objects
+    :return: a generator of DotDictify versions of the files
     """
     #: Number of items left in the generator
     count_remaining = num_requested
     #: Next url to get the json response from
-    url = url  # url of first page
+    url = files_url
 
     while url is not None:
         files_page = get_response_or_exception('get', url, auth=auth)
@@ -47,7 +47,8 @@ def file_generator(url, auth=None, num_requested=-1):
         for item in files_page_json[u'data']:
             # If it's a folder, follow it
             if item[u'item_type'] == "folder":
-                for subitem in file_generator(url, auth=auth, num_requested=count_remaining):
+                url_to_follow = item[u'links'][u'related']
+                for subitem in file_generator(url_to_follow, auth=auth, num_requested=count_remaining):
                     count_remaining -= 1
                     yield DotDictify(subitem)
             # If it's a file, yield it
@@ -62,6 +63,7 @@ def file_generator(url, auth=None, num_requested=-1):
         if count_remaining == 0:
             break
         url = files_page_json[u'links'][u'next']
+
 
 def dotdictify_generator(url, auth=None, num_requested=-1):
     """
