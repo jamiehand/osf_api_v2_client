@@ -106,17 +106,25 @@ class DotDictify(dict):
     As seen in the above example, DotDictify recurses through dictionaries of dictionaries and lists of
     dictionaries, to make those dictionaries into DotDictify objects as well.
     """
+
+    # TODO: start with - make a simple JSON object (1 or 2 items), and make it go thru this code - in a debugger,
+    # or construct a test that makes sure this code does what I want; -- e.g. x.pony --> Shetland,
+    # x.horse --> shouldn't exist
+    # See what happens when I go to the next line -- have a really good guess of what's going to happen. (Step into
+    # DotDictify) -- say, I expect it to step into this line here, because of this.
+    # Know before I hit next, what I think is going to happen -- if not, say: I expected this, but this happened.
+    # Try to get it to hit all lines of DotDictify() code.
+
     marker = object()  # a new object  # TODO what does this do...?
 
     def __init__(self, data=None):
-        dict.__init__(self)  # TODO necessary/useful? (see
+        dict.__init__(self)  # instantiating a dict   # TODO necessary/useful? (see
         # http://stackoverflow.com/questions/2033150/subclassing-dict-should-dict-init-be-called)
         if data is None:
             pass
         elif isinstance(data, dict):
             for key in data:
-                self.__setitem__(key, data[key])  # <==> self[key]=data[key]
-                # x.__setitem__(i, y) <==> x[i]=y
+                self.__setitem__(key, data[key])
         else:
             raise TypeError('expected dict')
 
@@ -136,7 +144,7 @@ class DotDictify(dict):
         found = self.get(key, DotDictify.marker)
         # def get(self, k, d=None):
         #     D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
-        if found is DotDictify.marker:  # TODO what does marker do here?
+        if found is DotDictify.marker:  # TODO what does marker do here?; tests if one DtDct obj is same obj as another?
             found = DotDictify()
             super(DotDictify, self).__setitem__(key, found)  # TODO why set item here?
         return found

@@ -6,6 +6,7 @@ from osf_api_v2_client.utils import(DotDictify,
                                     file_generator,
                                     get_response_or_exception)
 
+
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
         self.root_url = root_url
@@ -36,7 +37,6 @@ class Session(object):
         """
         # TODO consider case when generator is empty?
         target_url = '{}users/'.format(self.root_url)
-        # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
         return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_user(self, user_id):
@@ -59,7 +59,6 @@ class Session(object):
         """
         # TODO consider case when generator is empty?
         target_url = '{}nodes/'.format(self.root_url)
-        # TODO try/except something here? (e.g. raising exceptions for permissions errors?)
         return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_node(self, node_id=''):
@@ -112,7 +111,8 @@ class Session(object):
 
     # FILE ACTIONS
 
-    # TODO possible to do something like node.get_files_generator() ? ...
+    # TODO possible to do something like node.get_files_generator(), which would pass the current
+    # node's id to a function that would get the generator ? ...
     def get_file_generator(self, node_id, num_requested=-1):
         """
         :param node_id: 5-character node id

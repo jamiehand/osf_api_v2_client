@@ -36,13 +36,50 @@ my_vcr = vcr.VCR(
     record_mode='new_episodes',  # TODO or 'once' ?
 )
 
-# TODO get rid of pprint, smart_print()
-pp = pprint.PrettyPrinter()
+
+# TODO get rid of this:
 def smart_print(string):
     try:
         print(string)
     except UnicodeEncodeError:
         print(string.encode('utf-8'))
+
+
+class TestDotDictify(unittest.TestCase):
+
+    # TEST __INIT__
+
+    def test_no_param(self):
+        no_param_dd = DotDictify()  # no param --> uses default: data = None
+        assert_true(isinstance(no_param_dd, DotDictify))
+        assert_true(isinstance(no_param_dd, dict))
+        assert_false(no_param_dd)  # assert no_param_dd is empty
+
+    def test_wrong_type_param(self):
+        not_dict = 4
+        with assert_raises(TypeError):
+            DotDictify(not_dict)
+
+    def test_empty_dict_param(self):
+        empty_dict = {}
+        empty_dd = DotDictify(empty_dict)
+        assert_true(isinstance(empty_dd, DotDictify))
+        assert_true(isinstance(empty_dd, dict))
+        assert_false(empty_dd)  # assert empty_dd is empty
+
+    def test_json_dict_param(self):
+        json_dict = {
+            u'name': u'Sally',
+            u'age': 144
+        }
+        json_dd = DotDictify(json_dict)
+        assert_true(isinstance(json_dd, DotDictify))
+        assert_true(isinstance(json_dd, dict))
+        assert_true(json_dd)  # assert json_dd is not empty
+        assert_equal(json_dd[u'name'], u'Sally')  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
+        assert_equal(json_dd[u'age'], 144)  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
+        assert_equal(json_dd.name, u'Sally')  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
+        assert_equal(json_dd.age, 144)  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
 
 
 class TestFileGenerator(unittest.TestCase):
@@ -60,11 +97,11 @@ class TestFileGenerator(unittest.TestCase):
     # TODO how to assert that files exist?
 
 
-
 class TestDotDictifyGenerator(unittest.TestCase):
 
     @my_vcr.use_cassette()
     def test_defaults(self):
+        # TODO modify this
         """
         num_requested should == -1, meaning all items should be returned
         """
@@ -88,7 +125,7 @@ class TestDotDictifyGenerator(unittest.TestCase):
 
     @my_vcr.use_cassette()
     def test_num_requested_negative1(self):
-        # TODO this
+        # TODO write this test
         """
         Test that generator responds correctly when num_requested == -1 vs any other number.
         """
@@ -99,11 +136,12 @@ class TestDotDictifyGenerator(unittest.TestCase):
         """
         request 4; 4 items should be returned
         """
-        happy_gen = dotdictify_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
+        gen = dotdictify_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
                                        num_requested=4)
-        for item in happy_gen:
+        for item in gen:
             print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
+    # TODO get rid of this
     def test_time(self):
         small_gen = dotdictify_generator("https://staging2.osf.io/api/v2/users",
                                        num_requested=4)
