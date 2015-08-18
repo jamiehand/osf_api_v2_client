@@ -1,5 +1,6 @@
 import six
 import requests
+import collections
 
 
 # Possible alternative to replace a bunch of if statements:
@@ -151,4 +152,57 @@ class DotDictify(dict):
 
     __setattr__ = __setitem__
     __getattr__ = __getitem__
+
+
+class JamiesDotNotator(collections.MutableMapping):
+    """
+    Take a JSON dict (or any dict?) and make its keys and values accessible with dot
+    notation (like that of data attributes).
+    Creates an interface for interacting with a dict. ? See:
+    http://stackoverflow.com/a/3387975/4979097
+    Also modified from: http://stackoverflow.com/a/3031270/4979097
+    """
+    def __init__(self, dictionary=None):
+        # TODO rename "dictionary" param?
+        if dictionary is None:
+            pass  # TODO or raise TypeError ?
+        elif isinstance(dictionary, dict):
+            # TODO rename "dictionary" data attribute?
+            self.dictionary = dictionary
+            # TODO delete the following, unless needed:
+            # self.update(dict(*args, **kwargs))  # for key, value in dict(*args, **kwargs)
+            #     # TODO why args (above ^) ?? shouldn't this just be kwargs?, ie keys with values?
+            #     # TODO maybe just change it to accept only a dictionary, and then pass that dict in for update?
+
+        else:
+            raise TypeError('expected dict')
+
+    # ABSTRACT METHODS TO BE IMPLEMENTED:
+
+    def __getitem__(self, key):
+        return self.dictionary[key]
+
+    def __setitem__(self, key, value):
+        self.dictionary[key] = value
+
+    def __delitem__(self, key):
+        del self.dictionary[key]
+
+    def __iter__(self):
+        return iter(self.dictionary)
+
+    def __len__(self):
+        return len(self.dictionary)
+
+    __getattr__ = __getitem__
+    __setattr__ = __setitem__
+
+
+json_dict = {'name': 'Jamie', 'age': 22}
+dn = JamiesDotNotator(json_dict)
+# print(dn.name)
+print(dn)
+
+
+
 
