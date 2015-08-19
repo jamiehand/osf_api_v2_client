@@ -164,47 +164,29 @@ class JamiesDotNotator(collections.MutableMapping):
     Also modified from: http://stackoverflow.com/a/3031270/4979097
     """
 
-    # def __init__(self, dictionary=None):
-    #     # TODO rename "dictionary" param?
-    #     if dictionary is None:
-    #         pass  # TODO or raise TypeError ?
-    #     elif isinstance(dictionary, dict):
-    #         # TODO rename "dictionary" data attribute?
-    #         self.dictionary = dictionary
-    #         # TODO delete the following, unless needed:
-    #         # self.update(dict(*args, **kwargs))  # for key, value in dict(*args, **kwargs)
-    #         #     # TODO why args (above ^) ?? shouldn't this just be kwargs?, ie keys with values?
-    #         #     # TODO maybe just change it to accept only a dictionary, and then pass that dict in for update?
-    #
-    #     else:
-    #         raise TypeError('expected dict')
-
-    # ABSTRACT METHODS TO BE IMPLEMENTED:
+    def __init__(self, dictionary=None):
+        if dictionary is None:
+            pass  # TODO or raise TypeError ?
+        elif isinstance(dictionary, dict):
+            # self.__dict__ = dictionary  <-- doesn't work
+            for key in dictionary:
+                self.__dict__[key] = dictionary[key]
+        else:
+            raise TypeError('expected dict')
 
     def __getitem__(self, key):
-        # return self.dictionary[key]  # like self.__getitem__('hello') = 'world' --> infinite recursion
-        # super(JamiesDotNotator, self).__getitem__(key)  # Not implemented --> raises an error
-        # object.__getitem__()  # __getitem__() not defined for object --> doesn't work
         return self.__dict__[key]
 
     def __setitem__(self, key, value):
-        # self.dictionary[key] = value
-        # super(JamiesDotNotator, self).__setitem__(key, value)
         self.__dict__[key] = value
 
     def __delitem__(self, key):
-        # del self.dictionary[key]
-        # super(JamiesDotNotator, self).__delitem__(key)
         del self.__dict__[key]
 
     def __iter__(self):
-        # return iter(self.dictionary)
-        # super(JamiesDotNotator, self).__iter__()
         return iter(self.__dict__)
 
     def __len__(self):
-        # return len(self.dictionary)
-        # super(JamiesDotNotator, self).__len__()
         return len(self.__dict__)
 
     __getattr__ = __getitem__
@@ -212,9 +194,9 @@ class JamiesDotNotator(collections.MutableMapping):
 
 
 json_dict = {'name': 'Jamie', 'age': 22}
-dn = JamiesDotNotator()  # (json_dict)
-dn['name'] = 'Jamie'
-dn['age'] = 22
+dn = JamiesDotNotator(json_dict)
+# dn['name'] = 'Jamie'
+# dn['age'] = 22
 print(dn)
 print(dn['name'])
 print(dn.name)
