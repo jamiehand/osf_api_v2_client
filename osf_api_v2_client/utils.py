@@ -141,6 +141,7 @@ class DotDictify(dict):
         super(DotDictify, self).__setitem__(key, value)  # calling dict's setitem
 
     def __getitem__(self, key):
+        # TODO what is the utility of "found" and "marker" here?
         found = self.get(key, DotDictify.marker)
         # def get(self, k, d=None):
         #     D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
@@ -151,8 +152,6 @@ class DotDictify(dict):
 
     __setattr__ = __setitem__
     __getattr__ = __getitem__
-
-    # TODO why infinite recursion? add 'marker'? change 'dictionary' name?
 
 
 class JamiesDotNotator(collections.MutableMapping):
@@ -170,15 +169,26 @@ class JamiesDotNotator(collections.MutableMapping):
         elif isinstance(dictionary, dict):
             # self.__dict__ = dictionary  <-- doesn't work
             for key in dictionary:
-                self.__dict__[key] = dictionary[key]
+                # self.__dict__[key] = dictionary[key]  <-- use __setitem__ instead to deal with recursive cases
+                self.__setitem__(key, dictionary[key])
         else:
             raise TypeError('expected dict')
 
+    def __setitem__(self, key, value):
+        # If it's a dictionary, DotNotate it, too
+        if isinstance(value, dict):  # TODO add this to prevent inf. loops?: and not isinstance(value, JamiesDotNotator)
+            value = JamiesDotNotator(value)
+        elif isinstance(value, list):
+            new_value = []
+            if value:  # if value list is not empty
+                if isinstance(value[0], dict):  # if it is a list of dicts
+                    for i in range(len(value)):  # DotNotate the items in the list
+                        new_value.append(JamiesDotNotator(value[i]))
+                    value = new_value
+        self.__dict__[key] = value
+
     def __getitem__(self, key):
         return self.__dict__[key]
-
-    def __setitem__(self, key, value):
-        self.__dict__[key] = value
 
     def __delitem__(self, key):
         del self.__dict__[key]
@@ -189,17 +199,44 @@ class JamiesDotNotator(collections.MutableMapping):
     def __len__(self):
         return len(self.__dict__)
 
-    __getattr__ = __getitem__
     __setattr__ = __setitem__
+    __getattr__ = __getitem__
 
 
-json_dict = {'name': 'Jamie', 'age': 22}
+json_dict = {'name': 'Jamie',
+             'age': 22,
+             'housemates': [
+                 {'name': 'Iris',
+                  'age': 54
+                  },
+                 {'name': 'Sandy',
+                  'age': 42
+                  },
+                 {'name': 'Michael',
+                  'age': 19
+                  },
+                 {'name': 'Paul',
+                  'age': 23
+                  }
+             ],
+             'degrees': {
+                 'Middlebury_College': 'BA in Computer Science',
+                 'PCHS': 'Diploma'
+             }
+             }
 dn = JamiesDotNotator(json_dict)
-# dn['name'] = 'Jamie'
-# dn['age'] = 22
+print(dn.name)
+print(dn.age)
+dn['name'] = 'Jenny'
+dn['age'] = 57
 print(dn)
 print(dn['name'])
-print(dn.name)
+print(dn.age)
+print(dn.housemates)
+print(dn.housemates[0].name)
+print(dn.housemates[3].age)
+print(dn.degrees.Middlebury_College)
+
 
 
 
