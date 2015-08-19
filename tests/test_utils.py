@@ -84,8 +84,30 @@ class TestDotDictify(unittest.TestCase):
 
 
 class TestDotNotator(unittest.TestCase):
-
-    # TODO tests for setitem (e.g. dn.name = u'Sammy' --> check that it changes), delitem, iter, setattr, getattr?
+    def setUp(self):
+        self.json_dict = {
+            u'name': u'Sally',
+            u'age': 144,
+            u'friends': [
+                {u'name': u'Sasha',
+                 u'age': 121
+                 },
+                {u'name': u'Sandy',
+                 u'age': 100
+                 },
+            ],
+            u'education': {
+                u'Artsy_University':
+                    {u'degree': u'BA in Art',
+                     u'years_spent': 3,
+                     },
+                u'High_School':
+                    {u'degree': u'Diploma',
+                     u'years_spent': 4,
+                     }
+            },
+            }
+        self.dn = DotNotator(self.json_dict)
 
     def test_no_param(self):
         no_param_dn = DotNotator()  # no param --> uses default: dictionary = None
@@ -104,11 +126,7 @@ class TestDotNotator(unittest.TestCase):
         assert_false(empty_dn)  # assert empty_dn is empty
 
     def test_json_dict_param(self):
-        json_dict = {
-            u'name': u'Sally',
-            u'age': 144
-        }
-        json_dn = DotNotator(json_dict)
+        json_dn = DotNotator(self.json_dict)
         assert_true(isinstance(json_dn, DotNotator))
         assert_true(json_dn)  # assert json_dn is not empty
         assert_equal(json_dn[u'name'], u'Sally')
@@ -117,42 +135,67 @@ class TestDotNotator(unittest.TestCase):
         assert_equal(json_dn.age, 144)
 
     def test_param_includes_list_of_dicts(self):
-        json_dict = {u'name': u'Sally',
-                     u'age': 144,
-                     u'friends': [
-                         {u'name': u'Sasha',
-                          u'age': 121
-                          },
-                         {u'name': u'Sandy',
-                          u'age': 100
-                          },
-                     ],
-                     }
-        dn = DotNotator(json_dict)
-        assert_equal(dn[u'friends'][0][u'name'], u'Sasha')
-        assert_equal(dn[u'friends'][1][u'age'], 100)
-        assert_equal(dn.friends[0].age, 121)
-        assert_equal(dn.friends[1].name, u'Sandy')
+        assert_equal(self.dn[u'friends'][0][u'name'], u'Sasha')
+        assert_equal(self.dn[u'friends'][1][u'age'], 100)
+        assert_equal(self.dn.friends[0].age, 121)
+        assert_equal(self.dn.friends[1].name, u'Sandy')
 
     def test_param_includes_dict_inside_dict(self):
-        json_dict = {u'name': u'Sally',
-                     u'age': 144,
-                     u'education': {
-                         u'Artsy_University':
-                             {u'degree': u'BA in Art',
-                              u'years_spent': 3,
-                              },
-                         u'High_School':
-                             {u'degree': 'Diploma',
-                              u'years_spent': 4,
-                              }
-                     },
-                     }
-        dn = DotNotator(json_dict)
-        assert_equal(dn[u'education'][u'Artsy_University'][u'degree'], u'BA in Art')
-        assert_equal(dn[u'education'][u'High_School'][u'years_spent'], 4)
-        assert_equal(dn.education.Artsy_University.years_spent, 3)
-        assert_equal(dn.education.High_School.degree, u'Diploma')
+        assert_equal(self.dn[u'education'][u'Artsy_University'][u'degree'], u'BA in Art')
+        assert_equal(self.dn[u'education'][u'High_School'][u'years_spent'], 4)
+        assert_equal(self.dn.education.Artsy_University.years_spent, 3)
+        assert_equal(self.dn.education.High_School.degree, u'Diploma')
+
+    def test_attempt_to_access_nonexistent_key(self):
+        with assert_raises(KeyError):
+            print(self.dn.education.bad_key)
+
+    def test_modify_key(self):
+        self.dn.name = u'Sammy'
+        self.dn[u'age'] = 81
+        assert_equal(self.dn[u'name'], u'Sammy')
+        assert_equal(self.dn.age, 81)
+
+    def test_add_key(self):
+        self.dn.new_item1 = u'Hello'
+        self.dn[u'new_item2'] = u'world!'
+        assert_equal(self.dn[u'new_item1'], u'Hello')
+        assert_equal(self.dn.new_item2, u'world!')
+        assert_equal('{} {}'.format(self.dn.new_item1, self.dn.new_item2), u'Hello world!')
+
+    def test_delete_key(self):
+        del self.dn.name
+        with assert_raises(KeyError):
+            print(self.dn[u'name'])
+        del self.dn[u'friends'][0][u'name']
+        with assert_raises(KeyError):
+            print(self.dn.friends[0].name)
+        del self.dn.education.Artsy_University
+        with assert_raises(KeyError):
+            print(self.dn[u'education'][u'Artsy_University'])
+        assert_equal(self.dn[u'education'][u'High_School'], {u'degree': 'Diploma', u'years_spent': 4, })
+
+    def test_iter_list(self):
+        friends_list = []
+        for item in self.dn.friends:
+            friends_list.append(item)
+        assert_equal(friends_list,
+                     [{u'name': u'Sasha',
+                       u'age': 121
+                       },
+                      {u'name': u'Sandy',
+                       u'age': 100
+                       },
+                      ])
+
+    def test_iter_dict(self):
+        hs_dict = {}
+        for key in self.dn[u'education'][u'High_School']:
+            hs_dict[key] = self.dn[u'education'][u'High_School'][key]
+        assert_equal(hs_dict,
+                     {u'degree': u'Diploma',
+                      u'years_spent': 4,
+                      })
 
 
 class TestFileGenerator(unittest.TestCase):
