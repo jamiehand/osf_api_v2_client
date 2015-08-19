@@ -2,7 +2,6 @@ import six
 import requests
 import collections
 
-
 # Possible alternative to replace a bunch of if statements:
 # mydict = {
 #     'get':requests.get
@@ -153,6 +152,8 @@ class DotDictify(dict):
     __setattr__ = __setitem__
     __getattr__ = __getitem__
 
+    # TODO why infinite recursion? add 'marker'? change 'dictionary' name?
+
 
 class JamiesDotNotator(collections.MutableMapping):
     """
@@ -162,47 +163,61 @@ class JamiesDotNotator(collections.MutableMapping):
     http://stackoverflow.com/a/3387975/4979097
     Also modified from: http://stackoverflow.com/a/3031270/4979097
     """
-    def __init__(self, dictionary=None):
-        # TODO rename "dictionary" param?
-        if dictionary is None:
-            pass  # TODO or raise TypeError ?
-        elif isinstance(dictionary, dict):
-            # TODO rename "dictionary" data attribute?
-            self.dictionary = dictionary
-            # TODO delete the following, unless needed:
-            # self.update(dict(*args, **kwargs))  # for key, value in dict(*args, **kwargs)
-            #     # TODO why args (above ^) ?? shouldn't this just be kwargs?, ie keys with values?
-            #     # TODO maybe just change it to accept only a dictionary, and then pass that dict in for update?
 
-        else:
-            raise TypeError('expected dict')
+    # def __init__(self, dictionary=None):
+    #     # TODO rename "dictionary" param?
+    #     if dictionary is None:
+    #         pass  # TODO or raise TypeError ?
+    #     elif isinstance(dictionary, dict):
+    #         # TODO rename "dictionary" data attribute?
+    #         self.dictionary = dictionary
+    #         # TODO delete the following, unless needed:
+    #         # self.update(dict(*args, **kwargs))  # for key, value in dict(*args, **kwargs)
+    #         #     # TODO why args (above ^) ?? shouldn't this just be kwargs?, ie keys with values?
+    #         #     # TODO maybe just change it to accept only a dictionary, and then pass that dict in for update?
+    #
+    #     else:
+    #         raise TypeError('expected dict')
 
     # ABSTRACT METHODS TO BE IMPLEMENTED:
 
     def __getitem__(self, key):
-        return self.dictionary[key]
+        # return self.dictionary[key]  # like self.__getitem__('hello') = 'world' --> infinite recursion
+        # super(JamiesDotNotator, self).__getitem__(key)  # Not implemented --> raises an error
+        # object.__getitem__()  # __getitem__() not defined for object --> doesn't work
+        return self.__dict__[key]
 
     def __setitem__(self, key, value):
-        self.dictionary[key] = value
+        # self.dictionary[key] = value
+        # super(JamiesDotNotator, self).__setitem__(key, value)
+        self.__dict__[key] = value
 
     def __delitem__(self, key):
-        del self.dictionary[key]
+        # del self.dictionary[key]
+        # super(JamiesDotNotator, self).__delitem__(key)
+        del self.__dict__[key]
 
     def __iter__(self):
-        return iter(self.dictionary)
+        # return iter(self.dictionary)
+        # super(JamiesDotNotator, self).__iter__()
+        return iter(self.__dict__)
 
     def __len__(self):
-        return len(self.dictionary)
+        # return len(self.dictionary)
+        # super(JamiesDotNotator, self).__len__()
+        return len(self.__dict__)
 
     __getattr__ = __getitem__
     __setattr__ = __setitem__
 
 
 json_dict = {'name': 'Jamie', 'age': 22}
-dn = JamiesDotNotator(json_dict)
-# print(dn.name)
+dn = JamiesDotNotator()  # (json_dict)
+dn['name'] = 'Jamie'
+dn['age'] = 22
 print(dn)
-
+print(dn['name'])
+print(dn.name)
 
 
 
