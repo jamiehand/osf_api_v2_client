@@ -154,12 +154,12 @@ class DotDictify(dict):
     __getattr__ = __getitem__
 
 
-class JamiesDotNotator(collections.MutableMapping):
+class DotNotator(collections.MutableMapping):
     """
-    Take a JSON dict (or any dict?) and make its keys and values accessible with dot
+    Take a dict and make its keys and values accessible with dot
     notation (like that of data attributes).
-    Creates an interface for interacting with a dict. ? See:
-    http://stackoverflow.com/a/3387975/4979097
+    Creates an interface for interacting with a dict.
+    See: http://stackoverflow.com/a/3387975/4979097
     Also modified from: http://stackoverflow.com/a/3031270/4979097
     """
 
@@ -175,15 +175,14 @@ class JamiesDotNotator(collections.MutableMapping):
             raise TypeError('expected dict')
 
     def __setitem__(self, key, value):
-        # If it's a dictionary, DotNotate it, too
-        if isinstance(value, dict):  # TODO add this to prevent inf. loops?: and not isinstance(value, JamiesDotNotator)
-            value = JamiesDotNotator(value)
-        elif isinstance(value, list):
+        if isinstance(value, dict):  # DotNotate other dicts in dict
+            value = DotNotator(value)
+        elif isinstance(value, list):  # DotNotate the items in a list of dicts
             new_value = []
             if value:  # if value list is not empty
-                if isinstance(value[0], dict):  # if it is a list of dicts
-                    for i in range(len(value)):  # DotNotate the items in the list
-                        new_value.append(JamiesDotNotator(value[i]))
+                if isinstance(value[0], dict):
+                    for item in value:
+                        new_value.append(DotNotator(item))
                     value = new_value
         self.__dict__[key] = value
 
@@ -201,42 +200,6 @@ class JamiesDotNotator(collections.MutableMapping):
 
     __setattr__ = __setitem__
     __getattr__ = __getitem__
-
-
-json_dict = {'name': 'Jamie',
-             'age': 22,
-             'housemates': [
-                 {'name': 'Iris',
-                  'age': 54
-                  },
-                 {'name': 'Sandy',
-                  'age': 42
-                  },
-                 {'name': 'Michael',
-                  'age': 19
-                  },
-                 {'name': 'Paul',
-                  'age': 23
-                  }
-             ],
-             'degrees': {
-                 'Middlebury_College': 'BA in Computer Science',
-                 'PCHS': 'Diploma'
-             }
-             }
-dn = JamiesDotNotator(json_dict)
-print(dn.name)
-print(dn.age)
-dn['name'] = 'Jenny'
-dn['age'] = 57
-print(dn)
-print(dn['name'])
-print(dn.age)
-print(dn.housemates)
-print(dn.housemates[0].name)
-print(dn.housemates[3].age)
-print(dn.degrees.Middlebury_College)
-
 
 
 

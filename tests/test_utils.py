@@ -19,6 +19,7 @@ from settings.local import (
 )
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import (DotDictify,
+                                     DotNotator,
                                      dotdictify_generator,
                                      file_generator,
                                      get_response_or_exception)
@@ -80,6 +81,78 @@ class TestDotDictify(unittest.TestCase):
         assert_equal(json_dd[u'age'], 144)  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
         assert_equal(json_dd.name, u'Sally')  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
         assert_equal(json_dd.age, 144)  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
+
+
+class TestDotNotator(unittest.TestCase):
+
+    # TODO tests for setitem (e.g. dn.name = u'Sammy' --> check that it changes), delitem, iter, setattr, getattr?
+
+    def test_no_param(self):
+        no_param_dn = DotNotator()  # no param --> uses default: dictionary = None
+        assert_true(isinstance(no_param_dn, DotNotator))
+        assert_false(no_param_dn)  # assert no_param_dn is empty
+
+    def test_wrong_type_param(self):
+        not_dict = 4
+        with assert_raises(TypeError):
+            DotNotator(not_dict)
+
+    def test_empty_dict_param(self):
+        empty_dict = {}
+        empty_dn = DotNotator(empty_dict)
+        assert_true(isinstance(empty_dn, DotNotator))
+        assert_false(empty_dn)  # assert empty_dn is empty
+
+    def test_json_dict_param(self):
+        json_dict = {
+            u'name': u'Sally',
+            u'age': 144
+        }
+        json_dn = DotNotator(json_dict)
+        assert_true(isinstance(json_dn, DotNotator))
+        assert_true(json_dn)  # assert json_dn is not empty
+        assert_equal(json_dn[u'name'], u'Sally')
+        assert_equal(json_dn[u'age'], 144)
+        assert_equal(json_dn.name, u'Sally')
+        assert_equal(json_dn.age, 144)
+
+    def test_param_includes_list_of_dicts(self):
+        json_dict = {u'name': u'Sally',
+                     u'age': 144,
+                     u'friends': [
+                         {u'name': u'Sasha',
+                          u'age': 121
+                          },
+                         {u'name': u'Sandy',
+                          u'age': 100
+                          },
+                     ],
+                     }
+        dn = DotNotator(json_dict)
+        assert_equal(dn[u'friends'][0][u'name'], u'Sasha')
+        assert_equal(dn[u'friends'][1][u'age'], 100)
+        assert_equal(dn.friends[0].age, 121)
+        assert_equal(dn.friends[1].name, u'Sandy')
+
+    def test_param_includes_dict_inside_dict(self):
+        json_dict = {u'name': u'Sally',
+                     u'age': 144,
+                     u'education': {
+                         u'Artsy_University':
+                             {u'degree': u'BA in Art',
+                              u'years_spent': 3,
+                              },
+                         u'High_School':
+                             {u'degree': 'Diploma',
+                              u'years_spent': 4,
+                              }
+                     },
+                     }
+        dn = DotNotator(json_dict)
+        assert_equal(dn[u'education'][u'Artsy_University'][u'degree'], u'BA in Art')
+        assert_equal(dn[u'education'][u'High_School'][u'years_spent'], 4)
+        assert_equal(dn.education.Artsy_University.years_spent, 3)
+        assert_equal(dn.education.High_School.degree, u'Diploma')
 
 
 class TestFileGenerator(unittest.TestCase):
