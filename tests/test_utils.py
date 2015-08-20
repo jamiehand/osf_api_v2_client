@@ -163,17 +163,17 @@ class TestDotNotator(unittest.TestCase):
         assert_equal(self.dn.new_item2, u'world!')
         assert_equal('{} {}'.format(self.dn.new_item1, self.dn.new_item2), u'Hello world!')
 
-    # TODO pursue this functionality? See:
+    # Inspired by (though doesn't fulfill same functionality as) this:
     # http://codereply.com/answer/4ay2xl/python-easily-access-deeply-nested-dict-get-set.html
     def test_add_multiple_layers_of_keys(self):
-        # self.dn.top_layer = {}
-        # self.dn.top_layer.middle_layer = {}
-        # self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'] = {u'3': u'world!'}
-        # for item in self.dn:
-        #     print(item)
-        print(self.dn)
-        # self.dn.top_layer.middle_layer.lowest_layer = u'Hello'
+        self.dn.top_layer = {}
+        self.dn.top_layer.middle_layer = {}
+        self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'] = {u'3': u'world!'}
+        assert_equal(self.dn[u'top_layer'], {u'middle_layer': {u'lowest_layer': {u'3': u'world!'}}})
+        assert_equal(self.dn.top_layer.middle_layer, {u'lowest_layer': {u'3': u'world!'}})
+        assert_equal(self.dn.top_layer.middle_layer.lowest_layer, {u'3': u'world!'})
         assert_equal(self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'][u'3'], u'world!')
+        print(self.dn.age)
 
     def test_delete_key(self):
         del self.dn.name

@@ -198,14 +198,17 @@ class DotNotator(collections.MutableMapping):
     def __len__(self):
         return len(self.__dict__)
 
-    # TODO repr() / str() ?
-
     def __str__(self):
-        try:
-            for item in self:
-                print('{}: {} -- {}'.format(item, self[item], type(item)))
-        except TypeError:
-            pass
+        # TODO somehow make this recursive; could look at pprint
+        # try:
+        for item in self:
+            # if isinstance(item, DotNotator):
+            #     return item.__str__()
+            #     # pass
+            # else:
+            return '{}: {} -- {}'.format(item, self[item], type(item))
+        # except TypeError:
+        #     pass
             # try:
             # for subitem in item:
             #     print('{}: {} -- {}'.format(subitem, self[subitem], type(subitem)))
