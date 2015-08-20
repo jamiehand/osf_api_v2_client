@@ -18,7 +18,7 @@ from settings.local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 from osf_api_v2_client.session import Session
-from osf_api_v2_client.utils import DotDictify
+from osf_api_v2_client.utils import DotNotator
 
 
 # Sessions with different forms of authentication:
@@ -52,23 +52,23 @@ class TestGetUsers(unittest.TestCase):
     @my_vcr.use_cassette()
     def test_get_authenticated_user(self):
         user1 = SESSION_AUTH1.get_user(USER1_ID)
-        assert_true(isinstance(user1, DotDictify))
+        assert_true(isinstance(user1, DotNotator))
 
     @my_vcr.use_cassette()
     def test_get_different_user_from_authenticated_user(self):
         user2 = SESSION_AUTH1.get_user(USER2_ID)
-        assert_true(isinstance(user2, DotDictify))
+        assert_true(isinstance(user2, DotNotator))
 
     @my_vcr.use_cassette()
     def test_get_user_from_unauthenticated_session(self):
         user1 = SESSION_NO_AUTH.get_user(USER1_ID)
-        assert_true(isinstance(user1, DotDictify))
+        assert_true(isinstance(user1, DotNotator))
 
 
 class TestUserAttributes(unittest.TestCase):
     """
-    Test accessing user attributes with the DotDictify format,
-    as enabled through the DotDictify class in osf_api_v2_client/utils.py
+    Test accessing user attributes with the DotNotator format,
+    as enabled through the DotNotator class in osf_api_v2_client/utils.py
     """
     # TODO rename this class when Dawn's PR is merged, if needed.
     # TODO more tests here; modify to match Dawn's PR once merged.
@@ -103,13 +103,13 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_employment_institutions(self):
         """
-        Ensures user.employment_institutions returns a list of DotDictify objects,
+        Ensures user.employment_institutions returns a list of DotNotator objects,
         and that getting information from the objects works.
         """
         employment_list = self.user.employment_institutions
         assert_true(isinstance(employment_list, list))
         if employment_list:  # if employment_list is not empty
-            assert_true(isinstance(employment_list[0], DotDictify))
+            assert_true(isinstance(employment_list[0], DotNotator))
             start_year = employment_list[0].startYear
             assert_true(isinstance(start_year, str))
             ongoing = employment_list[0].ongoing
@@ -117,13 +117,13 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_educational_institutions(self):
         """
-        Ensures user.educational_institutions returns a list of DotDictify objects,
+        Ensures user.educational_institutions returns a list of DotNotator objects,
         and that getting information from the objects works.
         """
         educational_list = self.user.educational_institutions
         assert_true(isinstance(educational_list, list))
         if educational_list:  # if educational_list is not empty
-            assert_true(isinstance(educational_list[0], DotDictify))
+            assert_true(isinstance(educational_list[0], DotNotator))
             start_year = educational_list[0].startYear
             assert_true(isinstance(start_year, str))
             ongoing = educational_list[0].ongoing
@@ -131,5 +131,5 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_social_accounts(self):
         social_dict = self.user.social_accounts
-        assert_true(isinstance(social_dict, DotDictify))
+        assert_true(isinstance(social_dict, DotNotator))
 

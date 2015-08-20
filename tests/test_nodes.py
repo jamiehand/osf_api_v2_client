@@ -9,7 +9,7 @@ import types
 import unittest
 from nose.tools import *  # flake8: noqa
 
-from osf_api_v2_client.utils import DotDictify
+from osf_api_v2_client.utils import DotNotator
 from osf_api_v2_client.session import Session
 from settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
@@ -53,7 +53,7 @@ class TestGetNodes(unittest.TestCase):
         for node in node_generator:
             node_list.append(node)
         assert_equal(len(node_list), 25)
-        assert_true(isinstance(node_list[0], DotDictify))
+        assert_true(isinstance(node_list[0], DotNotator))
 
     # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
     # returns more nodes when USER1 calls node_generator().
@@ -61,24 +61,24 @@ class TestGetNodes(unittest.TestCase):
     @my_vcr.use_cassette()
     def test_get_public_node_auth_contrib(self):
         public_node = SESSION_AUTH1.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, DotDictify))
+        assert_true(isinstance(public_node, DotNotator))
 
     @my_vcr.use_cassette()
     def test_get_public_node_auth_non_contrib(self):
         public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, DotDictify))
+        assert_true(isinstance(public_node, DotNotator))
 
     @my_vcr.use_cassette()
     def test_get_public_node_not_auth(self):
         public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
-        assert_true(isinstance(public_node, DotDictify))
+        assert_true(isinstance(public_node, DotNotator))
 
     # TODO is there a way for vcrpy to record the exceptions to replay them? right now these 3 tests fail:
     @my_vcr.use_cassette()
     def test_get_private_node_auth_contrib(self):
         # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
         private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
-        assert_true(isinstance(private_node, DotDictify))
+        assert_true(isinstance(private_node, DotNotator))
 
     @my_vcr.use_cassette()
     def test_get_private_node_auth_non_contrib(self):
@@ -113,7 +113,7 @@ class TestGetNodes(unittest.TestCase):
 #         new_private_node = SESSION_AUTH1.create_node(
 #             "Creating private node with python 1", category=""
 #         )
-#         assert_true(isinstance(new_private_node, DotDictify))
+#         assert_true(isinstance(new_private_node, DotNotator))
 #
 #     def test_create_node_not_auth(self):
 #         # Shouldn't work, because users must be authenticated in order to create nodes.
@@ -202,10 +202,10 @@ class TestGetNodes(unittest.TestCase):
 #     @my_vcr.use_cassette()
 #     def test_user1(self):
 #         public_node = SESSION_EX1.get_node('bxsu6')
-#         assert_true(isinstance(public_node, DotDictify))
+#         assert_true(isinstance(public_node, DotNotator))
 #
 #     @my_vcr.use_cassette()
 #     def test_user2(self):
 #         public_node = SESSION_EX2.get_node('bxsu6')
-#         assert_true(isinstance(public_node, DotDictify))
+#         assert_true(isinstance(public_node, DotNotator))
 

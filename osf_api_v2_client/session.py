@@ -1,8 +1,8 @@
 import six
 import requests
 
-from osf_api_v2_client.utils import(DotDictify,
-                                    dotdictify_generator,
+from osf_api_v2_client.utils import(DotNotator,
+                                    dotnotator_generator,
                                     file_generator,
                                     get_response_or_exception)
 
@@ -14,11 +14,11 @@ class Session(object):
 
     def get_root(self):
         """
-        :return: a DotDictify object of the api root as designated by self.root_url
+        :return: a DotNotator object of the api root as designated by self.root_url
         """
         response = get_response_or_exception('get', self.root_url)
         response_json = response.json()
-        return DotDictify(response_json)
+        return DotNotator(response_json)
 
     # USER ACTIONS
 
@@ -28,7 +28,7 @@ class Session(object):
     # TODO: if a parameter gets passed in, I should process it.
     # TODO: requests -- query parameters = ...
 
-    # TODO: modify DotDictify object, then push it to server to edit it?
+    # TODO: modify DotNotator object, then push it to server to edit it?
     def get_user_generator(self, num_requested=-1):
         """
         :param num_requested: a positive integer or -1; -1 will cause all users
@@ -37,7 +37,7 @@ class Session(object):
         """
         # TODO consider case when generator is empty?
         target_url = '{}users/'.format(self.root_url)
-        return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotnotator_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_user(self, user_id):
         """
@@ -47,7 +47,7 @@ class Session(object):
         url = '{}users/{}/'.format(self.root_url, user_id)
         response = get_response_or_exception('get', url, auth=self.auth)
         data = response.json()[u'data']
-        return DotDictify(data)
+        return DotNotator(data)
 
     # NODE ACTIONS
 
@@ -59,7 +59,7 @@ class Session(object):
         """
         # TODO consider case when generator is empty?
         target_url = '{}nodes/'.format(self.root_url)
-        return dotdictify_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotnotator_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_node(self, node_id=''):
         """
@@ -72,7 +72,7 @@ class Session(object):
         url = '{}nodes/{}/'.format(self.root_url, node_id)
         response = get_response_or_exception('get', url, auth=self.auth)
         data = response.json()[u'data']
-        return DotDictify(data)
+        return DotNotator(data)
 
     def create_node(self, title="", description="", category="", public="True"):
         """

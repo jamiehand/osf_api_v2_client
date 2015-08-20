@@ -19,7 +19,7 @@ from settings.local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 from osf_api_v2_client.session import Session
-from osf_api_v2_client.utils import DotDictify
+from osf_api_v2_client.utils import DotNotator
 
 
 # Sessions with different forms of authentication:
@@ -37,18 +37,18 @@ my_vcr = vcr.VCR(
 
 class TestGetRoot(unittest.TestCase):
     """
-        Ensures the root is a DotDictify object with 'meta' as an attribute (because
+        Ensures the root is a DotNotator object with 'meta' as an attribute (because
         the JSON object has a 'meta' dictionary).
     """
 
     @my_vcr.use_cassette()
     def test_get_root_auth(self):
         root = SESSION_AUTH1.get_root()
-        assert_true(isinstance(root, DotDictify))
+        assert_true(isinstance(root, DotNotator))
         assert_true(hasattr(root, 'meta'))
 
     @my_vcr.use_cassette()
     def test_get_root_not_auth(self):
         root = SESSION_NO_AUTH.get_root()
-        assert_true(isinstance(root, DotDictify))
+        assert_true(isinstance(root, DotNotator))
         assert_true(hasattr(root, 'meta'))
