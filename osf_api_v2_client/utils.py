@@ -94,28 +94,26 @@ def dotdictify_generator(url, auth=None, num_requested=-1):
         url = response_json[u'links'][u'next']
 
 
-# Instead of translating request into json request format, DotDictify transforms response itself.
-# TODO seems like it would be more efficient to just translate the request as opposed to transforming the
-# response ... unless we can transform the responses on a when-needed basis...?
-# DocDictify class is modified from here: http://stackoverflow.com/a/3031270/4979097
 class DotDictify(dict):
     """
     Given a dictionary, DotDictify makes the dictionary's data accessible as data attributes.
-    e.g. given json dictionary json_dict, DotDictify enables access like so: json_dict.data[0].name
-    instead of requiring this syntax: json_dict[u'data'][0][u'name']
+    
+    e.g. given json dictionary json_dict, DotDictify enables access like so:
+    json_dict.data[0].name
+    instead of requiring this syntax:
+    json_dict[u'data'][0][u'name']
+
+    Note that both syntaxes will still work, though, and they can be mixed:
+    json_dict[u'data'][0].name
+    json_dict.data[0][u'name']
+
     As seen in the above example, DotDictify recurses through dictionaries of dictionaries and lists of
     dictionaries, to make those dictionaries into DotDictify objects as well.
+
+    DocDictify class is modified from here: http://stackoverflow.com/a/3031270/4979097
     """
 
-    # TODO: start with - make a simple JSON object (1 or 2 items), and make it go thru this code - in a debugger,
-    # or construct a test that makes sure this code does what I want; -- e.g. x.pony --> Shetland,
-    # x.horse --> shouldn't exist
-    # See what happens when I go to the next line -- have a really good guess of what's going to happen. (Step into
-    # DotDictify) -- say, I expect it to step into this line here, because of this.
-    # Know before I hit next, what I think is going to happen -- if not, say: I expected this, but this happened.
-    # Try to get it to hit all lines of DotDictify() code.
-
-    marker = object()  # a new object  # TODO what does this do...?
+    marker = object()  # marker is used in __getitem__
 
     def __init__(self, data=None):
         dict.__init__(self)  # instantiating a dict   # TODO necessary/useful? (see
@@ -129,25 +127,33 @@ class DotDictify(dict):
             raise TypeError('expected dict')
 
     def __setitem__(self, key, value):
-        if isinstance(value, dict) and not isinstance(value, DotDictify):  # TODO when would value have type DotDictify?
+        if isinstance(value, dict) and not isinstance(value, DotDictify):  # 2nd isinstance prevents infinite recursion
             value = DotDictify(value)
         elif isinstance(value, list):
             new_value = []
-            if value:  # if value list is not empty
-                if isinstance(value[0], dict):  # TODO can I assume that they will all be dicts if the first is?
+            if value:                            # If value list is not empty,
+                if isinstance(value[0], dict):   # if list is list of dicts,
+                    # TODO can I assume that they will all be dicts if the first is?
                     for i in range(len(value)):  # DotDictify the items in the list
                         new_value.append(DotDictify(value[i]))
                     value = new_value
         super(DotDictify, self).__setitem__(key, value)  # calling dict's setitem
 
     def __getitem__(self, key):
-        # TODO what is the utility of "found" and "marker" here?
-        found = self.get(key, DotDictify.marker)
-        # def get(self, k, d=None):
-        #     D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
-        if found is DotDictify.marker:  # TODO what does marker do here?; tests if one DtDct obj is same obj as another?
-            found = DotDictify()
-            super(DotDictify, self).__setitem__(key, found)  # TODO why set item here?
+        """
+        A note on the use of 'marker' and 'found' here. Much of this is not my (jamiehand's) code originally,
+        so I am not 100% sure about this, but it seems like the only purpose of 'DotDictify.marker'
+        and this method's local variable 'found' is to enable special functionality when the user
+        attempts to access a key that is not in a DotDictify object. Together, 'DotDictify.marker'
+        and 'found' make it so that instead of just returning a KeyError, __getitem__ adds that key and
+        creates a new empty DotDictify object as the value for that key.
+
+        The inline comments below are mine, not the original author's.
+        """
+        found = self.get(key, DotDictify.marker)  # i.e. found = self[key] if key in self, else DotDictify.marker
+        if found is DotDictify.marker:                       # If key not in self,
+            found = DotDictify()                             # create a new DotDictify object,
+            super(DotDictify, self).__setitem__(key, found)  # and set self[key] to be that object (found).
         return found
 
     __setattr__ = __setitem__
@@ -156,9 +162,21 @@ class DotDictify(dict):
 
 class DotNotator(collections.MutableMapping):
     """
-    Take a dict and make its keys and values accessible with dot
-    notation (like that of data attributes).
-    Creates an interface for interacting with a dict.
+    Given a dict, DotNotator makes the dict's data accessible as data attributes
+    (using 'dot' notation).
+
+    e.g. given json dictionary json_dict, DotDictify enables access like so:
+    json_dict.data[0].name
+    instead of requiring this syntax:
+    json_dict[u'data'][0][u'name']
+
+    Note that both syntaxes will still work, though, and they can be mixed:
+    json_dict[u'data'][0].name
+    json_dict.data[0][u'name']
+
+    As seen in the above example, DotNotator recurses through dicts of dicts and
+    lists of dicts, to make those dicts into DotNotator objects as well.
+
     See: http://stackoverflow.com/a/3387975/4979097
     Also modified from: http://stackoverflow.com/a/3031270/4979097
     """
@@ -167,15 +185,13 @@ class DotNotator(collections.MutableMapping):
         if dictionary is None:
             pass  # TODO or raise TypeError ?
         elif isinstance(dictionary, dict):
-            # self.__dict__ = dictionary  <-- doesn't work
             for key in dictionary:
-                # self.__dict__[key] = dictionary[key]  <-- use __setitem__ instead to deal with recursive cases
                 self.__setitem__(key, dictionary[key])
         else:
             raise TypeError('expected dict')
 
     def __setitem__(self, key, value):
-        if isinstance(value, dict):  # DotNotate other dicts in dict
+        if isinstance(value, dict):    # DotNotate other dicts in dict
             value = DotNotator(value)
         elif isinstance(value, list):  # DotNotate the items in a list of dicts
             new_value = []
@@ -197,22 +213,6 @@ class DotNotator(collections.MutableMapping):
 
     def __len__(self):
         return len(self.__dict__)
-
-    def __str__(self):
-        # TODO somehow make this recursive; could look at pprint
-        # try:
-        for item in self:
-            # if isinstance(item, DotNotator):
-            #     return item.__str__()
-            #     # pass
-            # else:
-            return '{}: {} -- {}'.format(item, self[item], type(item))
-        # except TypeError:
-        #     pass
-            # try:
-            # for subitem in item:
-            #     print('{}: {} -- {}'.format(subitem, self[subitem], type(subitem)))
-
 
     __setattr__ = __setitem__
     __getattr__ = __getitem__

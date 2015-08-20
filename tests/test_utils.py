@@ -48,7 +48,12 @@ def smart_print(string):
 
 class TestDotDictify(unittest.TestCase):
 
-    # TEST __INIT__
+    def setUp(self):
+        self.json_dict = {
+            u'name': u'Sally',
+            u'age': 144
+        }
+        self.dd = DotDictify(self.json_dict)
 
     def test_no_param(self):
         no_param_dd = DotDictify()  # no param --> uses default: data = None
@@ -82,6 +87,14 @@ class TestDotDictify(unittest.TestCase):
         assert_equal(json_dd.name, u'Sally')  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
         assert_equal(json_dd.age, 144)  # enters __getitem__; doesn't enter 'if found is DotDictify.marker'
 
+    def test_attempt_to_access_nonexistent_key(self):
+        new_dd = self.dd.nonexistent_key
+        assert_true(isinstance(new_dd, DotDictify))
+
+    def test_attempt_to_access_multiple_layers_of_nonexistent_keys(self):
+        self.dd.hello.foo.bar.nonexistent_key = u'Now I exist!'
+        assert_true(isinstance(self.dd.hello.foo.bar, DotDictify))
+        assert_equal(self.dd[u'hello'].foo.bar.nonexistent_key, u'Now I exist!')
 
 class TestDotNotator(unittest.TestCase):
     def setUp(self):
@@ -148,7 +161,7 @@ class TestDotNotator(unittest.TestCase):
 
     def test_attempt_to_access_nonexistent_key(self):
         with assert_raises(KeyError):
-            print(self.dn.education.bad_key)
+            print(self.dn.education.nonexistent_key)
 
     def test_modify_key(self):
         self.dn.name = u'Sammy'
