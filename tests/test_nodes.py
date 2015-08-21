@@ -193,20 +193,20 @@ class TestGetNodes(unittest.TestCase):
 #     # response = localhost_session.delete_node('x7s9m')
 #     # print(response.status_code)
 
-from requests.auth import HTTPBasicAuth
-SESSION_EX1 = Session(root_url=URL, auth=HTTPBasicAuth('user1@example.com', 'password1'))
-SESSION_EX2 = Session(root_url=URL, auth=HTTPBasicAuth('user2@example.com', 'password2'))
-
-
-class TestExamples(unittest.TestCase):
-
-    @my_vcr.use_cassette()
-    def test_user1(self):
-        public_node = SESSION_EX1.get_node('12345')
-        assert_true(isinstance(public_node, DotNotator))
-
-    @my_vcr.use_cassette()
-    def test_user2(self):
-        public_node = SESSION_EX2.get_node('bxsu6')
-        assert_true(isinstance(public_node, DotNotator))
+# from requests.auth import HTTPBasicAuth
+# SESSION_EX1 = Session(root_url=URL, auth=HTTPBasicAuth('user1@example.com', 'password1'))
+# SESSION_EX2 = Session(root_url=URL, auth=HTTPBasicAuth('user2@example.com', 'password2'))
+#
+#
+# class TestExamples(unittest.TestCase):
+#
+#     @my_vcr.use_cassette()
+#     def test_user1(self):
+#         public_node = SESSION_EX1.get_node('bxsu6')
+#         assert_true(isinstance(public_node, DotNotator))
+#
+#     @my_vcr.use_cassette()
+#     def test_user2(self):
+#         public_node = SESSION_EX2.get_node('bxsu6')
+#         assert_true(isinstance(public_node, DotNotator))
 
