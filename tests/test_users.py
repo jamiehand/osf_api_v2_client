@@ -1,7 +1,7 @@
 # TODO import API_PREFIX? (also, import domain?)
 # TODO change auth to work with OAuth/tokens instead of basic auth?
 
-import six
+from six import string_types
 import vcr
 import types
 import unittest
@@ -83,15 +83,15 @@ class TestUserAttributes(unittest.TestCase):
         """
         # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
         fullname = self.user.fullname
-        assert_true(isinstance(fullname, str))
+        assert_true(isinstance(fullname, string_types))
         given_name = self.user.given_name
-        assert_true(isinstance(given_name, str))
+        assert_true(isinstance(given_name, string_types))
         middle_name = self.user.middle_name
-        assert_true(isinstance(middle_name, str))
+        assert_true(isinstance(middle_name, string_types))
         family_name = self.user.family_name
-        assert_true(isinstance(family_name, str))
+        assert_true(isinstance(family_name, string_types))
         suffix = self.user.suffix
-        assert_true(isinstance(suffix, str))
+        assert_true(isinstance(suffix, string_types))
 
     def test_gravatar_url(self):
         """
@@ -111,7 +111,7 @@ class TestUserAttributes(unittest.TestCase):
         if employment_list:  # if employment_list is not empty
             assert_true(isinstance(employment_list[0], DotNotator))
             start_year = employment_list[0].startYear
-            assert_true(isinstance(start_year, str))
+            assert_true(isinstance(start_year, string_types))
             ongoing = employment_list[0].ongoing
             assert_true(isinstance(ongoing, bool))
 
@@ -125,7 +125,7 @@ class TestUserAttributes(unittest.TestCase):
         if educational_list:  # if educational_list is not empty
             assert_true(isinstance(educational_list[0], DotNotator))
             start_year = educational_list[0].startYear
-            assert_true(isinstance(start_year, str))
+            assert_true(isinstance(start_year, string_types))
             ongoing = educational_list[0].ongoing
             assert_true(isinstance(ongoing, bool))
 
