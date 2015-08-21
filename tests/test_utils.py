@@ -237,23 +237,32 @@ class TestDotNotatorGenerator(unittest.TestCase):
         for item in gen:
             print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
-    # TODO get rid of this
-    def test_time(self):
-        small_gen = dotnotator_generator("https://staging2.osf.io/api/v2/users",
-                                       num_requested=4)
 
-        def bar():
-            for item in small_gen:
-                print(item)
+class TestTimes(unittest.TestCase):
+    # TODO get rid of this class
 
-        print(timeit.timeit(bar))
+    @vcr.use_cassette(record_mode='new_episodes')
+    def test_dn_json(self):
 
-        big_gen = dotnotator_generator("https://staging2.osf.io/api/v2/users")
+        dn_list = []
+        for user in SESSION_AUTH1.get_user_generator(num_requested=50):
+            dn_list.append(user)
 
-        def foo():
-            for item in big_gen:
-                print(item)
+        def time_dn():
+            for u in dn_list:
+                x = u.fullname
 
-        print(timeit.timeit(foo))
+        json_list = []
+        for user in SESSION_AUTH1.get_json_user_generator(num_requested=50):
+            json_list.append(user)
 
+        def time_json():
 
+            for data_item in json_list:
+                y = data_item[u'fullname']
+
+        print('------ NUM_REQUESTED = 50 ------')
+        print('TIME_DN: 1ST TIME: {}'.format(timeit.timeit(time_dn)))
+        print('TIME_DN: 2ND TIME: {}'.format(timeit.timeit(time_dn)))
+        print('TIME_JSON: 1ST TIME: {}'.format(timeit.timeit(time_json)))
+        print('TIME_JSON: 2ND TIME: {}'.format(timeit.timeit(time_json)))

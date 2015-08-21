@@ -3,6 +3,7 @@ import requests
 
 from osf_api_v2_client.utils import(DotNotator,
                                     dotnotator_generator,
+                                    json_dict_generator,
                                     file_generator,
                                     get_response_or_exception)
 
@@ -35,9 +36,18 @@ class Session(object):
         to be returned; otherwise num_requested number of users will be returned
         :return: a generator containing users
         """
-        # TODO consider case when generator is empty?
         target_url = '{}users/'.format(self.root_url)
         return dotnotator_generator(target_url, auth=self.auth, num_requested=num_requested)
+
+    def get_json_user_generator(self, num_requested=-1):
+        # TODO get rid of this method
+        """
+        :param num_requested: a positive integer or -1; -1 will cause all users
+        to be returned; otherwise num_requested number of users will be returned
+        :return: a generator containing users
+        """
+        target_url = '{}users/'.format(self.root_url)
+        return json_dict_generator(target_url, auth=self.auth, num_requested=num_requested)
 
     def get_user(self, user_id):
         """

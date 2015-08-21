@@ -1,5 +1,5 @@
 """
-Example local settings file. Copy this file to local.py and change
+Example settings file. Copy this file to local.py and change
 these settings.
 
 Modify USER1, PASS1, USER2, and PASS2 to desired string values.

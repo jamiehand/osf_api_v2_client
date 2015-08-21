@@ -94,6 +94,36 @@ def dotnotator_generator(url, auth=None, num_requested=-1):
         url = response_json[u'links'][u'next']
 
 
+def json_dict_generator(url, auth=None, num_requested=-1):
+    # TODO get rid of this method
+    """
+    Deals with pagination.
+    :param url: the url where the desired items are located
+    :param auth: authentication to send with the request
+    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :return: a generator of DotNotator versions of the items desired
+    """
+    #: Number of items left in the generator
+    count_remaining = num_requested
+    #: Next url to get the json response from
+    url = url  # url of first page
+
+    while url is not None:
+        response = get_response_or_exception('get', url, auth=auth)  # page response
+        response_json = response.json()
+        data = response_json[u'data']
+        for item in data:
+            if num_requested == -1:
+                yield item
+            elif count_remaining > 0:
+                count_remaining -= 1
+                yield item
+            elif count_remaining == 0:
+                break
+        if count_remaining == 0:
+            break
+        url = response_json[u'links'][u'next']
+
 class DotNotator(collections.MutableMapping):
     """
     Given a dict, DotNotator makes the dict's data accessible as data attributes
