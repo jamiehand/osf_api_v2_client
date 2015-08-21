@@ -4,7 +4,7 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      Authorization: [Basic dXNlcjFAZXhhbXBsZS5jb206cGFzc3dvcmQx]
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
@@ -30,7 +30,7 @@ interactions:
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Wed, 12 Aug 2015 15:15:14 GMT']
+      Date: ['Fri, 21 Aug 2015 16:13:09 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
