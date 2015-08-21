@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/users/cm98x/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA5VRO0/DMBD+K8gDUxu7LklIpIqdmQ2hyLIv6Qk/Ij+qlqr/HTtVpYJY2M7f0z6f
+        iRJRkP5MUJGeSNM9H8mKjElrKwxk6FUYhAeewQkPYId7OIMGldJwQ4s16/XpBhRfSOOIxxyV59wG
+        g4cJQwQPpZKzTb1m7Zq3b5um37KesYo1LWOsVHpxyPfzQ/I6a/cxzqGnNIBMHqobW0ln6FVIGy5b
+        wVkL3bZVdS0BulrWXcOEYEyx+kXtUIGNKJ19DPgFu6dSBGbW7mQyMaANEWOK6Gwg/ftHJlWSopyF
+        /oMNTmImhJQu2Zgt58uKaLSfZSTWKVgGD3rJuH9GFBPaiVcujBU6KmakB05TAB/o8hV0sVOSE/fR
+        /FjBL+9VXrYNevxfR0mPp7l89lJNLpdvAwkXFxcCAAA=
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Fri, 21 Aug 2015 16:13:09 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
