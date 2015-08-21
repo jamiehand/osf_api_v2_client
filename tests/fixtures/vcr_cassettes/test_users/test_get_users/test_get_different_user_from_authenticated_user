@@ -23,7 +23,7 @@ interactions:
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Fri, 21 Aug 2015 16:13:09 GMT']
+      Date: ['Fri, 21 Aug 2015 18:15:49 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

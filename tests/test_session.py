@@ -35,6 +35,7 @@ my_vcr = vcr.VCR(
     record_mode='new_episodes',  # TODO or 'once' ?
 )
 
+
 class TestGetRoot(unittest.TestCase):
     """
         Ensures the root is a DotNotator object with 'meta' as an attribute (because

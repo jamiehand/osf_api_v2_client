@@ -21,6 +21,8 @@ from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotNotator
 
 
+CASSETTE_PREFIX = '../tests/fixtures/vcr_cassettes/test_users/'
+
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
@@ -29,16 +31,15 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
-my_vcr = vcr.VCR(
-    cassette_library_dir='fixtures/vcr_cassettes/test_users',
-    record_mode='new_episodes',  # TODO or 'once' ?
-)
 
-
-# @my_vcr.use_cassette()
 class TestGetUsers(unittest.TestCase):
 
-    @my_vcr.use_cassette()
+    get_users_vcr = vcr.VCR(
+        cassette_library_dir='{}test_get_users'.format(CASSETTE_PREFIX),
+        record_mode='new_episodes',  # TODO or 'once' ?
+    )
+
+    @get_users_vcr.use_cassette()
     def test_get_user_generator(self):
         user_generator = SESSION_AUTH1.get_user_generator()
         # TODO what should my assertion(s) here be?
@@ -49,17 +50,17 @@ class TestGetUsers(unittest.TestCase):
         #     pp.pprint(node)
         #     count += 1
 
-    @my_vcr.use_cassette()
+    @get_users_vcr.use_cassette()
     def test_get_authenticated_user(self):
         user1 = SESSION_AUTH1.get_user(USER1_ID)
         assert_true(isinstance(user1, DotNotator))
 
-    @my_vcr.use_cassette()
+    @get_users_vcr.use_cassette()
     def test_get_different_user_from_authenticated_user(self):
         user2 = SESSION_AUTH1.get_user(USER2_ID)
         assert_true(isinstance(user2, DotNotator))
 
-    @my_vcr.use_cassette()
+    @get_users_vcr.use_cassette()
     def test_get_user_from_unauthenticated_session(self):
         user1 = SESSION_NO_AUTH.get_user(USER1_ID)
         assert_true(isinstance(user1, DotNotator))
@@ -73,7 +74,12 @@ class TestUserAttributes(unittest.TestCase):
     # TODO rename this class when Dawn's PR is merged, if needed.
     # TODO more tests here; modify to match Dawn's PR once merged.
 
-    @my_vcr.use_cassette()
+    user_attributes_vcr = vcr.VCR(
+        cassette_library_dir='{}test_user_attributes'.format(CASSETTE_PREFIX),
+        record_mode='new_episodes',  # TODO or 'once' ?
+    )
+
+    @user_attributes_vcr.use_cassette()
     def setUp(self):
         self.user = SESSION_AUTH1.get_user(USER1_ID)
 
