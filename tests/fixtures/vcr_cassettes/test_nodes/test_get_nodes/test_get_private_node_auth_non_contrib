@@ -4,22 +4,22 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      Authorization: [Basic dXNlcjJAZXhhbXBsZS5jb206cGFzc3dvcmQy]
+      Authorization: [Basic amhhbmRAbWlkZGxlYnVyeS5lZHU6VFN1aDVqQXg2VEt1]
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
-    uri: https://staging2.osf.io/api/v2/nodes/bxsu6/
+    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA6tWSkktSczMUbJS8swrS8zJTFEoLU4tykvMTdUvSCwuLs8vStFTqgUA0COwIicA
-        AAA=
+        H4sIAAAAAAAAA6tWSkktSczMUbJSiswvVUjJV8jLL1HISCxLVShILcrNLC7OzM9TKMkH8dLyi3IV
+        SjIyixUSk0uAwnpKtQD5dIHnPwAAAA==
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Fri, 21 Aug 2015 16:23:55 GMT']
+      Date: ['Fri, 21 Aug 2015 18:31:12 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

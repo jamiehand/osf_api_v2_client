@@ -32,10 +32,9 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
-my_vcr = vcr.VCR(
-    cassette_library_dir='fixtures/vcr_cassettes/test_utils',
-    record_mode='new_episodes',  # TODO or 'once' ?
-)
+
+VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_utils/'
+VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
 
 
 # TODO get rid of this:
@@ -47,6 +46,7 @@ def smart_print(string):
 
 
 class TestDotNotator(unittest.TestCase):
+
     def setUp(self):
         self.json_dict = {
             u'name': u'Sally',
@@ -190,7 +190,12 @@ class TestDotNotator(unittest.TestCase):
 
 class TestDotNotatorGenerator(unittest.TestCase):
 
-    @my_vcr.use_cassette()
+    dot_notator_generator_vcr = vcr.VCR(
+        cassette_library_dir='{}test_dot_notator_generator'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @dot_notator_generator_vcr.use_cassette()
     def test_defaults(self):
         # TODO modify this
         """
@@ -214,7 +219,7 @@ class TestDotNotatorGenerator(unittest.TestCase):
             print(next(big_gen))
             print(next(big_gen))
 
-    @my_vcr.use_cassette()
+    @dot_notator_generator_vcr.use_cassette()
     def test_num_requested_negative1(self):
         # TODO write this test
         """
@@ -222,7 +227,7 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         pass
 
-    @my_vcr.use_cassette()
+    @dot_notator_generator_vcr.use_cassette()
     def test_num_requested_positive(self):
         """
         request 4; 4 items should be returned

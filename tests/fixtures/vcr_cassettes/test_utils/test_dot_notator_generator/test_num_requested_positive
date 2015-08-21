@@ -1,0 +1,44 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA8WYbVPbOBDHvwrjNtwb4gfZJsFT2uFoErhCCnkC0rnJOLbiCGzLZylugMl378pp
+        SgAn4Xo+5w2x5ZX+q93fSMs+Sq7Nbcn69ihFMU2Ii2PJkjxKPR+7MUmwtCdFNh/DoFKb2kHk4+N2
+        T3ZYAh8Ix8GA30cYvo6IL2xDOxBvr0wDzO250qPEyIOwMTQNJgTUJSOCXRhAqmaW1f0y0juaYemG
+        pamyqqp9sHJoyHHIF2IcT7ky9wGeYvD/UYpxQhih4alYqopQZR/mfcfDHsHfYWTMecQsRUk3Jc83
+        KDs0UGzFoUwmVBE7UFxF/fP+4mgwuRueNtVBT41aX0/qyA37951GVUlgsU8TFh2myzD3TprN9iSf
+        hHdM+MCwPxrAVsfUhfdvUqPWkf7eS4eXXGDc9kjoobJQZDJlo4X8JxHqwxeB3g2JezjlI8PcXaTo
+        8HmCYuzbPA3hYpcLicXidkSUBCkhdTFT0rXS7TIlWzFTBza6lGsmzfbewMxRSALhWwmpZ9SjckDX
+        g7Ow31myzmAHIUNTK+oKflBHq1q6aWloBT+Cc6r8MyHOHScA7J60CiMTmTlg1G5Efhv1v7RPWv2m
+        3y0Io6fYm0/RL4KmbOH/ESrjX0GVWmdDpVYO1kNlWGZ1LVTTcpCuvxIoo5IDUJ3atN1Dtfvm52aC
+        r5ztAWUkWwIKhPMD6ud1JU99NoXsbLzXFoYZEBkVU193LKGqpWkrCLKjyCeOzeEWU5LQlWmEw2ng
+        j2gMZygr09GIONilziSAu1BmUYxtl40x5oEvp79ruEPqQQ7cDU/8Ru/65r7/0BzhBiuIu+X0FIHb
+        M738KLuIcQt7FzGUP3IQGWtBe22bwVpFNwy0X83GTat2NN0yoZAyV+A2vwXnnqw6royU5v9aRnU6
+        9S8tfXzaDf7q3DwcFYTNixgWQc5LyfzgqUO5dkX4+KiEKm2oHn18OaEcy1HorQXp17w/Xs/KQKpq
+        6JnHl1lGB6IqVxEU5it4gkrPw8rcoVU8Qd2WA0/4Lrq5amhJ73M9OkdFHUNLKTBfJaEIutY7kB9r
+        JbS/kavdnxbbYEjPh6Fxe1hrcVtrGefdWkFnUgmZ8+AWwcuTWJ5s6CVklJD4uxGSd+/fvd8eJ7qa
+        x92Fr1sn3etz9fy2FXZvLwvkBEJsilCbItjwJCJZFDaZ2jlSpB8PS3rNIbHj44EPnYGSflzSj8Tg
+        Rqo+DD8uTfxgDT9ujzFUyePfueFJ03dqdfvmun921lWLY0ykAZnPEwHvx2IQkiE+FUjdW73Jj8Mm
+        tCuhNSUKK/hpR7YDDblNJZWYtCOm7DybsIWbUK/k0Z0aNjyt3fCT5hW/bN96BdE3Dz10pubBh4en
+        aBZxyq3Vfxth0Nr91fodkZhxyQonvg+jtnj+rW6shw8ru2kbuITq2S0O6MhDs3uhFUKp/ftaaKOW
+        wFr0tjnlti9Z+ybI43gQQa0vQYd+Npv9AJ//3TVEGAAA
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Fri, 21 Aug 2015 18:31:51 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

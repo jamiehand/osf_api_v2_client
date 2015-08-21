@@ -30,10 +30,9 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
-my_vcr = vcr.VCR(
-    cassette_library_dir='fixtures/vcr_cassettes/test_session',
-    record_mode='new_episodes',  # TODO or 'once' ?
-)
+
+VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_session/'
+VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
 
 
 class TestGetRoot(unittest.TestCase):
@@ -42,13 +41,18 @@ class TestGetRoot(unittest.TestCase):
         the JSON object has a 'meta' dictionary).
     """
 
-    @my_vcr.use_cassette()
+    get_root_vcr = vcr.VCR(
+        cassette_library_dir='{}test_get_root'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @get_root_vcr.use_cassette()
     def test_get_root_auth(self):
         root = SESSION_AUTH1.get_root()
         assert_true(isinstance(root, DotNotator))
         assert_true(hasattr(root, 'meta'))
 
-    @my_vcr.use_cassette()
+    @get_root_vcr.use_cassette()
     def test_get_root_not_auth(self):
         root = SESSION_NO_AUTH.get_root()
         assert_true(isinstance(root, DotNotator))

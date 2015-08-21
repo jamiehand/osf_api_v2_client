@@ -11,6 +11,7 @@ env:
 install:
   - cd $PROJECT_DIR
   - cp settings/local-travis.py settings/local.py
+  - cp tests/fixtures fixtures  # move fixtures out so Travis can find vcr cassettes
   - "pip install ."
   - "pip install -r requirements.txt"
 

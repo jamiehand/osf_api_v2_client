@@ -21,7 +21,8 @@ from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotNotator
 
 
-CASSETTE_PREFIX = '../tests/fixtures/vcr_cassettes/test_users/'
+VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_users/'
+VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID
@@ -35,8 +36,8 @@ SESSION_NO_AUTH = Session(root_url=URL)
 class TestGetUsers(unittest.TestCase):
 
     get_users_vcr = vcr.VCR(
-        cassette_library_dir='{}test_get_users'.format(CASSETTE_PREFIX),
-        record_mode='new_episodes',  # TODO or 'once' ?
+        cassette_library_dir='{}test_get_users'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
     )
 
     @get_users_vcr.use_cassette()
@@ -75,8 +76,8 @@ class TestUserAttributes(unittest.TestCase):
     # TODO more tests here; modify to match Dawn's PR once merged.
 
     user_attributes_vcr = vcr.VCR(
-        cassette_library_dir='{}test_user_attributes'.format(CASSETTE_PREFIX),
-        record_mode='new_episodes',  # TODO or 'once' ?
+        cassette_library_dir='{}test_user_attributes'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
     )
 
     @user_attributes_vcr.use_cassette()
