@@ -4,22 +4,22 @@
 from six import string_types
 import vcr
 import types
-import unittest
 import requests
 from nose.tools import *  # flake8: noqa
 
-from settings.local import (
+# Comment line below prevents unittest from deletion in import optimization
+# noinspection PyUnresolvedReferences
+import unittest
+
+from osf_api_v2_client.settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
     USER1_ID,           # id of USER1
     USER2_ID,           # id of USER2
-    PUBLIC_NODE_ID,     # id of a public node
-    PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotNotator
-
 
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_users/'
 VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?

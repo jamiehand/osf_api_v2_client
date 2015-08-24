@@ -1,28 +1,21 @@
-import six
-import vcr
-import types
 import timeit
-import pprint
-import unittest
-import requests
+
+import vcr
 from nose.tools import *  # flake8: noqa
 
-import os
-from settings.local import (
+# Comment line below prevents unittest from deletion in import optimization
+# noinspection PyUnresolvedReferences
+import unittest
+
+from osf_api_v2_client.settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
-    USER1_ID,           # id of USER1
-    USER2_ID,           # id of USER2
-    PUBLIC_NODE_ID,     # id of a public node
-    PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
 )
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import (DotNotator,
-                                     DotNotator,
-                                     dotnotator_generator,
-                                     file_generator,
-                                     get_response_or_exception)
+                                     dotnotator_generator)
+
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with PRIVATE_NODE_ID
@@ -238,31 +231,31 @@ class TestDotNotatorGenerator(unittest.TestCase):
             print("{}: {}: {}".format(item.provider, item.name, item.links.self))
 
 
-class TestTimes(unittest.TestCase):
-    # TODO get rid of this class
-
-    @vcr.use_cassette(record_mode='new_episodes')
-    def test_dn_json(self):
-
-        dn_list = []
-        for user in SESSION_AUTH1.get_user_generator(num_requested=50):
-            dn_list.append(user)
-
-        def time_dn():
-            for u in dn_list:
-                x = u.fullname
-
-        json_list = []
-        for user in SESSION_AUTH1.get_json_user_generator(num_requested=50):
-            json_list.append(user)
-
-        def time_json():
-
-            for data_item in json_list:
-                y = data_item[u'fullname']
-
-        print('------ NUM_REQUESTED = 50 ------')
-        print('TIME_DN: 1ST TIME: {}'.format(timeit.timeit(time_dn)))
-        print('TIME_DN: 2ND TIME: {}'.format(timeit.timeit(time_dn)))
-        print('TIME_JSON: 1ST TIME: {}'.format(timeit.timeit(time_json)))
-        print('TIME_JSON: 2ND TIME: {}'.format(timeit.timeit(time_json)))
+# class TestTimes(unittest.TestCase):
+#     # TODO get rid of this class
+#
+#     @vcr.use_cassette(record_mode='new_episodes')
+#     def test_dn_json(self):
+#
+#         dn_list = []
+#         for user in SESSION_AUTH1.get_user_generator(num_requested=50):
+#             dn_list.append(user)
+#
+#         def time_dn():
+#             for u in dn_list:
+#                 x = u.fullname
+#
+#         json_list = []
+#         for user in SESSION_AUTH1.get_json_user_generator(num_requested=50):
+#             json_list.append(user)
+#
+#         def time_json():
+#
+#             for data_item in json_list:
+#                 y = data_item[u'fullname']
+#
+#         print('------ NUM_REQUESTED = 50 ------')
+#         print('TIME_DN: 1ST TIME: {}'.format(timeit.timeit(time_dn)))
+#         print('TIME_DN: 2ND TIME: {}'.format(timeit.timeit(time_dn)))
+#         print('TIME_JSON: 1ST TIME: {}'.format(timeit.timeit(time_json)))
+#         print('TIME_JSON: 2ND TIME: {}'.format(timeit.timeit(time_json)))

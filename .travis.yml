@@ -10,7 +10,7 @@ env:
 # command to install dependencies
 install:
   - cd $PROJECT_DIR
-  - cp settings/local-travis.py settings/local.py
+  - cp osf_api_v2_client/settings/local-travis.py osf_api_v2_client/settings/local.py
   - cp -r tests/fixtures fixtures  # move fixtures out so Travis can find vcr cassettes
   - "pip install ."
   - "pip install -r requirements.txt"

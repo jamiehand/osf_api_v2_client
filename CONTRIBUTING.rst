@@ -20,6 +20,7 @@ If you are reporting a bug, please include:
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
 * Detailed steps to reproduce the bug.
+* Expected behavior and behavior you are experiencing.
 
 Fix Bugs
 ~~~~~~~~
@@ -73,6 +74,8 @@ Ready to contribute? Here's how to set up `osf_api_v2_client` for local developm
     $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
+
+.. TODO:: continue from here
 
 5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
 

@@ -6,7 +6,8 @@
 Welcome to osf_api_v2_client's documentation!
 =============================================
 
-Contents:
+**NOTE**: These docs are a work in progress. Feel free to contribute
+by creating an issue or submitting a pull request!
 
 .. toctree::
    :maxdepth: 2
@@ -18,10 +19,9 @@ Contents:
    authors
    history
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`search`
 

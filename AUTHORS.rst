@@ -2,10 +2,11 @@
 Credits
 =======
 
-Development Lead
-----------------
+Development Leads
+-----------------
 
 * jamiehand
+* reinaH
 
 Contributors
 ------------
