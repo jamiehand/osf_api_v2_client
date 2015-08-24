@@ -18,15 +18,18 @@ from osf_api_v2_client.settings.local import (
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
     PUBLIC_NODE_ID,     # id of a public node
-    PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but *not* to USER2
+    PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but
+                        # *not* to USER2
 )
 
 pp = pprint.PrettyPrinter(indent=4)
 
 # Sessions with different forms of authentication:
-# A session authenticated by the user who created the node with PRIVATE_NODE_ID
+# A session authenticated by the user who created the node
+# with PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
-# A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
+# A session authenticated by a user who does NOT have access
+# to the node with PRIVATE_NODE_ID
 SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
@@ -55,7 +58,8 @@ class TestGetNodes(unittest.TestCase):
         assert_equal(len(node_list), 25)
         assert_true(isinstance(node_list[0], DotNotator))
 
-    # TODO could createfakes for USER1 with some private nodes, some public nodes and make sure node_generator
+    # TODO could createfakes for USER1 with some private nodes, some
+    # public nodes and make sure node_generator
     # returns more nodes when USER1 calls node_generator().
 
     @get_nodes_vcr.use_cassette()
@@ -73,16 +77,17 @@ class TestGetNodes(unittest.TestCase):
         public_node = SESSION_NO_AUTH.get_node(PUBLIC_NODE_ID)
         assert_true(isinstance(public_node, DotNotator))
 
-    # TODO is there a way for vcrpy to record the exceptions to replay them? right now these 3 tests fail:
     @get_nodes_vcr.use_cassette()
     def test_get_private_node_auth_contrib(self):
-        # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
+        # The node with PRIVATE_NODE_ID is one created by USER1,
+        # so it should be visible to USER1.
         private_node = SESSION_AUTH1.get_node(PRIVATE_NODE_ID)
         assert_true(isinstance(private_node, DotNotator))
 
     @get_nodes_vcr.use_cassette()
     def test_get_private_node_auth_non_contrib(self):
-        # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
+        # USER2 is not a contributor to the node with PRIVATE_NODE_ID,
+        # so it should not be visible.
         with assert_raises(Exception):  # TODO more specific exception?
             SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
 

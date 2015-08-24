@@ -18,9 +18,11 @@ from osf_api_v2_client.utils import (DotNotator,
 
 
 # Sessions with different forms of authentication:
-# A session authenticated by the user who created the node with PRIVATE_NODE_ID
+# A session authenticated by the user who created the node with
+# PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
-# A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
+# A session authenticated by a user who does NOT have access to
+# the node with PRIVATE_NODE_ID
 SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
@@ -66,7 +68,7 @@ class TestDotNotator(unittest.TestCase):
         self.dn = DotNotator(self.json_dict)
 
     def test_no_param(self):
-        no_param_dn = DotNotator()  # no param --> uses default: dictionary = None
+        no_param_dn = DotNotator()  # no param --> default: dictionary = None
         assert_true(isinstance(no_param_dn, DotNotator))
         assert_false(no_param_dn)  # assert no_param_dn is empty
 
@@ -97,8 +99,11 @@ class TestDotNotator(unittest.TestCase):
         assert_equal(self.dn.friends[1].name, u'Sandy')
 
     def test_param_includes_dict_inside_dict(self):
-        assert_equal(self.dn[u'education'][u'Artsy_University'][u'degree'], u'BA in Art')
-        assert_equal(self.dn[u'education'][u'High_School'][u'years_spent'], 4)
+        assert_equal(
+            self.dn[u'education'][u'Artsy_University'][u'degree'],
+            u'BA in Art')
+        assert_equal(
+            self.dn[u'education'][u'High_School'][u'years_spent'], 4)
         assert_equal(self.dn.education.Artsy_University.years_spent, 3)
         assert_equal(self.dn.education.High_School.degree, u'Diploma')
 
@@ -117,18 +122,25 @@ class TestDotNotator(unittest.TestCase):
         self.dn[u'new_item2'] = u'world!'
         assert_equal(self.dn[u'new_item1'], u'Hello')
         assert_equal(self.dn.new_item2, u'world!')
-        assert_equal('{} {}'.format(self.dn.new_item1, self.dn.new_item2), u'Hello world!')
+        assert_equal('{} {}'.format(self.dn.new_item1, self.dn.new_item2),
+                     u'Hello world!')
 
     # Inspired by (though doesn't fulfill same functionality as) this:
     # http://codereply.com/answer/4ay2xl/python-easily-access-deeply-nested-dict-get-set.html
     def test_add_multiple_layers_of_keys(self):
         self.dn.top_layer = {}
         self.dn.top_layer.middle_layer = {}
-        self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'] = {u'3': u'world!'}
-        assert_equal(self.dn[u'top_layer'], {u'middle_layer': {u'lowest_layer': {u'3': u'world!'}}})
-        assert_equal(self.dn.top_layer.middle_layer, {u'lowest_layer': {u'3': u'world!'}})
-        assert_equal(self.dn.top_layer.middle_layer.lowest_layer, {u'3': u'world!'})
-        assert_equal(self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'][u'3'], u'world!')
+        self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'] = \
+            {u'3': u'world!'}
+        assert_equal(self.dn[u'top_layer'],
+                     {u'middle_layer': {u'lowest_layer': {u'3': u'world!'}}})
+        assert_equal(self.dn.top_layer.middle_layer,
+                     {u'lowest_layer': {u'3': u'world!'}})
+        assert_equal(self.dn.top_layer.middle_layer.lowest_layer,
+                     {u'3': u'world!'})
+        assert_equal(
+            self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'][u'3'],
+            u'world!')
         print(self.dn.age)
 
     def test_delete_key(self):
@@ -141,7 +153,8 @@ class TestDotNotator(unittest.TestCase):
         del self.dn.education.Artsy_University
         with assert_raises(KeyError):
             print(self.dn[u'education'][u'Artsy_University'])
-        assert_equal(self.dn[u'education'][u'High_School'], {u'degree': 'Diploma', u'years_spent': 4, })
+        assert_equal(self.dn[u'education'][u'High_School'],
+                     {u'degree': 'Diploma', u'years_spent': 4, })
 
     def test_iter_list(self):
         friends_list = []
@@ -184,7 +197,8 @@ class TestDotNotator(unittest.TestCase):
 class TestDotNotatorGenerator(unittest.TestCase):
 
     dot_notator_generator_vcr = vcr.VCR(
-        cassette_library_dir='{}test_dot_notator_generator'.format(VCR_CASSETTE_PREFIX),
+        cassette_library_dir='{}test_dot_notator_generator'.format(
+            VCR_CASSETTE_PREFIX),
         record_mode=VCR_RECORD_MODE
     )
 
@@ -194,7 +208,8 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         num_requested should == -1, meaning all items should be returned
         """
-        big_gen = dotnotator_generator("https://staging2.osf.io/api/v2/users/se6py/nodes/")
+        big_gen = dotnotator_generator(
+            "https://staging2.osf.io/api/v2/users/se6py/nodes/")
         with assert_raises(StopIteration):
             print(next(big_gen))
             print(next(big_gen))
@@ -216,7 +231,8 @@ class TestDotNotatorGenerator(unittest.TestCase):
     def test_num_requested_negative1(self):
         # TODO write this test
         """
-        Test that generator responds correctly when num_requested == -1 vs any other number.
+        Test that generator responds correctly when num_requested == -1
+        vs any other number.
         """
         pass
 
@@ -225,10 +241,13 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         request 4; 4 items should be returned
         """
-        gen = dotnotator_generator("https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
-                                       num_requested=4)
+        gen = dotnotator_generator(
+            "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
+            num_requested=4)
         for item in gen:
-            print("{}: {}: {}".format(item.provider, item.name, item.links.self))
+            print("{}: {}: {}".format(item.provider,
+                                      item.name,
+                                      item.links.self))
 
 
 # class TestTimes(unittest.TestCase):

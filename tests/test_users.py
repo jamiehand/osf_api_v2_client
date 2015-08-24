@@ -25,9 +25,11 @@ VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_users/'
 VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
 
 # Sessions with different forms of authentication:
-# A session authenticated by the user who created the node with PRIVATE_NODE_ID
+# A session authenticated by the user who created the node with
+# PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
-# A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
+# A session authenticated by a user who does NOT have access to
+# the node with PRIVATE_NODE_ID
 SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
@@ -47,7 +49,8 @@ class TestGetUsers(unittest.TestCase):
         assert_true(isinstance(user_generator, types.GeneratorType))
         # count = 1
         # for node in node_generator:
-        #     print("***************************** {} *******************************".format(count))
+        #     print("***************************** {}
+        # *******************************".format(count))
         #     pp.pprint(node)
         #     count += 1
 
@@ -76,7 +79,8 @@ class TestUserAttributes(unittest.TestCase):
     # TODO more tests here; modify to match Dawn's PR once merged.
 
     user_attributes_vcr = vcr.VCR(
-        cassette_library_dir='{}test_user_attributes'.format(VCR_CASSETTE_PREFIX),
+        cassette_library_dir='{}test_user_attributes'.format(
+            VCR_CASSETTE_PREFIX),
         record_mode=VCR_RECORD_MODE
     )
 
@@ -88,7 +92,6 @@ class TestUserAttributes(unittest.TestCase):
         """
         Ensure that the names return strings
         """
-        # TODO could test, e.g. assert_true(self.user.fullname == self[u'user'][u'fullname'])
         fullname = self.user.fullname
         assert_true(isinstance(fullname, string_types))
         given_name = self.user.given_name
@@ -110,8 +113,9 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_employment_institutions(self):
         """
-        Ensures user.employment_institutions returns a list of DotNotator objects,
-        and that getting information from the objects works.
+        Ensures user.employment_institutions returns a list of
+        DotNotator objects, and that getting information from
+        the objects works.
         """
         employment_list = self.user.employment_institutions
         assert_true(isinstance(employment_list, list))
@@ -124,8 +128,9 @@ class TestUserAttributes(unittest.TestCase):
 
     def test_educational_institutions(self):
         """
-        Ensures user.educational_institutions returns a list of DotNotator objects,
-        and that getting information from the objects works.
+        Ensures user.educational_institutions returns a list of
+        DotNotator objects, and that getting information from
+        the objects works.
         """
         educational_list = self.user.educational_institutions
         assert_true(isinstance(educational_list, list))

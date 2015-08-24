@@ -1,14 +1,14 @@
-import six
 import requests
 import collections
 
-# Possible alternative to replace a bunch of if statements:
-# mydict = {
-#     'get':requests.get
-# }
-# mydict[method](url, *args, **kwargs)
+
 def get_response_or_exception(method, url, *args, **kwargs):
     method = method.lower()
+    # TODO consider: Possible alternative to replace a bunch of if statements:
+    # mydict = {
+    #     'get':requests.get
+    # }
+    # mydict[method](url, *args, **kwargs)
     if method == 'get':
         response = requests.get(url, *args, **kwargs)
     elif method == 'post':
@@ -21,19 +21,24 @@ def get_response_or_exception(method, url, *args, **kwargs):
         raise ValueError('Invalid method input: {} \n'
                          'Please use get, post, patch, or delete.')
     if response.status_code >= 400:
-        raise Exception('Error in attempt to access {} \n'  # TODO make exception more specific?
+        # TODO make exception more specific?
+        raise Exception('Error in attempt to access {} \n'
                         'Status code: {} {} \n'
-                        'Content: {}'.format(
-                        response.url, response.status_code, response.reason, response.text))
+                        'Content: {}'.format(response.url,
+                                             response.status_code,
+                                             response.reason,
+                                             response.text)
+                        )
     else:
-        return response  # TODO return DotNotator object instead? -- not now; might stop DotNotatoring things later?
+        return response
 
 
 def file_generator(files_url, auth=None, num_requested=-1):
     """
     :param files_url: the url where the desired files are located
     :param auth: authentication to send with the request
-    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :param num_requested: the number of items desired; if -1, all
+    items available will be returned
     :return: a generator of DotNotator versions of the files
     """
     #: Number of items left in the generator
@@ -48,7 +53,8 @@ def file_generator(files_url, auth=None, num_requested=-1):
             # If it's a folder, follow it
             if item[u'item_type'] == "folder":
                 url_to_follow = item[u'links'][u'related']
-                for subitem in file_generator(url_to_follow, auth=auth, num_requested=count_remaining):
+                for subitem in file_generator(url_to_follow, auth=auth,
+                                              num_requested=count_remaining):
                     count_remaining -= 1
                     yield DotNotator(subitem)
             # If it's a file, yield it
@@ -70,7 +76,8 @@ def dotnotator_generator(url, auth=None, num_requested=-1):
     Deals with pagination.
     :param url: the url where the desired items are located
     :param auth: authentication to send with the request
-    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :param num_requested: the number of items desired; if -1, all
+    items available will be returned
     :return: a generator of DotNotator versions of the items desired
     """
     #: Number of items left in the generator
@@ -79,7 +86,7 @@ def dotnotator_generator(url, auth=None, num_requested=-1):
     url = url  # url of first page
 
     while url is not None:
-        response = get_response_or_exception('get', url, auth=auth)  # page response
+        response = get_response_or_exception('get', url, auth=auth)
         response_json = response.json()
         for item in response_json[u'data']:
             if num_requested == -1:
@@ -100,7 +107,8 @@ def json_dict_generator(url, auth=None, num_requested=-1):
     Deals with pagination.
     :param url: the url where the desired items are located
     :param auth: authentication to send with the request
-    :param num_requested: the number of items desired; if -1, all items available will be returned
+    :param num_requested: the number of items desired; if -1, all items
+    available will be returned
     :return: a generator of DotNotator versions of the items desired
     """
     #: Number of items left in the generator
@@ -109,7 +117,7 @@ def json_dict_generator(url, auth=None, num_requested=-1):
     url = url  # url of first page
 
     while url is not None:
-        response = get_response_or_exception('get', url, auth=auth)  # page response
+        response = get_response_or_exception('get', url, auth=auth)
         response_json = response.json()
         data = response_json[u'data']
         for item in data:
@@ -124,22 +132,26 @@ def json_dict_generator(url, auth=None, num_requested=-1):
             break
         url = response_json[u'links'][u'next']
 
+
 class DotNotator(collections.MutableMapping):
     """
-    Given a dict, DotNotator makes the dict's data accessible as data attributes
-    (using 'dot' notation).
+    Given a dict, DotNotator makes the dict's data accessible as data
+    attributes (using 'dot' notation).
 
-    e.g. given json dictionary json_dict, DotNotator enables access like so:
+    e.g. given json dictionary json_dict, DotNotator enables access
+    like so:
     json_dict.data[0].name
     instead of requiring this syntax:
     json_dict[u'data'][0][u'name']
 
-    Note that both syntaxes will still work, though, and they can be mixed:
+    Note that both syntaxes will still work, though, and they can
+    be mixed:
     json_dict[u'data'][0].name
     json_dict.data[0][u'name']
 
-    As seen in the above example, DotNotator recurses through dicts of dicts and
-    lists of dicts, to make those dicts into DotNotator objects as well.
+    As seen in the above example, DotNotator recurses through dicts
+    of dicts and lists of dicts, to make those dicts into DotNotator
+    objects as well.
 
     See: http://stackoverflow.com/a/3387975/4979097
     Also modified from: http://stackoverflow.com/a/3031270/4979097
@@ -157,7 +169,7 @@ class DotNotator(collections.MutableMapping):
     def __setitem__(self, key, value):
         if isinstance(value, dict):    # DotNotate other dicts in dict
             value = DotNotator(value)
-        elif isinstance(value, list):  # DotNotate the items in a list of dicts
+        elif isinstance(value, list):  # DotNotate items in a list of dicts
             new_value = []
             if value:  # if value list is not empty
                 if isinstance(value[0], dict):
@@ -168,11 +180,11 @@ class DotNotator(collections.MutableMapping):
 
     def __getitem__(self, key):
         """
-        Note that this returns a KeyError if the user attempts to access a
-        nonexistent key. For an example of a __getitem__ method that instead
-        creates the key and sets its value to be an empty DotNotator (well,
-        DotNotator) object, see the DotNotator class in a former version of
-        this library:
+        Note that this returns a KeyError if the user attempts to
+        access a nonexistent key. For an example of a __getitem__
+        method that instead creates the key and sets its value to
+        be an empty DotNotator (well, DotNotator) object, see the
+        DotNotator class in a former version of this library:
         https://github.com/jamiehand/osf_api_v2_client/commit/98da3a7dbab5a92fb99342508f90942bfea3cf05
         """
         return self.__dict__[key]
@@ -188,6 +200,3 @@ class DotNotator(collections.MutableMapping):
 
     __setattr__ = __setitem__
     __getattr__ = __getitem__
-
-
-

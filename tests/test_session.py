@@ -19,9 +19,11 @@ from osf_api_v2_client.utils import DotNotator
 
 
 # Sessions with different forms of authentication:
-# A session authenticated by the user who created the node with PRIVATE_NODE_ID
+# A session authenticated by the user who created the node with
+# PRIVATE_NODE_ID
 SESSION_AUTH1 = Session(root_url=URL, auth=AUTH1)
-# A session authenticated by a user who does NOT have access to the node with PRIVATE_NODE_ID
+# A session authenticated by a user who does NOT have access to
+# the node with PRIVATE_NODE_ID
 SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
@@ -33,8 +35,8 @@ VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
 
 class TestGetRoot(unittest.TestCase):
     """
-        Ensures the root is a DotNotator object with 'meta' as an attribute (because
-        the JSON object has a 'meta' dictionary).
+    Ensures the root is a DotNotator object with 'meta' as an
+    attribute (because the JSON object has a 'meta' dictionary).
     """
 
     get_root_vcr = vcr.VCR(

@@ -1,4 +1,3 @@
-import six
 import requests
 
 from osf_api_v2_client.utils import(DotNotator,
@@ -15,7 +14,8 @@ class Session(object):
 
     def get_root(self):
         """
-        :return: a DotNotator object of the api root as designated by self.root_url
+        :return: a DotNotator object of the api root as designated
+        by self.root_url
         """
         response = get_response_or_exception('get', self.root_url)
         response_json = response.json()
@@ -23,8 +23,10 @@ class Session(object):
 
     # USER ACTIONS
 
-    # TODO maybe: get_generator; get_object -- e.g. if I wanted to get a registration...
-    # but, if you're passing in the URL you maybe might as well be using the API itself
+    # TODO maybe: get_generator; get_object -- e.g. if I wanted to get
+    # a registration...
+    # but, if you're passing in the URL you maybe might as well
+    # be using the API itself
 
     # TODO: if a parameter gets passed in, I should process it.
     # TODO: requests -- query parameters = ...
@@ -32,22 +34,26 @@ class Session(object):
     # TODO: modify DotNotator object, then push it to server to edit it?
     def get_user_generator(self, num_requested=-1):
         """
-        :param num_requested: a positive integer or -1; -1 will cause all users
-        to be returned; otherwise num_requested number of users will be returned
+        :param num_requested: a positive integer or -1; -1 will cause
+        all users to be returned; otherwise num_requested number of
+        users will be returned
         :return: a generator containing users
         """
         target_url = '{}users/'.format(self.root_url)
-        return dotnotator_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotnotator_generator(target_url, auth=self.auth,
+                                    num_requested=num_requested)
 
     def get_json_user_generator(self, num_requested=-1):
         # TODO get rid of this method
         """
-        :param num_requested: a positive integer or -1; -1 will cause all users
-        to be returned; otherwise num_requested number of users will be returned
+        :param num_requested: a positive integer or -1; -1 will cause
+        all users to be returned; otherwise num_requested number of
+        users will be returned
         :return: a generator containing users
         """
         target_url = '{}users/'.format(self.root_url)
-        return json_dict_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return json_dict_generator(target_url, auth=self.auth,
+                                   num_requested=num_requested)
 
     def get_user(self, user_id):
         """
@@ -63,20 +69,23 @@ class Session(object):
 
     def get_node_generator(self, num_requested=-1):
         """
-        :param num_requested: a positive integer or -1; -1 will cause all nodes
-        to be returned; otherwise num_requested number of nodes will be returned
+        :param num_requested: a positive integer or -1; -1 will cause
+        all nodes to be returned; otherwise num_requested number of
+        nodes will be returned
         :return: a generator containing nodes
         """
         # TODO consider case when generator is empty?
         target_url = '{}nodes/'.format(self.root_url)
-        return dotnotator_generator(target_url, auth=self.auth, num_requested=num_requested)
+        return dotnotator_generator(target_url, auth=self.auth,
+                                    num_requested=num_requested)
 
     def get_node(self, node_id=''):
         """
         If node_id is None, return a generator containing nodes
         If node_id is a valid id, return the node with that id
         If node_id is not a valid node id, raise exception
-        :param node_id: 5-character id for a node that can be viewed by this session's auth
+        :param node_id: 5-character id for a node that can be
+        viewed by this session's auth
         :return: the node identified by node_id
         """
         url = '{}nodes/{}/'.format(self.root_url, node_id)
@@ -84,29 +93,36 @@ class Session(object):
         data = response.json()[u'data']
         return DotNotator(data)
 
-    def create_node(self, title="", description="", category="", public="True"):
+    def create_node(self, title="", description="",
+                    category="", public="True"):
         """
         :param title: required, string
         :param description: optional, string
-        :param category: optional, choice of '', 'project', 'hypothesis', 'methods and measures', 'procedure',
-        'instrumentation', 'data', 'analysis', 'communication', 'other'
+        :param category: optional, choice of '', 'project',
+        'hypothesis', 'methods and measures', 'procedure',
+        'instrumentation', 'data', 'analysis', 'communication',
+        'other'
         :return: created node
         """
-        params = {'title': title, 'description': description, 'category': category, 'public': public}
-        node = requests.post('{}nodes/'.format(self.root_url), json=params, auth=self.auth)
+        params = {'title': title, 'description': description,
+                  'category': category, 'public': public}
+        node = requests.post('{}nodes/'.format(self.root_url),
+                             json=params, auth=self.auth)
         return node
 
     def edit_node(self, node_id, **kwargs):
-        # Example kwargs: title='', description='', category='' TODO tags? public?
-        # TODO how should this functionality work in terms of when a category is passed in or not?
-        # TODO figure out how to change the private setting to public and vice versa
+        # e.g. kwargs: title='', description='', category='' TODO tags? public?
+        # TODO how should this functionality work in terms of when a category
+        # is passed in or not?
+        # TODO figure out how to change the private setting to public and
+        # vice versa
         params = {}  # 'node_id': node_id}
         for key, value in kwargs.items():
             params[key] = value
         print(params)
         response = requests.patch('{}nodes/{}/'.format(self.root_url, node_id),
                                   json=params,
-                                  # TODO should use json=params or data=params ?
+                                  # TODO should use json=params or data=params?
                                   auth=self.auth
                                   )
         return response
@@ -116,18 +132,21 @@ class Session(object):
         :param node_id: 5-character node id
         :return: none
         """
-        response = requests.delete('{}nodes/{}/'.format(self.root_url, node_id), auth=self.auth)
+        response = requests.delete('{}nodes/{}/'.format(
+            self.root_url, node_id), auth=self.auth)
         return response
 
     # FILE ACTIONS
 
-    # TODO possible to do something like node.get_files_generator(), which would pass the current
+    # TODO possible to do something like node.get_files_generator(),
+    # which would pass the current
     # node's id to a function that would get the generator ? ...
     def get_file_generator(self, node_id, num_requested=-1):
         """
         :param node_id: 5-character node id
-        :param num_requested: a positive integer or -1; -1 will cause all files
-        to be returned; otherwise num_requested number of files will be returned
+        :param num_requested: a positive integer or -1;
+        -1 will cause all files to be returned;
+        otherwise num_requested number of files will be returned
         :return: a generator containing files related to node_id
         """
         node = self.get_node(node_id)
