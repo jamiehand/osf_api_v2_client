@@ -75,20 +75,22 @@ Ready to contribute? Here's how to set up `osf_api_v2_client` for local developm
 
    Now you can make your changes locally.
 
-.. TODO:: continue from here
-
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass
+   flake8 and the tests, including testing other Python versions with tox::
 
     $ flake8 osf_api_v2_client tests
     $ python setup.py test
-    $ tox
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+   To get flake8, just pip install it into your virtualenv.
+
+.. TODO:: use tox? If so, add the following two lines:
+.. $ tox
+.. To get flake8 and tox, just pip install them into your virtualenv.
 
 6. Commit your changes and push your branch to GitHub::
 
     $ git add .
-    $ git commit -m "Your detailed description of your changes."
+    $ git commit -m "Your detailed description of your changes"
     $ git push origin name-of-your-bugfix-or-feature
 
 7. Submit a pull request through the GitHub website.
@@ -102,13 +104,17 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.7, 3.3, and 3.4, and for PyPy. Check
+3. The pull request should work for Python 2.7, 3.3, and 3.4. Check
    https://travis-ci.org/jamiehand/osf_api_v2_client/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
 Tips
 ----
 
-To run a subset of tests::
+Use the command line to run a subset of the tests. You can run tests from
+modules, classes, or even individual test methods. For example::
 
-    $ python -m unittest tests.test_osf_api_v2_client
+    $ python -m unittest test_nodes test_session
+    $ python -m unittest test_nodes.TestGetNodes
+    $ python -m unittest test_nodes.TestGetNodes.test_get_public_node_auth_non_contrib
+

@@ -22,6 +22,7 @@ requirements = [
 ]
 
 test_requirements = [
+    'nose',
     # TODO: put package test requirements here
 ]
 

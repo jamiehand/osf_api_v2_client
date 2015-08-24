@@ -107,6 +107,11 @@ class TestDotNotator(unittest.TestCase):
         assert_equal(self.dn.education.Artsy_University.years_spent, 3)
         assert_equal(self.dn.education.High_School.degree, u'Diploma')
 
+    def test_bracket_and_dot_access_together(self):
+        assert_equal(
+            self.dn.education.High_School[u'degree'],
+            self.dn[u'education'][u'High_School'].degree)
+
     def test_attempt_to_access_nonexistent_key(self):
         with assert_raises(KeyError):
             print(self.dn.education.nonexistent_key)
