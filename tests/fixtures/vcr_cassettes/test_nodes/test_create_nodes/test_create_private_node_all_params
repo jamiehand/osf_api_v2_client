@@ -1,0 +1,27 @@
+interactions:
+- request:
+    body: '{"title": "Private node created with client library", "category": "", "description":
+      "Hello world!"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      Content-Length: ['100']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: POST
+    uri: https://staging2.osf.io/api/v2/nodes/
+  response:
+    body: {string: '{"data":{"id":"v65z2","title":"Private node created with client
+        library","description":"Hello world!","category":"","date_created":"2015-08-25T16:09:17.661930","date_modified":"2015-08-25T16:09:17.661930","tags":{"system":[],"user":[]},"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/v65z2/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/v65z2/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/v65z2/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/v65z2/registrations/"},"html":"https://staging2.osf.io/v65z2/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/v65z2/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/v65z2/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
+    headers:
+      Allow: ['GET, POST, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Aug 2015 16:09:18 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 201, message: CREATED}
+version: 1

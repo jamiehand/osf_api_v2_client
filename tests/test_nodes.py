@@ -11,7 +11,10 @@ from nose.tools import *  # flake8: noqa
 # noinspection PyUnresolvedReferences
 import unittest
 
-from osf_api_v2_client.utils import DotNotator
+from osf_api_v2_client.utils import (
+    DotNotator,
+    StatusCode400orGreaterError
+)
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
@@ -88,46 +91,62 @@ class TestGetNodes(unittest.TestCase):
     def test_get_private_node_auth_non_contrib(self):
         # USER2 is not a contributor to the node with PRIVATE_NODE_ID,
         # so it should not be visible.
-        with assert_raises(Exception):  # TODO more specific exception?
+        with assert_raises(StatusCode400orGreaterError):
             SESSION_AUTH2.get_node(PRIVATE_NODE_ID)
 
     @get_nodes_vcr.use_cassette()
     def test_get_private_node_not_auth(self):
         # Unauthenticated user should not be able to view any private node.
-        with assert_raises(Exception):  # TODO more specific exception?
+        with assert_raises(StatusCode400orGreaterError):
             SESSION_NO_AUTH.get_node(PRIVATE_NODE_ID)
 
 
-# class TestCreateNodes(unittest.TestCase):
-#     # TODO add checks into tests to make sure the title, public, etc. are correct?
-#
-#     # def test_create_public_node_auth(self):  TODO delete
-#     #     # TODO figure out how to do this.
-#     #     # TODO capture the node_id, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PATCH?)
-#     #     # TODO include tests that check that non-auth'd users *can't* patch/post/delete
-#     #     new_public_node = SESSION_AUTH1.create_node(
-#     #         "Creating public node with python 1", category="", public="true"
-#     #     )
-#     #     # print(new_public_node.status_code)
-#     #     # print(new_public_node.json()[u'data'][u'public'])
-#     #     assert_true(new_public_node.json()[u'data'][u'public'])
-#
-#     def test_create_private_node(self):
-#         # TODO capture the node_id for this, make it PRIVATE_NODE_ID, use it for GET, DELETE tests (& PATCH?)
-#         # TODO include tests that check that non-auth'd users *can't* patch/post/delete/get
-#         new_private_node = SESSION_AUTH1.create_node(
-#             "Creating private node with python 1", category=""
-#         )
-#         assert_true(isinstance(new_private_node, DotNotator))
-#
-#     def test_create_node_not_auth(self):
-#         # Shouldn't work, because users must be authenticated in order to create nodes.
-#         # with assert_raises ??
-#         new_private_node = SESSION_NO_AUTH.create_node(
-#             "Creating private node with python 1", category=""
-#         )
-#         assert_equal(new_private_node.status_code, 403)  # forbidden status code
-#
+class TestCreateNodes(unittest.TestCase):
+    # TODO add checks to make sure the title, public, etc. are correct?
+    # TODO once functionality exists to create public nodes, add
+    # test: test_create_public_node()
+
+    create_nodes_vcr = vcr.VCR(
+        cassette_library_dir='{}test_create_nodes'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @create_nodes_vcr.use_cassette()
+    def test_create_private_node_all_params(self):
+        # TODO include tests that check that non-auth'd users *can't*
+        # patch/post/delete/get
+        new_private_node = SESSION_AUTH1.create_node(
+            "Private node created with client library", category="",
+            description="Hello world!"
+        )
+        assert_true(isinstance(new_private_node, DotNotator))
+        assert_equal(new_private_node.title,
+                     "Private node created with client library")
+        assert_equal(new_private_node.category, "")
+        assert_equal(new_private_node.description, "Hello world!")
+
+    @create_nodes_vcr.use_cassette()
+    def test_create_private_nodes_title_param_only(self):
+        new_private_node = SESSION_AUTH1.create_node(
+            "Private node 2 created with client library"
+        )
+        assert_true(isinstance(new_private_node, DotNotator))
+        assert_equal(new_private_node.title,
+                     "Private node 2 created with client library")
+        assert_equal(new_private_node.category, "")
+        assert_equal(new_private_node.description, "")
+
+    @create_nodes_vcr.use_cassette()
+    def test_create_private_node_not_auth(self):
+        """
+        Should not work, because users must be authenticated
+        in order to create nodes.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            new_private_node = SESSION_NO_AUTH.create_node(
+                "Private node 3 created with client library"
+            )
+
 #
 # class TestEditNodes(unittest.TestCase):
 #

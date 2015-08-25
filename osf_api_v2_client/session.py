@@ -93,7 +93,7 @@ class Session(object):
         data = response.json()[u'data']
         return DotNotator(data)
 
-    def create_node(self, title="", description="",
+    def create_node(self, title, description="",
                     category="", public="True"):
         """
         :param title: required, string
@@ -102,13 +102,19 @@ class Session(object):
         'hypothesis', 'methods and measures', 'procedure',
         'instrumentation', 'data', 'analysis', 'communication',
         'other'
-        :return: created node
+        :return: DotNotator version of created node
         """
+        # TODO once functionality exists to create public nodes w/ API,
+        # add 'public' bool to create_node parameters, and add the
+        # functionality in this method.
         params = {'title': title, 'description': description,
-                  'category': category, 'public': public}
-        node = requests.post('{}nodes/'.format(self.root_url),
-                             json=params, auth=self.auth)
-        return node
+                  'category': category}
+        node = get_response_or_exception(
+            'post', '{}nodes/'.format(self.root_url),
+            json=params, auth=self.auth
+        )
+        node_json = node.json()[u'data']
+        return DotNotator(node_json)
 
     def edit_node(self, node_id, **kwargs):
         # e.g. kwargs: title='', description='', category='' TODO tags? public?

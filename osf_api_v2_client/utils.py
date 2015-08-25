@@ -2,6 +2,28 @@ import requests
 import collections
 
 
+class StatusCode400orGreaterError(Exception):
+    """
+    Takes a Response object (from the requests library)
+    and returns an error explaining that its status_code
+    is 400 or greater, and the reason for the status_code.
+    """
+    def __init__(self, response):
+        """
+        :param response: a Response object (from the requests library)
+        whose status_code is 400 or greater
+        """
+        self.response = response
+
+    def __str__(self):
+        string = ('Error in attempt to access {} \n'
+                  'Status code: {} {} \n'
+                  'Content: {}'.format(self.response.url,
+                                       self.response.status_code,
+                                       self.response.reason,
+                                       self.response.text))
+        return string
+
 def get_response_or_exception(method, url, *args, **kwargs):
     method = method.lower()
     # TODO consider: Possible alternative to replace a bunch of if statements:
@@ -21,14 +43,7 @@ def get_response_or_exception(method, url, *args, **kwargs):
         raise ValueError('Invalid method input: {} \n'
                          'Please use get, post, patch, or delete.')
     if response.status_code >= 400:
-        # TODO make exception more specific?
-        raise Exception('Error in attempt to access {} \n'
-                        'Status code: {} {} \n'
-                        'Content: {}'.format(response.url,
-                                             response.status_code,
-                                             response.reason,
-                                             response.text)
-                        )
+        raise StatusCode400orGreaterError(response)
     else:
         return response
 
