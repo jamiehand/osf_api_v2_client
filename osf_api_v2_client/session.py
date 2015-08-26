@@ -125,13 +125,14 @@ class Session(object):
         params = {}  # 'node_id': node_id}
         for key, value in kwargs.items():
             params[key] = value
-        print(params)
-        response = requests.patch('{}nodes/{}/'.format(self.root_url, node_id),
-                                  json=params,
-                                  # TODO should use json=params or data=params?
-                                  auth=self.auth
-                                  )
-        return response
+        # print(params)
+        edited_node = get_response_or_exception(
+            'patch', '{}nodes/{}/'.format(self.root_url, node_id),
+            json=params, # TODO should use json=params or data=params?
+            auth=self.auth
+        )
+        edited_node_json = edited_node.json()[u'data']
+        return DotNotator(edited_node_json)
 
     def delete_node(self, node_id):
         """

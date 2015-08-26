@@ -147,70 +147,138 @@ class TestCreateNodes(unittest.TestCase):
                 "Private node 3 created with client library"
             )
 
-#
-# class TestEditNodes(unittest.TestCase):
-#
-#     # TODO finished?
-#     # TODO change this to modify the public node created by test_create_public_node
-#     def test_edit_public_node_auth_contrib(self):
-#         edited_public_node = SESSION_AUTH1.edit_node(
-#             PUBLIC_NODE_ID,
-#             title="User's New Title",
-#             description="User's new description",
-#             category=""
-#         )
-#         assert_equal(edited_public_node.status_code, 200)
-#         assert_equal(edited_public_node.json()[u'data'][u'title'], "Jamie's New Title")
-#         assert_equal(edited_public_node.json()[u'data'][u'description'], "Jamie's new description")
-#         assert_equal(edited_public_node.json()[u'data'][u'description'], "")
-#
-#     # TODO finished?
-#     def test_edit_public_node_auth_non_contrib(self):
-#         edited_public_node = SESSION_AUTH2.edit_node(
-#             PUBLIC_NODE_ID,
-#             title="User2's New Title",
-#             description="User2's new description",
-#             category=""
-#         )
-#         assert_equal(edited_public_node.status_code, 403)
-#         public_node = SESSION_AUTH2.get_node(PUBLIC_NODE_ID)
-#         assert_equal(public_node.json()[u'data'][u'title'], "User's New Title")
-#         assert_equal(public_node.json()[u'data'][u'description'], "User's new description")
-#         assert_equal(public_node.json()[u'data'][u'description'], "")
-#
-#     # TODO finished?
-#     def test_edit_public_node_not_auth(self):
-#         edited_public_node = SESSION_NO_AUTH.edit_node(
-#             PUBLIC_NODE_ID,
-#             title="Jamie's New Title",
-#             description="Jamie's new description",
-#             category=""
-#         )
-#         assert_equal(edited_public_node.status_code, 200)
-#         assert_equal(edited_public_node.json()[u'data'][u'title'], "Jamie's New Title")
-#         assert_equal(edited_public_node.json()[u'data'][u'description'], "Jamie's new description")
-#         assert_equal(edited_public_node.json()[u'data'][u'description'], "")
-#         edited_public_node = SESSION_NO_AUTH.edit_node(PUBLIC_NODE_ID)
-#         assert_equal(edited_public_node.status_code, 200)
-#
-#     # TODO finish
-#     def test_edit_private_node_auth_contributor(self):
-#         # The node with PRIVATE_NODE_ID is one created by USER1, so it should be visible to USER1.
-#         private_node = SESSION_AUTH1.edit_node(PRIVATE_NODE_ID)
-#         assert_equal(private_node.status_code, 200)
-#
-#     # TODO finish
-#     def test_edit_private_node_auth_non_contributor(self):
-#         # USER2 is not a contributor to the node with PRIVATE_NODE_ID, so it should not be visible.
-#         private_node = SESSION_AUTH2.edit_node(PRIVATE_NODE_ID)
-#         assert_equal(private_node.status_code, 403)
-#
-#     # TODO finish
-#     def test_edit_private_node_not_auth(self):
-#         # Unauthenticated user should not be able to view any private node.
-#         private_node = SESSION_NO_AUTH.edit_node(PRIVATE_NODE_ID)
-#         assert_equal(private_node.status_code, 403)
-#
+
+class TestEditNodes(unittest.TestCase):
+
+    edit_nodes_vcr = vcr.VCR(
+        cassette_library_dir='{}test_edit_nodes'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @edit_nodes_vcr.use_cassette()
+    def setUp(self):
+        # TODO this setUp is currently dependent on edit_node()
+        # working. How can we make it independent?
+        # SESSION_AUTH1.edit_node(
+        #     PUBLIC_NODE_ID,
+        #     title="Original public node title",
+        #     description="Original public node description",
+        #     category=""
+        # )
+        SESSION_AUTH1.edit_node(
+            PRIVATE_NODE_ID,
+            title="Original private node title",
+            description="Original private node description",
+            category=""
+        )
+
+    # @edit_nodes_vcr.use_cassette()
+    # def test_edit_public_node_auth_contrib(self):
+    #     """
+    #     The node with PUBLIC_NODE_ID was created by USER1,
+    #     so it should be editable by USER1.
+    #     """
+    #     # TODO why 500 errors when editing public nodes?
+    #     # import requests
+    #     # edited_public_node = requests.patch(
+    #     #     'https://staging2.osf.io/api/v2/nodes/bxsu6/',
+    #     #     json={'title': "User1's New Title",
+    #     #         'description': "User1's new description",
+    #     #         'category': "data"},
+    #     #     auth=AUTH1
+    #     #     )
+    #     # print(edited_public_node)
+    #     edited_public_node = SESSION_AUTH1.edit_node(
+    #         PUBLIC_NODE_ID,
+    #         title="User1's New Title",
+    #         description="User1's new description",
+    #         category="data"
+    #     )
+    #     assert_true(isinstance(edited_public_node, DotNotator))
+    #     assert_equal(edited_public_node.title,
+    #                  "User1's new title")
+    #     assert_equal(edited_public_node.description,
+    #                  "User1's new description")
+    #     assert_equal(edited_public_node.category,
+    #                  "data")
+
+    @edit_nodes_vcr.use_cassette()
+    def test_edit_public_node_auth_non_contrib(self):
+        """
+        USER2 is not a contributor to the node with PUBLIC_NODE_ID,
+        so it should not be editable by USER2.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            edited_public_node = SESSION_AUTH2.edit_node(
+                PUBLIC_NODE_ID,
+                title="User2's New Title",
+                description="User2's new description",
+                category="data",
+            )
+
+    @edit_nodes_vcr.use_cassette()
+    def test_edit_public_node_not_auth(self):
+        """
+        The node with PUBLIC_NODE_ID should be visible to
+        a session with no authentication, but should not
+        be editable by such a session.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            edited_public_node = SESSION_NO_AUTH.edit_node(
+                PUBLIC_NODE_ID,
+                title="NoAuth's new title",
+                description="NoAuth's new description",
+                category="data",
+            )
+
+    @edit_nodes_vcr.use_cassette()
+    def test_edit_private_node_auth_contributor(self):
+        """
+        The node with PRIVATE_NODE_ID was created by USER1,
+        so it should be editable by USER1.
+        """
+        private_node = SESSION_AUTH1.edit_node(
+            PRIVATE_NODE_ID,
+            title="User1's new title",
+            description="User1's new description",
+            category="data",
+        )
+        assert_true(isinstance(private_node, DotNotator))
+        assert_equal(private_node.title,
+                     "User1's new title")
+        assert_equal(private_node.description,
+                     "User1's new description")
+        assert_equal(private_node.category,
+                     "data")
+
+    @edit_nodes_vcr.use_cassette()
+    def test_edit_private_node_auth_non_contributor(self):
+        """
+        USER2 is not a contributor to the node with PRIVATE_NODE_ID,
+        so the node should not be visible.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            private_node = SESSION_AUTH2.edit_node(
+                PRIVATE_NODE_ID,
+                title="User2's new title",
+                description="User2's new description",
+                category="data",
+            )
+
+    @edit_nodes_vcr.use_cassette()
+    def test_edit_private_node_not_auth(self):
+        """
+        Unauthenticated user should not be able to view any
+        private node.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            private_node = SESSION_NO_AUTH.edit_node(
+                PRIVATE_NODE_ID,
+                title="NoAuth's new title",
+                description="NoAuth's new description",
+                category="data",
+            )
+
 # class TestDeleteNodes(unittest.TestCase):
 #
 #     pass

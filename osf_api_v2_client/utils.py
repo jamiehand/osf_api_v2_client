@@ -36,9 +36,9 @@ def get_response_or_exception(method, url, *args, **kwargs):
     elif method == 'post':
         response = requests.post(url, *args, **kwargs)
     elif method == 'patch':
-        response == requests.patch(url, *args, **kwargs)
+        response = requests.patch(url, *args, **kwargs)
     elif method == 'delete':
-        response == requests.delete(url, **kwargs)
+        response = requests.delete(url, **kwargs)
     else:
         raise ValueError('Invalid method input: {} \n'
                          'Please use get, post, patch, or delete.')

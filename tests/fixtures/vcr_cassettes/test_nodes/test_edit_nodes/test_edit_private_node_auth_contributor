@@ -1,0 +1,35 @@
+interactions:
+- request:
+    body: '{"title": "User1''s new title", "category": "data", "description": "User1''s
+      new description"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      Content-Length: ['92']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: PATCH
+    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA51T0WrDMAz8leGXvWS1Eygt+Y7taYziOkoi5trBVjZK2b9PdtIuG4yxQCC2LN2d
+        T/JFNJq0qC8CG1GLYQ9xJwpBSBZ4/xQhlPfxzsH73RQrRAPRBBwIvfuRsTwphNEEnQ9nTsocXMmR
+        gwnAv0RWqXL7oHb8PZa7eqvqar+pqkopdc09+QZb/DuZdBfTHeI5EpxE/fxSiJGlp9VHISy613ze
+        ooW8CGBnET3REGspI2Og66qNj+0GvdQDyrdKOs+XktkWmaulYMBBB3CUGcG2onajtRw23lHA40g+
+        ZBbjx5RVFuv4lnCZdiIT/5DMRgboMFLQqV9LVWqlqm94WVZPJ8vt/E3WZB4rSV4ebr2YzVkr4wss
+        azA92oabsrB9LfIVinFTq4MfIBBOc9Po2B+9Djy+rbYRUs+tBTM9hjm0dGjOS0Dj0aK51dF5SA8s
+        zxcTfQLfZTJLiAMAAA==
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Wed, 26 Aug 2015 01:45:44 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
