@@ -51,7 +51,7 @@ class TestGetRoot(unittest.TestCase):
         assert_true(hasattr(root, 'meta'))
 
     @get_root_vcr.use_cassette()
-    def test_get_root_not_auth(self):
+    def test_get_root_no_auth(self):
         root = SESSION_NO_AUTH.get_root()
         assert_true(isinstance(root, DotNotator))
         assert_true(hasattr(root, 'meta'))

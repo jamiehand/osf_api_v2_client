@@ -1,27 +1,27 @@
 interactions:
 - request:
-    body: '{"title": "NoAuth''s new title", "description": "NoAuth''s new description",
-      "category": "data"}'
+    body: '{"title": "Private node 3 created with client library", "description":
+      "", "category": ""}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['94']
+      Content-Length: ['90']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
-    method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+    method: POST
+    uri: https://staging2.osf.io/api/v2/nodes/
   response:
     body:
       string: !!binary |
         H4sIAAAAAAAAA6tWSkktSczMUbJSciwtyUjNK8lMTizJzM9TSC5KTQFxE3OKFcpTi1IV8vJLFAqK
         8ssyU1JT9JRqAdh4JeM6AAAA
     headers:
-      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Wed, 26 Aug 2015 01:49:04 GMT']
+      Date: ['Tue, 01 Sep 2015 19:37:44 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

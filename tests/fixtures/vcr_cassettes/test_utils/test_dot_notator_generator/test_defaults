@@ -11,41 +11,71 @@ interactions:
   response:
     body:
       string: !!binary |
-        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
-        3tPT0796qa6I4SUAAA==
+        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
     headers:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Fri, 21 Aug 2015 18:31:50 GMT']
+      Date: ['Tue, 01 Sep 2015 19:38:16 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/users/se6py/nodes/?page=2
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA52UTZObMAyG/0rHZxKbfG3W1/6BPextp5NxQBBPje2xRWaZDP+9sqEpvfSDEwak
+        h1fSKx6sVqiY/HgwXTPJhr2q7qxgqNEA3b/1V6OrL19d550Fi/SqhlgF7VE7y6TtjSlYpRBaFwZK
+        yDgKoieXKgBdEnYnyuNGnDZ78V6eZHmWe7F9EWchxM/YztW60Yvg86Y8vJev8riT4rB9eaXYFIyq
+        jUw+WBwiQkfCvxWsjxDSaSyY0fZ7ft9oA/kQwMwibog+Ss4jMbRtd1sXm612XHnN7ztuHVXGcwN4
+        zuaMgF6FVHb6IpiGSvknyic2h2POr5zFoK89upDlVK5PuEOxTtgSl/n/o2qqjZoYoNURg0ozXKoS
+        K1X9xsuybtiZPzTrqSQ1/fIc2tyctTJ+wabW37SpaXqLtq8lVzOKuMkTwXkIqCeD1Srerk4F8nmj
+        TIQ0c2OgmhZkfrTs0ByXQHm7mMTQUxoOPq1c9iEbydcLM4dIpvmb99IeRB7h5IfZzTRro1LqtKc+
+        wH0lxsLnE9NB+mU8GDpUNOWypEogXLxqSX8pxnH8AaLpa99XBAAA
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Tue, 01 Sep 2015 19:38:16 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

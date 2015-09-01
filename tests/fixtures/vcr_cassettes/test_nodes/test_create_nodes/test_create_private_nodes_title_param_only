@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"title": "Private node 2 created with client library", "category": "",
-      "description": ""}'
+    body: '{"title": "Private node 2 created with client library", "description":
+      "", "category": ""}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -13,13 +13,13 @@ interactions:
     method: POST
     uri: https://staging2.osf.io/api/v2/nodes/
   response:
-    body: {string: '{"data":{"id":"5mvug","title":"Private node 2 created with client
-        library","description":"","category":"","date_created":"2015-08-25T16:11:01.193113","date_modified":"2015-08-25T16:11:01.193113","tags":{"system":[],"user":[]},"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/5mvug/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/5mvug/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/5mvug/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/5mvug/registrations/"},"html":"https://staging2.osf.io/5mvug/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/5mvug/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/5mvug/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
+    body: {string: '{"data":{"id":"pxtgm","title":"Private node 2 created with client
+        library","description":"","category":"","date_created":"2015-09-01T19:37:44.886170","date_modified":"2015-09-01T19:37:44.886170","tags":{"system":[],"user":[]},"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/pxtgm/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/registrations/"},"html":"https://staging2.osf.io/pxtgm/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/json]
-      Date: ['Tue, 25 Aug 2015 16:11:02 GMT']
+      Date: ['Tue, 01 Sep 2015 19:37:45 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

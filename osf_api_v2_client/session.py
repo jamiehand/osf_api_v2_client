@@ -81,9 +81,6 @@ class Session(object):
 
     def get_node(self, node_id=''):
         """
-        If node_id is None, return a generator containing nodes
-        If node_id is a valid id, return the node with that id
-        If node_id is not a valid node id, raise exception
         :param node_id: 5-character id for a node that can be
         viewed by this session's auth
         :return: the node identified by node_id
@@ -117,18 +114,25 @@ class Session(object):
         return DotNotator(node_json)
 
     def edit_node(self, node_id, **kwargs):
+        """
+        :param node_id: 5-character id for a node that can be
+        edited by this session's auth
+        :param kwargs: e.g. title='My Title',
+        description='This is my new description',
+        category='data'
+        :return: DotNotator version of edited node
+        """
         # e.g. kwargs: title='', description='', category='' TODO tags? public?
         # TODO how should this functionality work in terms of when a category
         # is passed in or not?
         # TODO figure out how to change the private setting to public and
         # vice versa
-        params = {}  # 'node_id': node_id}
+        params = {}
         for key, value in kwargs.items():
             params[key] = value
-        # print(params)
         edited_node = get_response_or_exception(
             'patch', '{}nodes/{}/'.format(self.root_url, node_id),
-            json=params, # TODO should use json=params or data=params?
+            json=params,
             auth=self.auth
         )
         edited_node_json = edited_node.json()[u'data']

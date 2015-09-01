@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"description": "User2''s new description", "title": "User2''s new title",
+    body: '{"title": "User2''s new title", "description": "User2''s new description",
       "category": "data"}'
     headers:
       Accept: ['*/*']
@@ -11,7 +11,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/p8es7/
+    uri: https://staging2.osf.io/api/v2/nodes/vemxa/
   response:
     body:
       string: !!binary |
@@ -22,7 +22,7 @@ interactions:
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Wed, 26 Aug 2015 01:47:22 GMT']
+      Date: ['Tue, 01 Sep 2015 19:37:48 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

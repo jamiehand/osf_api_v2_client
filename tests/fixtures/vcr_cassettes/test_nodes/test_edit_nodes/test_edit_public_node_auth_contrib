@@ -1,13 +1,16 @@
 interactions:
 - request:
-    body: null
+    body: '{"title": "User1''s new title", "description": "User1''s new description",
+      "category": "data"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
       Connection: [keep-alive]
+      Content-Length: ['92']
+      Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
-    method: GET
+    method: PATCH
     uri: https://staging2.osf.io/api/v2/nodes/pqbun/
   response:
     body:
@@ -24,7 +27,7 @@ interactions:
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:53 GMT']
+      Date: ['Tue, 01 Sep 2015 19:37:49 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

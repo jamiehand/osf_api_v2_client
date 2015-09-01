@@ -7,21 +7,20 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
-    uri: https://staging2.osf.io/api/v2/
+    uri: https://staging2.osf.io/api/v2/nodes/vemxa/
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA43MsQrCMBDG8VcJN5ecZMzmIjgpODhKqGcaTJOSu3QpeXfTPoHTfQc//hvMJA7s
-        1i+z8wQWnhTHPJOSrGQidXtc1Pl+1TDASoVDTt0Yfer/WEuhJK/KVMCmGmMbIIb05b2Y8pv6gElk
-        YYvI4nxI3ujMHx0yuiXgavBg2Gt75Q9/MITWfjq4LSu8AAAA
+        H4sIAAAAAAAAA6tWSkktSczMUbJSciwtyUjNK8lMTizJzM9TSC5KTQFxE3OKFcpTi1IV8vJLFAqK
+        8ssyU1JT9JRqAdh4JeM6AAAA
     headers:
-      Allow: ['OPTIONS, GET']
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Encoding: [gzip]
       Content-Type: [application/json]
-      Date: ['Mon, 24 Aug 2015 20:01:05 GMT']
+      Date: ['Tue, 01 Sep 2015 19:37:53 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+    status: {code: 403, message: FORBIDDEN}
 version: 1
