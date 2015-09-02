@@ -24,6 +24,7 @@ class StatusCode400orGreaterError(Exception):
                                        self.response.text))
         return string
 
+
 def get_response_or_exception(method, url, *args, **kwargs):
     method = method.lower()
     # TODO consider: Possible alternative to replace a bunch of if statements:
@@ -68,10 +69,12 @@ def file_generator(files_url, auth=None, num_requested=-1):
             # If it's a folder, follow it
             if item[u'item_type'] == "folder":
                 url_to_follow = item[u'links'][u'related']
+                new_num_requested = -1 if (
+                    num_requested == -1) else count_remaining
                 for subitem in file_generator(url_to_follow, auth=auth,
-                                              num_requested=count_remaining):
+                                              num_requested=new_num_requested):
                     count_remaining -= 1
-                    yield DotNotator(subitem)
+                    yield subitem
             # If it's a file, yield it
             elif item[u'item_type'] == "file":
                 if num_requested == -1:

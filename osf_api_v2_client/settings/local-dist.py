@@ -11,10 +11,10 @@ DOMAIN = "https://staging2.osf.io/"  # TODO rename this variable?
 API_PREFIX = "api/v2/"
 URL = "{}{}".format(DOMAIN, API_PREFIX)  # e.g. https://staging2.osf.io/api/v2/
 
-# Change these to a the id's of a public node and private node that
-# were created by USER1.
-PUBLIC_NODE_ID = 'bxsu6'
-PRIVATE_NODE_ID = 'p8es7'
+# Change these to the id's of nodes that were created by USER1.
+PUBLIC_NODE_ID = 'pqbun'
+PRIVATE_NODE_ID = 'vemxa'
+FILES_NODE_ID = 'bc79a'  # public node with files to test file downloads
 
 # Change these to the email and pw of the main user, who created
 # the nodes

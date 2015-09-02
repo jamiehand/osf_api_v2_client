@@ -10,7 +10,7 @@ from osf_api_v2_client.utils import(DotNotator,
 class Session(object):
     def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
         self.root_url = root_url
-        self.auth = auth  # TODO is it okay to have auth be None?
+        self.auth = auth
 
     def get_root(self):
         """
@@ -23,15 +23,6 @@ class Session(object):
 
     # USER ACTIONS
 
-    # TODO maybe: get_generator; get_object -- e.g. if I wanted to get
-    # a registration...
-    # but, if you're passing in the URL you maybe might as well
-    # be using the API itself
-
-    # TODO: if a parameter gets passed in, I should process it.
-    # TODO: requests -- query parameters = ...
-
-    # TODO: modify DotNotator object, then push it to server to edit it?
     def get_user_generator(self, num_requested=-1):
         """
         :param num_requested: a positive integer or -1; -1 will cause
@@ -42,18 +33,6 @@ class Session(object):
         target_url = '{}users/'.format(self.root_url)
         return dotnotator_generator(target_url, auth=self.auth,
                                     num_requested=num_requested)
-
-    def get_json_user_generator(self, num_requested=-1):
-        # TODO get rid of this method
-        """
-        :param num_requested: a positive integer or -1; -1 will cause
-        all users to be returned; otherwise num_requested number of
-        users will be returned
-        :return: a generator containing users
-        """
-        target_url = '{}users/'.format(self.root_url)
-        return json_dict_generator(target_url, auth=self.auth,
-                                   num_requested=num_requested)
 
     def get_user(self, user_id):
         """
@@ -74,7 +53,6 @@ class Session(object):
         nodes will be returned
         :return: a generator containing nodes
         """
-        # TODO consider case when generator is empty?
         target_url = '{}nodes/'.format(self.root_url)
         return dotnotator_generator(target_url, auth=self.auth,
                                     num_requested=num_requested)
@@ -122,11 +100,7 @@ class Session(object):
         category='data'
         :return: DotNotator version of edited node
         """
-        # e.g. kwargs: title='', description='', category='' TODO tags? public?
-        # TODO how should this functionality work in terms of when a category
-        # is passed in or not?
-        # TODO figure out how to change the private setting to public and
-        # vice versa
+        # e.g. kwargs: title='', description='', category=''
         params = {}
         for key, value in kwargs.items():
             params[key] = value
@@ -150,9 +124,6 @@ class Session(object):
 
     # FILE ACTIONS
 
-    # TODO possible to do something like node.get_files_generator(),
-    # which would pass the current
-    # node's id to a function that would get the generator ? ...
     def get_file_generator(self, node_id, num_requested=-1):
         """
         :param node_id: 5-character node id

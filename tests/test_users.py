@@ -1,6 +1,3 @@
-# TODO import API_PREFIX? (also, import domain?)
-# TODO change auth to work with OAuth/tokens instead of basic auth?
-
 from six import string_types
 import vcr
 import types

@@ -1,6 +1,6 @@
-import timeit
-
+import os
 import vcr
+import requests
 from nose.tools import *  # flake8: noqa
 
 # Comment line below prevents unittest from deletion in import optimization
@@ -11,11 +11,11 @@ from osf_api_v2_client.settings.local import (
     URL,                # e.g. 'https://staging2.osf.io/api/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
+    FILES_NODE_ID,      # id of a node with a total of 15 files
 )
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import (DotNotator,
                                      dotnotator_generator)
-
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with
@@ -27,17 +27,8 @@ SESSION_AUTH2 = Session(root_url=URL, auth=AUTH2)
 # A session that is not authenticated
 SESSION_NO_AUTH = Session(root_url=URL)
 
-
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_utils/'
 VCR_RECORD_MODE = 'new_episodes'
-
-
-# TODO get rid of this:
-def smart_print(string):
-    try:
-        print(string)
-    except UnicodeEncodeError:
-        print(string.encode('utf-8'))
 
 
 class TestDotNotator(unittest.TestCase):
@@ -184,19 +175,63 @@ class TestDotNotator(unittest.TestCase):
                       })
 
 
-# class TestFileGenerator(unittest.TestCase):
-#     TODO fix this
-#     @my_vcr.use_cassette()
-#     def test_few_files(self):
-#         for file in SESSION_AUTH1.get_file_generator(PUBLIC_NODE_ID):
-#             file_to_download = requests.get(file.links.self)
-#             filepath = "test_file_generator/test_few_files/{}/{}".format(file.provider, file.name)
-#             print("Downloading file: {}".format(filepath))
-#             os.makedirs(os.path.dirname(filepath), exist_ok=True)  # Create directory for file if it doesn't exist
-#             # Name the new file with the name of the file given in the API
-#             with open(filepath, "wb") as new_file:
-#                 new_file.write(file_to_download.content)
-#     # TODO how to assert that files exist?
+class TestFileGenerator(unittest.TestCase):
+    """
+    This currently only tests a few of the add-ons;
+    maybe all add-ons should be tested, but this shows
+    the basic functionality of the generator.
+    """
+
+    file_generator_vcr = vcr.VCR(
+        cassette_library_dir='{}test_file_generator'.format(
+            VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @file_generator_vcr.use_cassette()
+    def test_get_all_files(self):
+        """
+        The node with id FILES_NODE_ID has 15 files among various
+        add-ons -- this tests that all are yielded by the generator.
+        """
+        file_links = []
+        for file in SESSION_AUTH1.get_file_generator(FILES_NODE_ID):
+            file_links.append(file.links.self)
+        #     file_to_download = requests.get(file.links.self)
+        #     filepath = "test_file_generator/test_get_all_files/{}/{}".format(
+        #         file.provider, file.name)
+        #     print("Downloading file: {}".format(filepath))
+        #     os.makedirs(os.path.dirname(filepath), exist_ok=True)  # Create directory for file if it doesn't exist
+        #     # Name the new file with the name of the file given in the API
+        #     with open(filepath, "wb") as new_file:
+        #         new_file.write(file_to_download.content)
+        # print('len(file_links): {}'.format(len(file_links)))
+        # print(file_links)
+        assert_equal(len(file_links), 15)
+
+    # @file_generator_vcr.use_cassette()
+    # def test_get_some_files(self):
+    #     """
+    #     The node with id FILES_NODE_ID has 15 files among various
+    #     add-ons -- this tests that 5 are yielded when 5 are requested.
+    #     """
+    #     file_links = []
+    #     for file in SESSION_AUTH1.get_file_generator(
+    #         FILES_NODE_ID,
+    #         num_requested=5
+    #     ):
+    #         file_links.append(file.links.self)
+    #         file_to_download = requests.get(file.links.self)
+    #         filepath = "test_file_generator/test_get_some_files/{}/{}".format(
+    #             file.provider, file.name)
+    #         print("Downloading file: {}".format(filepath))
+    #         os.makedirs(os.path.dirname(filepath), exist_ok=True)  # Create directory for file if it doesn't exist
+    #         # Name the new file with the name of the file given in the API
+    #         with open(filepath, "wb") as new_file:
+    #             new_file.write(file_to_download.content)
+    #     print('len(file_links): {}'.format(len(file_links)))
+    #     print(file_links)
+    #     assert_equal(len(file_links), 5)
 
 
 class TestDotNotatorGenerator(unittest.TestCase):
@@ -254,32 +289,3 @@ class TestDotNotatorGenerator(unittest.TestCase):
                                       item.name,
                                       item.links.self))
 
-
-# class TestTimes(unittest.TestCase):
-#     # TODO get rid of this class
-#
-#     @vcr.use_cassette(record_mode='new_episodes')
-#     def test_dn_json(self):
-#
-#         dn_list = []
-#         for user in SESSION_AUTH1.get_user_generator(num_requested=50):
-#             dn_list.append(user)
-#
-#         def time_dn():
-#             for u in dn_list:
-#                 x = u.fullname
-#
-#         json_list = []
-#         for user in SESSION_AUTH1.get_json_user_generator(num_requested=50):
-#             json_list.append(user)
-#
-#         def time_json():
-#
-#             for data_item in json_list:
-#                 y = data_item[u'fullname']
-#
-#         print('------ NUM_REQUESTED = 50 ------')
-#         print('TIME_DN: 1ST TIME: {}'.format(timeit.timeit(time_dn)))
-#         print('TIME_DN: 2ND TIME: {}'.format(timeit.timeit(time_dn)))
-#         print('TIME_JSON: 1ST TIME: {}'.format(timeit.timeit(time_json)))
-#         print('TIME_JSON: 2ND TIME: {}'.format(timeit.timeit(time_json)))

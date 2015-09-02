@@ -1,6 +1,3 @@
-# TODO import API_PREFIX? (also, import domain?)
-# TODO change auth to work with OAuth/tokens instead of basic auth?
-
 import vcr
 from nose.tools import *  # flake8: noqa
 
