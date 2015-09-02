@@ -42,14 +42,20 @@ class TestGetUsers(unittest.TestCase):
     @get_users_vcr.use_cassette()
     def test_get_user_generator(self):
         user_generator = SESSION_AUTH1.get_user_generator()
-        # TODO what should my assertion(s) here be?
+        user_list = []
         assert_true(isinstance(user_generator, types.GeneratorType))
-        # count = 1
-        # for node in node_generator:
-        #     print("***************************** {}
-        # *******************************".format(count))
-        #     pp.pprint(node)
-        #     count += 1
+        for user in user_generator:
+            user_list.append(user.id)
+        assert_equal(len(user_list), 50)
+
+    def test_get_user_generator_with_num_requested(self):
+        user_generator = SESSION_AUTH1.get_user_generator(
+            num_requested=5
+        )
+        user_list = []
+        for user in user_generator:
+            user_list.append(user.id)
+        assert_equal(len(user_list), 5)
 
     @get_users_vcr.use_cassette()
     def test_get_authenticated_user(self):
