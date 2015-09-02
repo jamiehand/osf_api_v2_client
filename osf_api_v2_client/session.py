@@ -91,7 +91,7 @@ class Session(object):
         return DotNotator(data)
 
     def create_node(self, title, description="",
-                    category="", public="True"):
+                    category=""):
         """
         :param title: required, string
         :param description: optional, string
@@ -143,9 +143,10 @@ class Session(object):
         :param node_id: 5-character node id
         :return: none
         """
-        response = requests.delete('{}nodes/{}/'.format(
-            self.root_url, node_id), auth=self.auth)
-        return response
+        get_response_or_exception(
+            'delete', '{}nodes/{}/'.format(self.root_url, node_id),
+            auth=self.auth
+        )
 
     # FILE ACTIONS
 

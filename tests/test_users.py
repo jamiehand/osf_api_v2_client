@@ -22,7 +22,7 @@ from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotNotator
 
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_users/'
-VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
+VCR_RECORD_MODE = 'new_episodes'
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with

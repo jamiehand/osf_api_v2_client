@@ -29,7 +29,7 @@ SESSION_NO_AUTH = Session(root_url=URL)
 
 
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_utils/'
-VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
+VCR_RECORD_MODE = 'new_episodes'
 
 
 # TODO get rid of this:

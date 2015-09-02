@@ -17,7 +17,6 @@ from osf_api_v2_client.session import Session
 from osf_api_v2_client.utils import DotNotator
 
 
-
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node with
 # PRIVATE_NODE_ID
@@ -30,7 +29,7 @@ SESSION_NO_AUTH = Session(root_url=URL)
 
 
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_session/'
-VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
+VCR_RECORD_MODE = 'new_episodes'
 
 
 class TestGetRoot(unittest.TestCase):

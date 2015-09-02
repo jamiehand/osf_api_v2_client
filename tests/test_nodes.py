@@ -1,6 +1,3 @@
-# TODO import API_PREFIX? (also, import domain?)
-# TODO change auth to work with OAuth/tokens instead of basic auth
-
 import pprint
 import types
 
@@ -39,10 +36,10 @@ SESSION_NO_AUTH = Session(root_url=URL)
 
 
 VCR_CASSETTE_PREFIX = 'fixtures/vcr_cassettes/test_nodes/'
-VCR_RECORD_MODE = 'new_episodes'  # TODO or 'once' ?
+VCR_RECORD_MODE = 'new_episodes'
 
 
-# TODO once functionality exists to create public nodes, and edit
+# TODO once functionality exists to create public nodes and edit
 # a node's private/public setting, add tests for this functionality
 # under TestCreateNodes and TestEditNodes.
 
@@ -271,137 +268,88 @@ class TestEditNodes(unittest.TestCase):
             )
 
 
-# class TestDeleteNodes(unittest.TestCase):
-#
-#     delete_nodes_vcr = vcr.VCR(
-#         cassette_library_dir='{}test_delete_nodes'.format(VCR_CASSETTE_PREFIX),
-#         record_mode=VCR_RECORD_MODE
-#     )
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def setUp(self):
-#         # TODO this setUp is currently dependent on create_node() working.
-#         # How can we make it independent?
-#         # TODO create a public and private node with AUTH1 here, and
-#         # record their id's.
-#         SESSION_AUTH1.edit_node(
-#             PUBLIC_NODE_ID,
-#             title="Original public node title",
-#             description="Original public node description",
-#             category=""
-#         )
-#         SESSION_AUTH1.edit_node(
-#             PRIVATE_NODE_ID,
-#             title="Original private node title",
-#             description="Original private node description",
-#             category=""
-#         )
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_public_node_auth_contrib(self):
-#         """
-#         The node with PUBLIC_NODE_ID was created by USER1,
-#         so it should be editable by USER1.
-#         """
-#         edited_public_node = SESSION_AUTH1.edit_node(
-#             PUBLIC_NODE_ID,
-#             title="User1's new title",
-#             description="User1's new description",
-#             category="data"
-#         )
-#         assert_true(isinstance(edited_public_node, DotNotator))
-#         assert_equal(edited_public_node.title,
-#                      "User1's new title")
-#         assert_equal(edited_public_node.description,
-#                      "User1's new description")
-#         assert_equal(edited_public_node.category,
-#                      "data")
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_public_node_auth_non_contrib(self):
-#         """
-#         USER2 is not a contributor to the node with PUBLIC_NODE_ID,
-#         so it should not be editable by USER2.
-#         """
-#         with assert_raises(StatusCode400orGreaterError):
-#             edited_public_node = SESSION_AUTH2.edit_node(
-#                 PUBLIC_NODE_ID,
-#                 title="User2's new title",
-#                 description="User2's new description",
-#                 category="data",
-#             )
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_public_node_no_auth(self):
-#         """
-#         The node with PUBLIC_NODE_ID should be visible to
-#         a session with no authentication, but should not
-#         be editable by such a session.
-#         """
-#         with assert_raises(StatusCode400orGreaterError):
-#             edited_public_node = SESSION_NO_AUTH.edit_node(
-#                 PUBLIC_NODE_ID,
-#                 title="NoAuth's new title",
-#                 description="NoAuth's new description",
-#                 category="data",
-#             )
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_private_node_auth_contributor(self):
-#         """
-#         The node with PRIVATE_NODE_ID was created by USER1,
-#         so it should be editable by USER1.
-#         """
-#         private_node = SESSION_AUTH1.edit_node(
-#             PRIVATE_NODE_ID,
-#             title="User1's new title",
-#             description="User1's new description",
-#             category="data",
-#         )
-#         assert_true(isinstance(private_node, DotNotator))
-#         assert_equal(private_node.title,
-#                      "User1's new title")
-#         assert_equal(private_node.description,
-#                      "User1's new description")
-#         assert_equal(private_node.category,
-#                      "data")
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_private_node_auth_non_contributor(self):
-#         """
-#         USER2 is not a contributor to the node with PRIVATE_NODE_ID,
-#         so the node should not be visible.
-#         """
-#         with assert_raises(StatusCode400orGreaterError):
-#             private_node = SESSION_AUTH2.edit_node(
-#                 PRIVATE_NODE_ID,
-#                 title="User2's new title",
-#                 description="User2's new description",
-#                 category="data",
-#             )
-#
-#     @delete_nodes_vcr.use_cassette()
-#     def test_edit_private_node_no_auth(self):
-#         """
-#         Unauthenticated user should not be able to view any
-#         private node.
-#         """
-#         with assert_raises(StatusCode400orGreaterError):
-#             private_node = SESSION_NO_AUTH.edit_node(
-#                 PRIVATE_NODE_ID,
-#                 title="NoAuth's new title",
-#                 description="NoAuth's new description",
-#                 category="data",
-#             )
-#
-# #     pass
-# #     # TODO write tests on deleting nodes (private, public; auth,
-# #       diff_auth, no_auth
-# #     # TODO check if Reina fixed problem of deleted nodes being returned,
-# #       ability to delete nodes multiple times, etc.
-# #
-# #     # Starter, from code used in initial testing:
-# #     # response = localhost_session.delete_node('x7s9m')
-# #     # print(response.status_code)
-#
-#
+class TestDeleteNodes(unittest.TestCase):
+
+    delete_nodes_vcr = vcr.VCR(
+        cassette_library_dir='{}test_delete_nodes'.format(VCR_CASSETTE_PREFIX),
+        record_mode=VCR_RECORD_MODE
+    )
+
+    @delete_nodes_vcr.use_cassette()
+    def setUp(self):
+        # This is currently the id of a node that I created and made
+        # public in the GUI, but to make the test self-contained:
+        # TODO once it's possible to create public nodes, create
+        # a public node with SESSION_AUTH1, recording its id as
+        # self.public_node_id, and then delete it in test methods,
+        # as done below with the private node.
+        self.public_node_id = 'my3kd'
+
+        private_node = SESSION_AUTH1.create_node('Private node to delete')
+        self.private_node_id = private_node.id
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_public_node_auth_non_contrib(self):
+        """
+        USER2 is not a contributor to the node with
+        self.public_node_id, so it should not be deletable by USER2.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_AUTH2.delete_node(
+                self.public_node_id
+            )
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_public_node_no_auth(self):
+        """
+        Unauthenticated user should not be able to delete any node.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_NO_AUTH.delete_node(
+                self.public_node_id
+            )
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_public_node_auth_contrib(self):
+        """
+        The node with self.public_node_id was created by USER1,
+        so it should be deletable by USER1.
+        """
+        SESSION_AUTH1.delete_node(
+            self.public_node_id
+        )
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_AUTH1.get_node(self.public_node_id)
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_private_node_auth_non_contrib(self):
+        """
+        USER2 is not a contributor to the node with
+        self.private_node_id, so the node should not be visible.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_AUTH2.delete_node(
+                self.private_node_id
+            )
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_private_node_no_auth(self):
+        """
+        Unauthenticated user should not be able to delete any node.
+        """
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_NO_AUTH.delete_node(
+                self.private_node_id
+            )
+
+    @delete_nodes_vcr.use_cassette()
+    def test_delete_private_node_auth_contrib(self):
+        """
+        The node with self.private_node_id was created by USER1,
+        so it should be deletable by USER1.
+        """
+        SESSION_AUTH1.delete_node(
+            self.private_node_id
+        )
+        with assert_raises(StatusCode400orGreaterError):
+            SESSION_AUTH1.get_node(self.private_node_id)
