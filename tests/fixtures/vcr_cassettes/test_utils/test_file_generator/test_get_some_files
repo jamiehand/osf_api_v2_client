@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://staging2.osf.io/api/v2/nodes/bc79a/
+  response:
+    body: {string: '{"data":{"id":"bc79a","type":"nodes","attributes":{"title":"Files
+        node","description":"A node with files, to test file download in client library","category":"project","date_created":"2015-09-02T17:32:47.359000","date_modified":"2015-09-02T17:55:06","tags":[],"registration":false,"collection":false,"dashboard":false,"public":true},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/bc79a/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/bc79a/","html":"https://staging2.osf.io/bc79a/"}}}'}
+    headers:
+      Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
+      Connection: [keep-alive]
+      Content-Type: [application/vnd.api+json]
+      Date: ['Wed, 02 Sep 2015 19:24:48 GMT']
+      Server: [nginx/1.4.6 (Ubuntu)]
+      Vary: [Accept]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

@@ -2,7 +2,6 @@ import requests
 
 from osf_api_v2_client.utils import(DotNotator,
                                     dotnotator_generator,
-                                    json_dict_generator,
                                     file_generator,
                                     get_response_or_exception)
 

@@ -194,9 +194,9 @@ class TestFileGenerator(unittest.TestCase):
         The node with id FILES_NODE_ID has 15 files among various
         add-ons -- this tests that all are yielded by the generator.
         """
-        file_links = []
+        file_links_list = []
         for file in SESSION_AUTH1.get_file_generator(FILES_NODE_ID):
-            file_links.append(file.links.self)
+            file_links_list.append(file.links.self)
         #     file_to_download = requests.get(file.links.self)
         #     filepath = "test_file_generator/test_get_all_files/{}/{}".format(
         #         file.provider, file.name)
@@ -205,9 +205,9 @@ class TestFileGenerator(unittest.TestCase):
         #     # Name the new file with the name of the file given in the API
         #     with open(filepath, "wb") as new_file:
         #         new_file.write(file_to_download.content)
-        # print('len(file_links): {}'.format(len(file_links)))
-        # print(file_links)
-        assert_equal(len(file_links), 15)
+        # print('len(file_links_list): {}'.format(len(file_links_list)))
+        # print(file_links_list)
+        assert_equal(len(file_links_list), 15)
 
     # @file_generator_vcr.use_cassette()
     # def test_get_some_files(self):
@@ -215,12 +215,12 @@ class TestFileGenerator(unittest.TestCase):
     #     The node with id FILES_NODE_ID has 15 files among various
     #     add-ons -- this tests that 5 are yielded when 5 are requested.
     #     """
-    #     file_links = []
+    #     file_links_list = []
     #     for file in SESSION_AUTH1.get_file_generator(
     #         FILES_NODE_ID,
     #         num_requested=5
     #     ):
-    #         file_links.append(file.links.self)
+    #         file_links_list.append(file.links.self)
     #         file_to_download = requests.get(file.links.self)
     #         filepath = "test_file_generator/test_get_some_files/{}/{}".format(
     #             file.provider, file.name)
@@ -229,9 +229,9 @@ class TestFileGenerator(unittest.TestCase):
     #         # Name the new file with the name of the file given in the API
     #         with open(filepath, "wb") as new_file:
     #             new_file.write(file_to_download.content)
-    #     print('len(file_links): {}'.format(len(file_links)))
-    #     print(file_links)
-    #     assert_equal(len(file_links), 5)
+    #     print('len(file_links_list): {}'.format(len(file_links_list)))
+    #     print(file_links_list)
+    #     assert_equal(len(file_links_list), 5)
 
 
 class TestDotNotatorGenerator(unittest.TestCase):
@@ -244,48 +244,38 @@ class TestDotNotatorGenerator(unittest.TestCase):
 
     @dot_notator_generator_vcr.use_cassette()
     def test_defaults(self):
-        # TODO modify this
         """
-        num_requested should == -1, meaning all items should be returned
+        By default num_requested == -1, so all items should be returned
         """
-        big_gen = dotnotator_generator(
-            "https://staging2.osf.io/api/v2/users/se6py/nodes/")
-        with assert_raises(StopIteration):
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
-            print(next(big_gen))
+        dotnotator_list = []
+        for user in dotnotator_generator(
+                'https://staging2.osf.io/api/v2/users/'):
+            dotnotator_list.append(user.id)
+        assert_equals(len(dotnotator_list), 50)
 
     @dot_notator_generator_vcr.use_cassette()
     def test_num_requested_negative1(self):
-        # TODO write this test
         """
         Test that generator responds correctly when num_requested == -1
-        vs any other number.
         """
-        pass
+        dotnotator_list = []
+        for user in dotnotator_generator(
+            'https://staging2.osf.io/api/v2/users/',
+            num_requested=-1
+        ):
+            dotnotator_list.append(user.id)
+        assert_equals(len(dotnotator_list), 50)
 
     @dot_notator_generator_vcr.use_cassette()
     def test_num_requested_positive(self):
         """
-        request 4; 4 items should be returned
+        Test that generator responds correctly when num_requested is
+        a positive number
         """
-        gen = dotnotator_generator(
-            "https://staging2.osf.io/api/v2/nodes/xtf45/files/?path=%2F&provider=googledrive",
-            num_requested=4)
-        for item in gen:
-            print("{}: {}: {}".format(item.provider,
-                                      item.name,
-                                      item.links.self))
-
+        dotnotator_list = []
+        for user in dotnotator_generator(
+            'https://staging2.osf.io/api/v2/users/',
+            num_requested=16
+        ):
+            dotnotator_list.append(user.id)
+        assert_equals(len(dotnotator_list), 16)
