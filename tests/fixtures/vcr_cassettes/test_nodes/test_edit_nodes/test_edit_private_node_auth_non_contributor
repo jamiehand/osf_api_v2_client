@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"category": "data", "title": "User2''s new title", "description": "User2''s
+    body: '{"title": "User2''s new title", "category": "data", "description": "User2''s
       new description"}'
     headers:
       Accept: ['*/*']
@@ -11,7 +11,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/vemxa/
+    uri: https://staging2-api.osf.io/v2/nodes/vemxa/
   response:
     body: {string: '{"errors":[{"detail":"You do not have permission to perform this
         action."}]}'}
@@ -19,7 +19,7 @@ interactions:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:14:51 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:24 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

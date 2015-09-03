@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"title": "Private node 3 created with client library", "description":
-      "", "category": ""}'
+    body: '{"title": "Private node 3 created with client library", "category": "",
+      "description": ""}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -10,14 +10,14 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: POST
-    uri: https://staging2.osf.io/api/v2/nodes/
+    uri: https://staging2-api.osf.io/v2/nodes/
   response:
     body: {string: '{"errors":[{"detail":"Authentication credentials were not provided."}]}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:12:40 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:15 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

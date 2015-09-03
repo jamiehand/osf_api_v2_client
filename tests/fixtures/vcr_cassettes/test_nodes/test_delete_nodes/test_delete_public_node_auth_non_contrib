@@ -9,14 +9,14 @@ interactions:
       Content-Length: ['0']
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: DELETE
-    uri: https://staging2.osf.io/api/v2/nodes/4zdtk/
+    uri: https://staging2-api.osf.io/v2/nodes/9e2gz/
   response:
     body: {string: '{"errors":[{"detail":"The requested node is no longer available."}]}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:14:49 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:21 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

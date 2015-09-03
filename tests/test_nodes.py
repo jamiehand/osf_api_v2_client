@@ -13,7 +13,7 @@ from osf_api_v2_client.utils import (
 )
 from osf_api_v2_client.session import Session
 from osf_api_v2_client.settings.local import (
-    URL,                # e.g. 'https://staging2.osf.io/api/v2/'
+    URL,                # e.g. 'https://staging2-api.osf.io/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
     PUBLIC_NODE_ID,     # id of a public node
@@ -280,7 +280,9 @@ class TestDeleteNodes(unittest.TestCase):
         # a public node with SESSION_AUTH1, recording its id as
         # self.public_node_id, and then delete it in test methods,
         # as done below with the private node.
-        self.public_node_id = '4zdtk'
+        # TODO every time this vcr cassette is remade, a new public
+        # node id (made by USER1) needs to be put here to be deleted:
+        self.public_node_id = '9e2gz'
 
         private_node = SESSION_AUTH1.create_node('Private node to delete')
         self.private_node_id = private_node.id

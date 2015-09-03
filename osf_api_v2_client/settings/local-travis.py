@@ -7,9 +7,9 @@ Modify USER1, PASS1, USER2, and PASS2 to desired string values.
 
 from requests.auth import HTTPBasicAuth
 
-DOMAIN = "https://staging2.osf.io/"  # TODO rename this variable?
-API_PREFIX = "api/v2/"
-URL = "{}{}".format(DOMAIN, API_PREFIX)  # e.g. https://staging2.osf.io/api/v2/
+DOMAIN = "https://staging2-api.osf.io/"  # TODO rename this variable?
+API_PREFIX = "v2/"
+URL = "{}{}".format(DOMAIN, API_PREFIX)  # e.g. https://staging2-api.osf.io/v2/
 
 # Change these to the id's of nodes that were created by USER1.
 PUBLIC_NODE_ID = 'pqbun'

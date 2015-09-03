@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"title": "Private node 2 created with client library", "description":
-      "", "category": ""}'
+    body: '{"title": "Private node 2 created with client library", "category": "",
+      "description": ""}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -11,15 +11,15 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: POST
-    uri: https://staging2.osf.io/api/v2/nodes/
+    uri: https://staging2-api.osf.io/v2/nodes/
   response:
-    body: {string: '{"data":{"id":"fnmv3","type":"nodes","attributes":{"title":"Private
-        node 2 created with client library","description":"","category":"","date_created":"2015-09-03T02:12:40.690294","date_modified":"2015-09-03T02:12:40.690294","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/fnmv3/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/fnmv3/","html":"https://staging2.osf.io/fnmv3/"}}}'}
+    body: {string: '{"data":{"id":"t8pgs","type":"nodes","attributes":{"title":"Private
+        node 2 created with client library","description":"","category":"","date_created":"2015-09-03T14:28:15.568893","date_modified":"2015-09-03T14:28:15.568893","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/t8pgs/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/t8pgs/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2-api.osf.io/v2/nodes/t8pgs/files/"}},"node_links":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/t8pgs/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/t8pgs/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2-api.osf.io/v2/nodes/t8pgs/","html":"https://staging2.osf.io/t8pgs/"}}}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:12:41 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:16 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

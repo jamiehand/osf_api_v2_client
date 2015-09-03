@@ -7,15 +7,15 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
-    uri: https://staging2.osf.io/api/v2/users/se6py/
+    uri: https://staging2-api.osf.io/v2/users/se6py/
   response:
     body: {string: '{"data":{"id":"se6py","type":"users","attributes":{"fullname":"Jamie
-        Hand","given_name":"Jamie","middle_names":"","family_name":"Hand","suffix":"suffix!","date_registered":"2015-06-30T14:27:22.180000","gravatar_url":"https://secure.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40","gitHub":"jamiehand","scholar":"something","personal_website":"http://example.com","twitter":"jamiechand","linkedIn":"something","impactStory":"something","orcid":"xxxx-xxxx-xxxx-xxxx","researcherId":"x-xxxx-xxxx"},"relationships":{"nodes":{"links":{"related":"https://staging2.osf.io/api/v2/users/se6py/nodes/"}}},"links":{"self":"https://staging2.osf.io/api/v2/users/se6py/","html":"https://staging2.osf.io/se6py/"}}}'}
+        Hand","given_name":"Jamie","middle_names":"","family_name":"Hand","suffix":"suffix!","date_registered":"2015-06-30T14:27:22.180000","gravatar_url":"https://secure.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40","gitHub":"jamiehand","scholar":"something","personal_website":"http://example.com","twitter":"jamiechand","linkedIn":"something","impactStory":"something","orcid":"xxxx-xxxx-xxxx-xxxx","researcherId":"x-xxxx-xxxx"},"relationships":{"nodes":{"links":{"related":"https://staging2-api.osf.io/v2/users/se6py/nodes/"}}},"links":{"self":"https://staging2-api.osf.io/v2/users/se6py/","html":"https://staging2.osf.io/se6py/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Wed, 02 Sep 2015 21:21:54 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:47 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

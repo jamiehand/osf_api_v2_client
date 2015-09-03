@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"category": "data", "title": "NoAuth''s new title", "description": "NoAuth''s
+    body: '{"title": "NoAuth''s new title", "category": "data", "description": "NoAuth''s
       new description"}'
     headers:
       Accept: ['*/*']
@@ -10,14 +10,14 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/pqbun/
+    uri: https://staging2-api.osf.io/v2/nodes/pqbun/
   response:
     body: {string: '{"errors":[{"detail":"Authentication credentials were not provided."}]}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:14:53 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:26 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

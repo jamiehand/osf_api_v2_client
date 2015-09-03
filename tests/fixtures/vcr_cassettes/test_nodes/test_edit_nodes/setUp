@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"category": "", "title": "Original public node title", "description":
+    body: '{"title": "Original public node title", "category": "", "description":
       "Original public node description"}'
     headers:
       Accept: ['*/*']
@@ -11,21 +11,21 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/pqbun/
+    uri: https://staging2-api.osf.io/v2/nodes/pqbun/
   response:
     body: {string: '{"data":{"id":"pqbun","type":"nodes","attributes":{"title":"Original
-        public node title","description":"Original public node description","category":"","date_created":"2015-08-28T16:40:03.745000","date_modified":"2015-08-28T16:40:10.885000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":true},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/pqbun/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/pqbun/","html":"https://staging2.osf.io/pqbun/"}}}'}
+        public node title","description":"Original public node description","category":"","date_created":"2015-08-28T16:40:03.745000","date_modified":"2015-08-28T16:40:10.885000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":true},"relationships":{"children":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/pqbun/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/pqbun/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2-api.osf.io/v2/nodes/pqbun/files/"}},"node_links":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/pqbun/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/pqbun/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2-api.osf.io/v2/nodes/pqbun/","html":"https://staging2.osf.io/pqbun/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:14:49 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:22 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
     status: {code: 200, message: OK}
 - request:
-    body: '{"category": "", "title": "Original private node title", "description":
+    body: '{"title": "Original private node title", "category": "", "description":
       "Original private node description"}'
     headers:
       Accept: ['*/*']
@@ -36,15 +36,15 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: PATCH
-    uri: https://staging2.osf.io/api/v2/nodes/vemxa/
+    uri: https://staging2-api.osf.io/v2/nodes/vemxa/
   response:
     body: {string: '{"data":{"id":"vemxa","type":"nodes","attributes":{"title":"Original
-        private node title","description":"Original private node description","category":"","date_created":"2015-08-28T16:33:10.781000","date_modified":"2015-08-28T16:33:10.781000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/vemxa/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/vemxa/","html":"https://staging2.osf.io/vemxa/"}}}'}
+        private node title","description":"Original private node description","category":"","date_created":"2015-08-28T16:33:10.781000","date_modified":"2015-08-28T16:33:10.781000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/vemxa/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/vemxa/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2-api.osf.io/v2/nodes/vemxa/files/"}},"node_links":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/vemxa/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2-api.osf.io/v2/nodes/vemxa/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2-api.osf.io/v2/nodes/vemxa/","html":"https://staging2.osf.io/vemxa/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:14:50 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:23 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

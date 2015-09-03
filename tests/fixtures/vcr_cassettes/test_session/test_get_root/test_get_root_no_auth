@@ -7,14 +7,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
-    uri: https://staging2.osf.io/api/v2/
+    uri: https://staging2-api.osf.io/v2/
   response:
-    body: {string: '{"meta":{"message":"Welcome to the OSF API.","version":"2.0","current_user":null},"links":{"nodes":"https://staging2.osf.io/api/v2/nodes/","users":"https://staging2.osf.io/api/v2/users/"}}'}
+    body: {string: '{"meta":{"message":"Welcome to the OSF API.","version":"2.0","current_user":null},"links":{"nodes":"https://staging2-api.osf.io/v2/nodes/","users":"https://staging2-api.osf.io/v2/users/"}}'}
     headers:
       Allow: ['OPTIONS, GET']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 02:17:56 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:35 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

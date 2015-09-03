@@ -8,7 +8,7 @@ from nose.tools import *  # flake8: noqa
 import unittest
 
 from osf_api_v2_client.settings.local import (
-    URL,                # e.g. 'https://staging2.osf.io/api/v2/'
+    URL,                # e.g. 'https://staging2-api.osf.io/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
     FILES_NODE_ID,      # id of a node with a total of 15 files
@@ -180,6 +180,7 @@ class TestFileGenerator(unittest.TestCase):
     maybe all add-ons should be tested, but this shows
     the basic functionality of the generator.
     """
+    # TODO test this with a node that has files in all add-ons?
 
     file_generator_vcr = vcr.VCR(
         cassette_library_dir='{}test_file_generator'.format(
@@ -244,7 +245,7 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         dotnotator_list = []
         for user in dotnotator_generator(
-                'https://staging2.osf.io/api/v2/users/'):
+                '{}users/'.format(URL)):
             dotnotator_list.append(user.id)
         assert_equals(len(dotnotator_list), 50)
 
@@ -255,7 +256,7 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         dotnotator_list = []
         for user in dotnotator_generator(
-            'https://staging2.osf.io/api/v2/users/',
+            '{}users/'.format(URL),
             num_requested=-1
         ):
             dotnotator_list.append(user.id)
@@ -269,7 +270,7 @@ class TestDotNotatorGenerator(unittest.TestCase):
         """
         dotnotator_list = []
         for user in dotnotator_generator(
-            'https://staging2.osf.io/api/v2/users/',
+            '{}users/'.format(URL),
             num_requested=16
         ):
             dotnotator_list.append(user.id)

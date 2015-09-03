@@ -45,14 +45,14 @@ interactions:
       Content-Disposition: [inline; filename="bbc4e54e8ed51e6bf6bae383d2989788.jpeg"]
       Content-Length: ['1479']
       Content-Type: [image/jpeg]
-      Date: ['Wed, 02 Sep 2015 21:20:57 GMT']
-      Expires: ['Wed, 02 Sep 2015 21:25:57 GMT']
+      Date: ['Thu, 03 Sep 2015 14:28:46 GMT']
+      Expires: ['Thu, 03 Sep 2015 14:33:46 GMT']
       Last-Modified: ['Fri, 07 Aug 2015 14:45:05 GMT']
       Link: ['<https://www.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40>;
           rel="canonical"']
       Server: [nginx]
-      Source-Age: ['2694']
+      Source-Age: ['0']
       Via: [1.1 varnish]
-      X-Varnish: [2089515301 2078128026]
+      X-Varnish: ['2311509116']
     status: {code: 200, message: OK}
 version: 1

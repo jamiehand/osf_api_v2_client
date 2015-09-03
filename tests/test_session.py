@@ -6,7 +6,7 @@ from nose.tools import *  # flake8: noqa
 import unittest
 
 from osf_api_v2_client.settings.local import (
-    URL,                # e.g. 'https://staging2.osf.io/api/v2/'
+    URL,                # e.g. 'https://staging2-api.osf.io/v2/'
     AUTH1,              # authentication details for USER1
     AUTH2,              # authentication details for USER2
 )
