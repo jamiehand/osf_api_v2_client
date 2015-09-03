@@ -137,7 +137,6 @@ class TestDotNotator(unittest.TestCase):
         assert_equal(
             self.dn[u'top_layer'][u'middle_layer'][u'lowest_layer'][u'3'],
             u'world!')
-        print(self.dn.age)
 
     def test_delete_key(self):
         del self.dn.name
@@ -197,41 +196,21 @@ class TestFileGenerator(unittest.TestCase):
         file_links_list = []
         for file in SESSION_AUTH1.get_file_generator(FILES_NODE_ID):
             file_links_list.append(file.links.self)
-        #     file_to_download = requests.get(file.links.self)
-        #     filepath = "test_file_generator/test_get_all_files/{}/{}".format(
-        #         file.provider, file.name)
-        #     print("Downloading file: {}".format(filepath))
-        #     os.makedirs(os.path.dirname(filepath), exist_ok=True)  # Create directory for file if it doesn't exist
-        #     # Name the new file with the name of the file given in the API
-        #     with open(filepath, "wb") as new_file:
-        #         new_file.write(file_to_download.content)
-        # print('len(file_links_list): {}'.format(len(file_links_list)))
-        # print(file_links_list)
         assert_equal(len(file_links_list), 15)
 
-    # @file_generator_vcr.use_cassette()
-    # def test_get_some_files(self):
-    #     """
-    #     The node with id FILES_NODE_ID has 15 files among various
-    #     add-ons -- this tests that 5 are yielded when 5 are requested.
-    #     """
-    #     file_links_list = []
-    #     for file in SESSION_AUTH1.get_file_generator(
-    #         FILES_NODE_ID,
-    #         num_requested=5
-    #     ):
-    #         file_links_list.append(file.links.self)
-    #         file_to_download = requests.get(file.links.self)
-    #         filepath = "test_file_generator/test_get_some_files/{}/{}".format(
-    #             file.provider, file.name)
-    #         print("Downloading file: {}".format(filepath))
-    #         os.makedirs(os.path.dirname(filepath), exist_ok=True)  # Create directory for file if it doesn't exist
-    #         # Name the new file with the name of the file given in the API
-    #         with open(filepath, "wb") as new_file:
-    #             new_file.write(file_to_download.content)
-    #     print('len(file_links_list): {}'.format(len(file_links_list)))
-    #     print(file_links_list)
-    #     assert_equal(len(file_links_list), 5)
+    @file_generator_vcr.use_cassette()
+    def test_get_some_files(self):
+        """
+        The node with id FILES_NODE_ID has 15 files among various
+        add-ons -- this tests that 5 are yielded when 5 are requested.
+        """
+        file_links_list = []
+        for file in SESSION_AUTH1.get_file_generator(
+            FILES_NODE_ID,
+            num_requested=5
+        ):
+            file_links_list.append(file.links.self)
+        assert_equal(len(file_links_list), 5)
 
 
 class TestDotNotatorGenerator(unittest.TestCase):

@@ -13,13 +13,13 @@ interactions:
     method: POST
     uri: https://staging2.osf.io/api/v2/nodes/
   response:
-    body: {string: '{"data":{"id":"pxtgm","title":"Private node 2 created with client
-        library","description":"","category":"","date_created":"2015-09-01T19:37:44.886170","date_modified":"2015-09-01T19:37:44.886170","tags":{"system":[],"user":[]},"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/pxtgm/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/registrations/"},"html":"https://staging2.osf.io/pxtgm/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/pxtgm/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
+    body: {string: '{"data":{"id":"fnmv3","type":"nodes","attributes":{"title":"Private
+        node 2 created with client library","description":"","category":"","date_created":"2015-09-03T02:12:40.690294","date_modified":"2015-09-03T02:12:40.690294","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/fnmv3/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/fnmv3/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/fnmv3/","html":"https://staging2.osf.io/fnmv3/"}}}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:45 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:12:41 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

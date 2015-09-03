@@ -9,17 +9,12 @@ interactions:
     method: GET
     uri: https://staging2.osf.io/api/v2/
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA43MsQrCMBDG8VcJN5ecZMzmIjgpODhKqGcaTJOSu3QpeXfTPoHTfQc//hvMJA7s
-        1i+z8wQWnhTHPJOSrGQidXtc1Pl+1TDASoVDTt0Yfer/WEuhJK/KVMCmGmMbIIb05b2Y8pv6gElk
-        YYvI4nxI3ujMHx0yuiXgavBg2Gt75Q9/MITWfjq4LSu8AAAA
+    body: {string: '{"meta":{"message":"Welcome to the OSF API.","version":"2.0","current_user":null},"links":{"nodes":"https://staging2.osf.io/api/v2/nodes/","users":"https://staging2.osf.io/api/v2/users/"}}'}
     headers:
       Allow: ['OPTIONS, GET']
       Connection: [keep-alive]
-      Content-Encoding: [gzip]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:38:03 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:17:56 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

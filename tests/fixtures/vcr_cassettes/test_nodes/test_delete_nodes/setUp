@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"category": "", "title": "Private node to delete", "description": ""}'
+    body: '{"title": "Private node to delete", "description": "", "category": ""}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -12,12 +12,13 @@ interactions:
     method: POST
     uri: https://staging2.osf.io/api/v2/nodes/
   response:
-    body: {string: '{"data":{"id":"cz7xr","title":"Private node to delete","description":"","category":"","date_created":"2015-09-02T16:57:31.531962","date_modified":"2015-09-02T16:57:31.531962","tags":[],"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/cz7xr/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/cz7xr/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/cz7xr/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/cz7xr/registrations/"},"html":"https://staging2.osf.io/cz7xr/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/cz7xr/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/cz7xr/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
+    body: {string: '{"data":{"id":"k6r85","type":"nodes","attributes":{"title":"Private
+        node to delete","description":"","category":"","date_created":"2015-09-03T02:12:42.323237","date_modified":"2015-09-03T02:12:42.323237","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/k6r85/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/k6r85/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/k6r85/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/k6r85/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/k6r85/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/k6r85/","html":"https://staging2.osf.io/k6r85/"}}}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Type: [application/json]
-      Date: ['Wed, 02 Sep 2015 16:57:32 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:12:43 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

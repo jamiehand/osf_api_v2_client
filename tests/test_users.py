@@ -74,77 +74,58 @@ class TestGetUsers(unittest.TestCase):
         assert_true(isinstance(user1, DotNotator))
 
 
-class TestUserAttributes(unittest.TestCase):
+class TestUserData(unittest.TestCase):
     """
-    Test accessing user attributes with the DotNotator format,
+    Test accessing user data with the DotNotator format,
     as enabled through the DotNotator class in osf_api_v2_client/utils.py
     """
 
-    user_attributes_vcr = vcr.VCR(
+    user_data_vcr = vcr.VCR(
         cassette_library_dir='{}test_user_attributes'.format(
             VCR_CASSETTE_PREFIX),
         record_mode=VCR_RECORD_MODE
     )
 
-    @user_attributes_vcr.use_cassette()
+    @user_data_vcr.use_cassette()
     def setUp(self):
         self.user = SESSION_AUTH1.get_user(USER1_ID)
 
-    def test_user_names(self):
-        """
-        Ensure that the names return strings
-        """
-        # fullname = self.user.attributes.fullname
-        # assert_true(isinstance(fullname, string_types))
-        # given_name = self.user.attributes.given_name
-        # assert_true(isinstance(given_name, string_types))
-        # middle_name = self.user.attributes.middle_name
-        # assert_true(isinstance(middle_name, string_types))
-        # family_name = self.user.attributes.family_name
-        # assert_true(isinstance(family_name, string_types))
-        # suffix = self.user.attributes.suffix
-        # assert_true(isinstance(suffix, string_types))
-        pass
+    def test_id(self):
+        assert_equal(self.user.id, USER1_ID)
 
+    def test_type(self):
+        assert_equal(self.user.type, u'users')
+
+    def test_attributes(self):
+        """
+        Ensure that attributes return strings
+        """
+        for attribute in self.user.attributes:
+            assert_true(isinstance(attribute, string_types))
+
+    @user_data_vcr.use_cassette()
     def test_gravatar_url(self):
         """
         Ensures user.gravatar_url returns a valid url
         """
-        url = self.user.gravatar_url
+        url = self.user.attributes.gravatar_url
         response = requests.get(url)
         assert_equal(response.status_code, 200)
 
-    def test_employment_institutions(self):
-        """
-        Ensures user.employment_institutions returns a list of
-        DotNotator objects, and that getting information from
-        the objects works.
-        """
-        employment_list = self.user.employment_institutions
-        assert_true(isinstance(employment_list, list))
-        if employment_list:  # if employment_list is not empty
-            assert_true(isinstance(employment_list[0], DotNotator))
-            start_year = employment_list[0].startYear
-            assert_true(isinstance(start_year, string_types))
-            ongoing = employment_list[0].ongoing
-            assert_true(isinstance(ongoing, bool))
+    @user_data_vcr.use_cassette()
+    def test_relationships(self):
+        url = self.user.relationships.nodes.links.related
+        response = requests.get(url)
+        assert_equal(response.status_code, 200)
 
-    def test_educational_institutions(self):
-        """
-        Ensures user.educational_institutions returns a list of
-        DotNotator objects, and that getting information from
-        the objects works.
-        """
-        educational_list = self.user.educational_institutions
-        assert_true(isinstance(educational_list, list))
-        if educational_list:  # if educational_list is not empty
-            assert_true(isinstance(educational_list[0], DotNotator))
-            start_year = educational_list[0].startYear
-            assert_true(isinstance(start_year, string_types))
-            ongoing = educational_list[0].ongoing
-            assert_true(isinstance(ongoing, bool))
+    @user_data_vcr.use_cassette()
+    def test_links_self(self):
+        url = self.user.links.self
+        response = requests.get(url)
+        assert_equal(response.status_code, 200)
 
-    def test_social_accounts(self):
-        social_dict = self.user.social_accounts
-        assert_true(isinstance(social_dict, DotNotator))
-
+    @user_data_vcr.use_cassette()
+    def test_links_html(self):
+        url = self.user.links.html
+        response = requests.get(url)
+        assert_equal(response.status_code, 200)

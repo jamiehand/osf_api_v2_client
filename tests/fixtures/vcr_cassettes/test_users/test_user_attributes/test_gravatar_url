@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
+    method: GET
+    uri: https://secure.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40
+  response:
+    body:
+      string: !!binary |
+        /9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcg
+        SlBFRyB2ODApLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwK
+        DAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQU
+        FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAKAAo
+        AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMF
+        BQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkq
+        NDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqi
+        o6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/E
+        AB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMR
+        BAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVG
+        R0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+        tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A
+        +uYYpVmG0MVAwWPHP41alnEEUksrCOOMbmZiMADkkmnbzGMklsnoBzXjv7VnjOfwt8JtTtbKQx6l
+        rBGn24BwcPw5/wC+Nw/EVwuXu3kacvNJRizAi+PPxI+Ik99d/DHwbbah4dtZWhj1TUmC/aWB5KAy
+        J8v0z+HSuv8Ahd8Yrzxhrt54Z8U6L/wjXjWwt1up7ISeZDPCWK+ZE2eQDgEZONw5NWdNsbb4a6RB
+        pWg6laWOhaXYi3jsmjwPOAAGXzySTkgDcc9+K8Vl1XVYv2xPAy6jLbLdy6JfLMtk5ZfLbDJknrko
+        T+FePCvKdXl6HuYjBxpUOfqj6evGCu3C49qKpXEhcuSxx6k4H50V6S1PDT0NqGbcMhnI9CK+JP8A
+        goH4ylGveHdMtLnAhhMpEbco7MVH0OBmvQP2q/j7f+AJ7bwz4cuo7XULmDz57uI/vI1JIVV7KTtP
+        PXpjFfB3iTXX1IR7A92SJGMjEk7yR82T16frSrS0UT1aODnRpxr1Gve2X6n3tp/xpsde+E+lazrG
+        nTJqt9ZJLdfY9qGVwgy27IKd/m7DvXyh8NPjZeeKP2qNA8U/ZUtre81OLS4LeNy4jt2DxAAnqSXL
+        V5zP4u8X/wDCMHSotavDpUkXliA427CeVDYzgA9AayPCD3Pg7V9NvrO4+z6hY3q3NvIVDYdcbTzw
+        cEnrXNClGleb67Hfi1UcYRezV/0P2IkkBJwBiivGf2e/jr/wuPQbxL63S11vTDGl2If9XKHB2yKO
+        2dpyOcevNFdi1Wh4NSk6UnCa1Ph/4/fEiDxN8btf1d3H9nLcrHFt6eVGAq4A9QM/U1wN3o8OnXso
+        S5EDhWyHY4dcjA4HP/6hmiiliI6xsfXZjFRaglpFWX9fI+iPhhaDRPhdrx8S32gSeHr2xVdLtZJo
+        2mkuQ6BmiyGKgOYjNjDFVOORXzT4nupNJliVlXzGk+UowKgA/wBf6UUVpUtOVNNdDgxOHWHw8ZKT
+        d2/lstP631Pev2CPFM1r8WbvTJnYx6pYSxIrcnfGwkX8lV/zoooquVHnY/8AdyhbrFfqf//Z
+    headers:
+      Accept-Ranges: [bytes]
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: [max-age=300]
+      Connection: [keep-alive]
+      Content-Disposition: [inline; filename="bbc4e54e8ed51e6bf6bae383d2989788.jpeg"]
+      Content-Length: ['1479']
+      Content-Type: [image/jpeg]
+      Date: ['Wed, 02 Sep 2015 21:20:57 GMT']
+      Expires: ['Wed, 02 Sep 2015 21:25:57 GMT']
+      Last-Modified: ['Fri, 07 Aug 2015 14:45:05 GMT']
+      Link: ['<https://www.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40>;
+          rel="canonical"']
+      Server: [nginx]
+      Source-Age: ['2694']
+      Via: [1.1 varnish]
+      X-Varnish: [2089515301 2078128026]
+    status: {code: 200, message: OK}
+version: 1

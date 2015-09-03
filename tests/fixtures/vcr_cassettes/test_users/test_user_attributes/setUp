@@ -10,27 +10,13 @@ interactions:
     method: GET
     uri: https://staging2.osf.io/api/v2/users/se6py/
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA81WTW/bMAz9K54OO7XxR74cA8XQdYd2wLAB6WUYhkCWaVubLBmSnDUL8t9HOU7n
-        OsWKnmYfAosi+R5pIo97klFLSbInPCMJMbCod+SC5I0QklaApo+04uDdUpmhveBbkJv+DRornmUC
-        TlYXjSFidzJ0oabJc/7gMNqXN+iH0LDRUHBjQYPDj4JwfhksLqfBfThLomUSRZMwDvBx4Jpukaze
-        NFqgb2ltbRLfN8AaDZPT7YSpyj86+mnKZjCfQQzZPIRFmi9SCtN4mkWreLWM43fZFc9AWs6UfGv4
-        b7iaOSCoaqF2FV5suDSW28ZyJQ1Jvu2JQQL2K1DdsUV3dBCuU/ja3n5S0pYkWWAimXWHoD10ceio
-        ZKG4LEhidQPYCagx0CEe8/Rg0XDzeU0OF2fY0x72ncyVrqjj6d0DKyVnnMoBo7DPaN5n5PreZ5VT
-        YYa01rZxvfKuGQNjeMoFtxyMtwa95WjC+Ke0P7VzkTZ6590oIaAAcviOqFnDWqJUvNjeCJNmUGhw
-        /X1/7XGJqaq6wXnx1oyDZDCoMe7XKHGMX9H4Z1K/XNHZdwmWfdIfOM5SRQcsV//6EuFLX+Ks019u
-        bs8m5Fj7Y/MGBB47083noFPH4+OQPjcOZyTWrFRKeNPhqP4vIrOxEJmPhchiLESWYyESj4XIaixE
-        wmA0TMJWLoxCJRMbyphqpEUR3uMWYssmRUX44XaT8riaGPz7Ea0sG1WBLZ26XpAatHFK0+0LuC7A
-        A0V5B7cm4L39xS2KySkX65IJLn9CdicH2XhVU2bXVund4EZp1i5QD/hcPv1BFA0GNwZWgr5rnf56
-        YLOJA2vrkipDGcUXDaJVyI51u+VYWmBJ0USZfMKVT2vubyO/MVggrkC4tvltuO8ylrZ6siENYo/u
-        ThFA5K/DcNntrnZy3EKTw+EPT76QeEMKAAA=
+    body: {string: '{"data":{"id":"se6py","type":"users","attributes":{"fullname":"Jamie
+        Hand","given_name":"Jamie","middle_names":"","family_name":"Hand","suffix":"suffix!","date_registered":"2015-06-30T14:27:22.180000","gravatar_url":"https://secure.gravatar.com/avatar/bbc4e54e8ed51e6bf6bae383d2989788?d=identicon&size=40","gitHub":"jamiehand","scholar":"something","personal_website":"http://example.com","twitter":"jamiechand","linkedIn":"something","impactStory":"something","orcid":"xxxx-xxxx-xxxx-xxxx","researcherId":"x-xxxx-xxxx"},"relationships":{"nodes":{"links":{"related":"https://staging2.osf.io/api/v2/users/se6py/nodes/"}}},"links":{"self":"https://staging2.osf.io/api/v2/users/se6py/","html":"https://staging2.osf.io/se6py/"}}}'}
     headers:
-      Allow: ['GET, HEAD, OPTIONS']
+      Allow: ['GET, PUT, PATCH, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Encoding: [gzip]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:38:09 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Wed, 02 Sep 2015 21:15:10 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

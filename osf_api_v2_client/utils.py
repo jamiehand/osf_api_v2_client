@@ -27,11 +27,6 @@ class StatusCode400orGreaterError(Exception):
 
 def get_response_or_exception(method, url, *args, **kwargs):
     method = method.lower()
-    # TODO consider: Possible alternative to replace a bunch of if statements:
-    # mydict = {
-    #     'get':requests.get
-    # }
-    # mydict[method](url, *args, **kwargs)
     if method == 'get':
         response = requests.get(url, *args, **kwargs)
     elif method == 'post':
@@ -67,8 +62,8 @@ def file_generator(files_url, auth=None, num_requested=-1):
         files_page_json = files_page.json()
         for item in files_page_json[u'data']:
             # If it's a folder, follow it
-            if item[u'item_type'] == "folder":
-                url_to_follow = item[u'links'][u'related']
+            if item[u'attributes'][u'item_type'] == "folder":
+                url_to_follow = item[u'links'][u'related'][u'href']
                 new_num_requested = -1 if (
                     num_requested == -1) else count_remaining
                 for subitem in file_generator(url_to_follow, auth=auth,
@@ -76,7 +71,7 @@ def file_generator(files_url, auth=None, num_requested=-1):
                     count_remaining -= 1
                     yield subitem
             # If it's a file, yield it
-            elif item[u'item_type'] == "file":
+            elif item[u'attributes'][u'item_type'] == "file":
                 if num_requested == -1:
                     yield DotNotator(item)
                 elif count_remaining > 0:
@@ -126,14 +121,14 @@ class DotNotator(collections.MutableMapping):
 
     e.g. given json dictionary json_dict, DotNotator enables access
     like so:
-    json_dict.data[0].name
+    json_dict.data[0].id
     instead of requiring this syntax:
-    json_dict[u'data'][0][u'name']
+    json_dict[u'data'][0][u'id']
 
     Note that both syntaxes will still work, though, and they can
     be mixed:
-    json_dict[u'data'][0].name
-    json_dict.data[0][u'name']
+    json_dict[u'data'][0].id
+    json_dict.data[0][u'id']
 
     As seen in the above example, DotNotator recurses through dicts
     of dicts and lists of dicts, to make those dicts into DotNotator

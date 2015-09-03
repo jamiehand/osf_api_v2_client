@@ -13,13 +13,13 @@ interactions:
     method: POST
     uri: https://staging2.osf.io/api/v2/nodes/
   response:
-    body: {string: '{"data":{"id":"gh6bf","title":"Private node created with client
-        library","description":"Hello world!","category":"","date_created":"2015-09-01T19:37:43.087980","date_modified":"2015-09-01T19:37:43.087980","tags":{"system":[],"user":[]},"links":{"files":{"related":"https://staging2.osf.io/api/v2/nodes/gh6bf/files/"},"parent":{"self":null},"contributors":{"count":1,"related":"https://staging2.osf.io/api/v2/nodes/gh6bf/contributors/"},"self":"https://staging2.osf.io/api/v2/nodes/gh6bf/","registrations":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/gh6bf/registrations/"},"html":"https://staging2.osf.io/gh6bf/","node_links":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/gh6bf/node_links/"},"children":{"count":0,"related":"https://staging2.osf.io/api/v2/nodes/gh6bf/children/"}},"properties":{"dashboard":false,"collection":false,"registration":false},"public":false,"type":"nodes"}}'}
+    body: {string: '{"data":{"id":"rjzsq","type":"nodes","attributes":{"title":"Private
+        node created with client library","description":"Hello world!","category":"","date_created":"2015-09-03T02:12:38.921096","date_modified":"2015-09-03T02:12:38.921096","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/rjzsq/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/rjzsq/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/rjzsq/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/rjzsq/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/rjzsq/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/rjzsq/","html":"https://staging2.osf.io/rjzsq/"}}}'}
     headers:
       Allow: ['GET, POST, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:44 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:12:39 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

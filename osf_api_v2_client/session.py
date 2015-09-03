@@ -1,5 +1,7 @@
 import requests
 
+from osf_api_v2_client.settings.local import URL
+
 from osf_api_v2_client.utils import(DotNotator,
                                     dotnotator_generator,
                                     file_generator,
@@ -7,7 +9,7 @@ from osf_api_v2_client.utils import(DotNotator,
 
 
 class Session(object):
-    def __init__(self, root_url='https://staging2.osf.io/api/v2/', auth=None):
+    def __init__(self, root_url=URL, auth=None):
         self.root_url = root_url
         self.auth = auth
 
@@ -132,5 +134,7 @@ class Session(object):
         :return: a generator containing files related to node_id
         """
         node = self.get_node(node_id)
-        files_url = node.links.files.related
-        return file_generator(files_url, auth=self.auth)
+        files_url = node.relationships.files.links.related
+        return file_generator(files_url,
+                              auth=self.auth,
+                              num_requested=num_requested)

@@ -1,4 +1,3 @@
-import pprint
 import types
 
 import vcr
@@ -21,8 +20,6 @@ from osf_api_v2_client.settings.local import (
     PRIVATE_NODE_ID     # id of a private node that is visible to USER1 but
                         # *not* to USER2
 )
-
-pp = pprint.PrettyPrinter(indent=4)
 
 # Sessions with different forms of authentication:
 # A session authenticated by the user who created the node
@@ -118,10 +115,10 @@ class TestCreateNodes(unittest.TestCase):
             description="Hello world!"
         )
         assert_true(isinstance(new_private_node, DotNotator))
-        assert_equal(new_private_node.title,
+        assert_equal(new_private_node.attributes.title,
                      "Private node created with client library")
-        assert_equal(new_private_node.category, "")
-        assert_equal(new_private_node.description, "Hello world!")
+        assert_equal(new_private_node.attributes.category, "")
+        assert_equal(new_private_node.attributes.description, "Hello world!")
 
     @create_nodes_vcr.use_cassette()
     def test_create_private_nodes_title_param_only(self):
@@ -129,10 +126,10 @@ class TestCreateNodes(unittest.TestCase):
             "Private node 2 created with client library"
         )
         assert_true(isinstance(new_private_node, DotNotator))
-        assert_equal(new_private_node.title,
+        assert_equal(new_private_node.attributes.title,
                      "Private node 2 created with client library")
-        assert_equal(new_private_node.category, "")
-        assert_equal(new_private_node.description, "")
+        assert_equal(new_private_node.attributes.category, "")
+        assert_equal(new_private_node.attributes.description, "")
 
     @create_nodes_vcr.use_cassette()
     def test_create_private_node_no_auth(self):
@@ -183,11 +180,11 @@ class TestEditNodes(unittest.TestCase):
             category="data"
         )
         assert_true(isinstance(edited_public_node, DotNotator))
-        assert_equal(edited_public_node.title,
+        assert_equal(edited_public_node.attributes.title,
                      "User1's new title")
-        assert_equal(edited_public_node.description,
+        assert_equal(edited_public_node.attributes.description,
                      "User1's new description")
-        assert_equal(edited_public_node.category,
+        assert_equal(edited_public_node.attributes.category,
                      "data")
 
     @edit_nodes_vcr.use_cassette()
@@ -232,11 +229,11 @@ class TestEditNodes(unittest.TestCase):
             category="data",
         )
         assert_true(isinstance(private_node, DotNotator))
-        assert_equal(private_node.title,
+        assert_equal(private_node.attributes.title,
                      "User1's new title")
-        assert_equal(private_node.description,
+        assert_equal(private_node.attributes.description,
                      "User1's new description")
-        assert_equal(private_node.category,
+        assert_equal(private_node.attributes.category,
                      "data")
 
     @edit_nodes_vcr.use_cassette()
@@ -283,7 +280,7 @@ class TestDeleteNodes(unittest.TestCase):
         # a public node with SESSION_AUTH1, recording its id as
         # self.public_node_id, and then delete it in test methods,
         # as done below with the private node.
-        self.public_node_id = 'my3kd'
+        self.public_node_id = '4zdtk'
 
         private_node = SESSION_AUTH1.create_node('Private node to delete')
         self.private_node_id = private_node.id

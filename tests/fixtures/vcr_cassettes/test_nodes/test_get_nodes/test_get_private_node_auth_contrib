@@ -10,21 +10,13 @@ interactions:
     method: GET
     uri: https://staging2.osf.io/api/v2/nodes/vemxa/
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA51TQU7DMBD8CvKFS1onqYAq74ATQpXrbJIVjh3Zm0JV8XfWTloCEkL0FGe9nhnP
-        rE+iVqREdRJYi0ocoH9XIhOEZID/nwL44jbcWHi7mWqZqCFojwOhsz86ljuZ0Iqgdf7ITYmDT3Jl
-        pz3wJ5KVeXG3yrercvtY3FebTVXk64dtkef5ubd3NTb4dzOpNsQ7hGMg6EX1/JKJkaXH1UcmDNrX
-        tN+ggbTwYGYRHdEQKikDY6Bty7ULzRqdVAPKQymt40vJZItMp6VgwEF5sJQYwTSisqMxXNbOksf9
-        SM4nFu3G2FVk1/Et4RLtRCb+IZmN9NBiIK9iXktV+ZWqvuElWR31huP8TdZkHiuJXu4uWczmXCvj
-        Cyxp0B2amkNZ2H4t8hmKcWPU3g3gCae5qVXo9k55Ht9GmQAxc2NAT49hLi0dmvsi0Lg3qC/n6DjE
-        B5bmi4k+AXTGHuyIAwAA
+    body: {string: '{"data":{"id":"vemxa","type":"nodes","attributes":{"title":"User1''s
+        new title","description":"User1''s new description","category":"data","date_created":"2015-08-28T16:33:10.781000","date_modified":"2015-08-28T16:33:10.781000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/vemxa/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/vemxa/","html":"https://staging2.osf.io/vemxa/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Encoding: [gzip]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:52 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:15:36 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

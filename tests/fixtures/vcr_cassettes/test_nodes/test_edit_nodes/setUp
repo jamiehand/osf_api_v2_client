@@ -1,7 +1,7 @@
 interactions:
 - request:
-    body: '{"title": "Original public node title", "description": "Original public
-      node description", "category": ""}'
+    body: '{"category": "", "title": "Original public node title", "description":
+      "Original public node description"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -13,28 +13,20 @@ interactions:
     method: PATCH
     uri: https://staging2.osf.io/api/v2/nodes/pqbun/
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA51TwU7EIBT8lQ3nbqF1Vxt+wos3YzaU0vZFFhBeTTYb/12gXa2JHuypFIaZYd57
-        V9IJFIRfCXSEE/fWToYUBAG1iv+PHgYwQu/c1GqQO2M7tZsPC9KpID04BGv+gq4hBZEC1WD9JaKj
-        RhRWJ+lV/CTpmlXHPWv2dfNU3fMD4+yufDgcGWM37Nl20MPv4IqVTbOAUQwhvShcAqoz4c8vBZmC
-        8mn1URAN5jWf96BVXnilFxMjoguc0hA5wAx1aUNfgqXCAX2vaXp+oDkkmm9TEgmd8MpgVlS6J9xM
-        WsdtaQ16aCe0PqtIOyVUVWzTW9Nl2VmM/MNyDNKrAQJ6kYq2dsU2uvrBl22NeNaxnH/ZmsOLTlKW
-        p69aLOFstfFNlj3IEXQXi7KKfSvzjSryplJ765RHmPumE2FsrfCxfXuhg0o111rJeSKWrXVCCy4R
-        5XkiHP0Ur+HFpWnL7RV1PgE+hiiglQMAAA==
+    body: {string: '{"data":{"id":"pqbun","type":"nodes","attributes":{"title":"Original
+        public node title","description":"Original public node description","category":"","date_created":"2015-08-28T16:40:03.745000","date_modified":"2015-08-28T16:40:10.885000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":true},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/pqbun/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/pqbun/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/pqbun/","html":"https://staging2.osf.io/pqbun/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Encoding: [gzip]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:46 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:14:49 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
     status: {code: 200, message: OK}
 - request:
-    body: '{"title": "Original private node title", "description": "Original private
-      node description", "category": ""}'
+    body: '{"category": "", "title": "Original private node title", "description":
+      "Original private node description"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
@@ -46,21 +38,13 @@ interactions:
     method: PATCH
     uri: https://staging2.osf.io/api/v2/nodes/vemxa/
   response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA51TQW6DMBD8SuQziYGobcQneumtqiLHLLCqsZG9RI2i/r1rQ1J6qKpywtjjmfGM
-        fRW1IiWqq8BaVOIM/YcSmSAkA/z/7LFFq8xm8HhWBBvrathMq5moIWiPA6Gzv2KXmExo5midvzCc
-        VVgajtoDf6J4mRcP2/ywLQ8vxWO131dFvns6FHme37C9q7HBv8Gk2hDPFC6BoBfV61smxgA+jj4z
-        YdC+p/UGDaSBBzOb6IiGUEkZmANtW+5caHbopBpQnksZzx9kikmm3VIw4aA8WEqKYBpR2dEYntbO
-        ksfTSM4nFe3GiCqydXpLuiQ7iYl/WOYgPbQYyKvY2tJVvtLVD75kq6PecJ2/2ZrCYycxy+O9izmc
-        tTa+yZIH3aGpuZRF7GuZb1TMG6v2bgBPON2bWoXu5JTn69soEyB2bgzo6UnMU8uEZlwkGk8G9X0f
-        XYb44NL9YqEv0IK9eZgDAAA=
+    body: {string: '{"data":{"id":"vemxa","type":"nodes","attributes":{"title":"Original
+        private node title","description":"Original private node description","category":"","date_created":"2015-08-28T16:33:10.781000","date_modified":"2015-08-28T16:33:10.781000","tags":[],"registration":false,"collection":false,"dashboard":false,"public":false},"relationships":{"children":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/children/","meta":{"count":0}}}},"contributors":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/contributors/","meta":{"count":1}}}},"files":{"links":{"related":"https://staging2.osf.io/api/v2/nodes/vemxa/files/"}},"node_links":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/node_links/","meta":{"count":0}}}},"parent":{"links":{"self":null}},"registrations":{"links":{"related":{"href":"https://staging2.osf.io/api/v2/nodes/vemxa/registrations/","meta":{"count":0}}}}},"links":{"self":"https://staging2.osf.io/api/v2/nodes/vemxa/","html":"https://staging2.osf.io/vemxa/"}}}'}
     headers:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
-      Content-Encoding: [gzip]
-      Content-Type: [application/json]
-      Date: ['Tue, 01 Sep 2015 19:37:47 GMT']
+      Content-Type: [application/vnd.api+json]
+      Date: ['Thu, 03 Sep 2015 02:14:50 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

@@ -4,7 +4,6 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
       Connection: [keep-alive]
       User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
     method: GET
@@ -16,7 +15,7 @@ interactions:
       Allow: ['GET, PUT, PATCH, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Wed, 02 Sep 2015 21:20:30 GMT']
+      Date: ['Wed, 02 Sep 2015 21:21:54 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]

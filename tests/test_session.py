@@ -44,10 +44,10 @@ class TestGetRoot(unittest.TestCase):
     def test_get_root_auth(self):
         root = SESSION_AUTH1.get_root()
         assert_true(isinstance(root, DotNotator))
-        assert_true(hasattr(root, 'meta'))
+        assert_equal(root.meta.message, u'Welcome to the OSF API.')
 
     @get_root_vcr.use_cassette()
     def test_get_root_no_auth(self):
         root = SESSION_NO_AUTH.get_root()
         assert_true(isinstance(root, DotNotator))
-        assert_true(hasattr(root, 'meta'))
+        assert_equal(root.meta.message, u'Welcome to the OSF API.')
