@@ -188,10 +188,11 @@ class TestFileGenerator(unittest.TestCase):
     )
 
     @file_generator_vcr.use_cassette()
-    def test_get_all_files(self):
+    def test_defaults(self):
         """
         The node with id FILES_NODE_ID has 15 files among various
-        add-ons -- this tests that all are yielded by the generator.
+        add-ons -- this tests that all are yielded by the default
+        generator (with num_requested == -1).
         """
         file_links_list = []
         for file in SESSION_AUTH1.get_file_generator(FILES_NODE_ID):
@@ -199,7 +200,22 @@ class TestFileGenerator(unittest.TestCase):
         assert_equal(len(file_links_list), 15)
 
     @file_generator_vcr.use_cassette()
-    def test_get_some_files(self):
+    def test_num_requested_negative1(self):
+        """
+        The node with id FILES_NODE_ID has 15 files among various
+        add-ons -- this tests that all are yielded by the generator
+        when -1 is passed to param num_requested.
+        """
+        file_links_list = []
+        for file in SESSION_AUTH1.get_file_generator(
+            FILES_NODE_ID,
+            num_requested=-1
+        ):
+            file_links_list.append(file.links.self)
+        assert_equal(len(file_links_list), 15)
+
+    @file_generator_vcr.use_cassette()
+    def test_num_requested_positive(self):
         """
         The node with id FILES_NODE_ID has 15 files among various
         add-ons -- this tests that 5 are yielded when 5 are requested.

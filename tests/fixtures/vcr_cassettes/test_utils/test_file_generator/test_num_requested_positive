@@ -16,7 +16,7 @@ interactions:
       Allow: ['GET, PUT, PATCH, DELETE, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:29 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:28 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
@@ -37,7 +37,7 @@ interactions:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:30 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:29 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
@@ -65,7 +65,7 @@ interactions:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:31 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:30 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
@@ -86,28 +86,7 @@ interactions:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:33 GMT']
-      Server: [nginx/1.4.6 (Ubuntu)]
-      Vary: [Accept]
-      X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Authorization: [Basic aGFuZC5qYW1pZUBnbWFpbC5jb206MUFxdXNHdUk0S0w0]
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.7.0 CPython/3.4.3 Darwin/14.4.0]
-    method: GET
-    uri: https://staging2.osf.io/api/v2/nodes/bc79a/files/?page=2&path=%2F&provider=github
-  response:
-    body: {string: '{"data":[{"id":"github/text.txt","type":"files","attributes":{"provider":"github","path":"/text.txt","item_type":"file","name":"text.txt","metadata":{"size":21,"modified":null,"content_type":null,"extra":{"webView":"https://github.com/jamiehand/Practice-Repository2/blob/master/text.txt","fileSha":"1dbce286ef16b73f279b0b2c88b833bc25f3f281"}}},"links":{"self":"https://staging2-files.osf.io/file?path=/text.txt&nid=bc79a&provider=github&cookie=55e7647c404f776f82873f03.ycWGNralaiXzF9-mSrlOVuj_kWQ","related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=/text.txt&provider=github","meta":{"self_methods":["GET","POST","DELETE"]}}}}],"links":{"first":"https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=%2F&provider=github","last":null,"prev":"https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=%2F&provider=github","next":null,"meta":{"total":11,"per_page":10}}}'}
-    headers:
-      Allow: ['GET, HEAD, OPTIONS']
-      Connection: [keep-alive]
-      Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:35 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:30 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
@@ -124,12 +103,12 @@ interactions:
     uri: https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=/&provider=osfstorage
   response:
     body: {string: '{"data":[{"id":"osfstorage/55e73306404f773fe0adfc2d","type":"files","attributes":{"provider":"osfstorage","path":"/55e73306404f773fe0adfc2d","item_type":"file","name":"Screen
-        Shot 2015-08-28 at 12.56.00 PM.png","metadata":{"size":86573,"modified":"2015-09-02T17:33:58","content_type":"application/octet-stream","extra":{"downloads":1,"version":1}}},"links":{"self":"https://staging2-files.osf.io/file?path=/55e73306404f773fe0adfc2d&nid=bc79a&provider=osfstorage&cookie=55e7647c404f776f82873f03.ycWGNralaiXzF9-mSrlOVuj_kWQ","related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=/55e73306404f773fe0adfc2d&provider=osfstorage","meta":{"self_methods":["GET","POST","DELETE"]}}}}],"links":{"first":null,"last":null,"prev":null,"next":null,"meta":{"total":1,"per_page":10}}}'}
+        Shot 2015-08-28 at 12.56.00 PM.png","metadata":{"size":86573,"modified":"2015-09-02T17:33:58","content_type":"application/octet-stream","extra":{"downloads":2,"version":1}}},"links":{"self":"https://staging2-files.osf.io/file?path=/55e73306404f773fe0adfc2d&nid=bc79a&provider=osfstorage&cookie=55e7647c404f776f82873f03.ycWGNralaiXzF9-mSrlOVuj_kWQ","related":{"href":"https://staging2.osf.io/api/v2/nodes/bc79a/files/?path=/55e73306404f773fe0adfc2d&provider=osfstorage","meta":{"self_methods":["GET","POST","DELETE"]}}}}],"links":{"first":null,"last":null,"prev":null,"next":null,"meta":{"total":1,"per_page":10}}}'}
     headers:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:45 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:31 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
@@ -151,7 +130,7 @@ interactions:
       Allow: ['GET, HEAD, OPTIONS']
       Connection: [keep-alive]
       Content-Type: [application/vnd.api+json]
-      Date: ['Thu, 03 Sep 2015 01:46:45 GMT']
+      Date: ['Thu, 03 Sep 2015 02:34:32 GMT']
       Server: [nginx/1.4.6 (Ubuntu)]
       Vary: [Accept]
       X-Frame-Options: [SAMEORIGIN]
