@@ -24,14 +24,15 @@ class Session(object):
 
     # USER ACTIONS
 
-    def get_user_generator(self, num_requested=-1):
+    def get_user_generator(self, url=None, num_requested=-1):
         """
         :param num_requested: a positive integer or -1; -1 will cause
         all users to be returned; otherwise num_requested number of
         users will be returned
         :return: a generator containing users
         """
-        target_url = '{}users/'.format(self.root_url)
+        target_url = '{}users/'.format(self.root_url) if (
+            url is None) else url
         return dotnotator_generator(target_url, auth=self.auth,
                                     num_requested=num_requested)
 
@@ -47,14 +48,15 @@ class Session(object):
 
     # NODE ACTIONS
 
-    def get_node_generator(self, num_requested=-1):
+    def get_node_generator(self, url=None, num_requested=-1):
         """
         :param num_requested: a positive integer or -1; -1 will cause
         all nodes to be returned; otherwise num_requested number of
         nodes will be returned
         :return: a generator containing nodes
         """
-        target_url = '{}nodes/'.format(self.root_url)
+        target_url = '{}nodes/'.format(self.root_url) if (
+            url is None) else url
         return dotnotator_generator(target_url, auth=self.auth,
                                     num_requested=num_requested)
 
